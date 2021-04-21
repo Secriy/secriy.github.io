@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,9 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2021/3 - Secriy&#39;s Blog</title>
+  <title>数据库系统概论 - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="数据库">
   
 
+  
+    <meta name="description" content="有关数据库相关知识的学习探讨。">
   
 
   <!-- feed -->
@@ -66,7 +68,7 @@
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur floatable " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -489,7 +491,7 @@
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  search' style="display: ;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
           
@@ -561,70 +563,350 @@
           
 
 <div class='l_main'>
-	
-		
-  <section class="post-list">
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
     
-      
+    
+    
+      <h1 class="title">
+        数据库系统概论
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-        数据结构学习笔记（一）
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <div class="note quote cyan"><p>数据结构相关复习总结笔记。</p></div>
-    
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+    </a>
   </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年9月13日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="数据库系统概论" data-path="/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
   
-    <div class='meta-v3' line_style='dashed'>
-      <div>
-        
-        <time>2021-03-15</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  <a href="/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>有关数据库相关知识的学习探讨。</p></div>
+
+<a id="more"></a>
+
+<h2 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h2><h3 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h3><blockquote>
+<p><strong>数据库（Database）</strong>指的是一些<strong>相互关联</strong>的数据的集合。</p>
+</blockquote>
+<p>描述事物的符号记录称为数据，而数据库是长期存在计算机内、有组织的、可共享的、大量数据的集合。数据库中的数据按一定的数据模型组织、描述和储存，具有较小的冗余度、较高的数据独立性和易扩展性，并可为各种用户共享。</p>
+<h3 id="什么是数据库管理系统？"><a href="#什么是数据库管理系统？" class="headerlink" title="什么是数据库管理系统？"></a>什么是数据库管理系统？</h3><blockquote>
+<p><strong>数据库管理系统（Database Management System，DBMS）</strong>由一个相互关联的数据的集合和一组用以访问这些数据的程序组成。DBMS 的基本目标是要提供一个可以方便、有效的地存取数据库信息的环境。</p>
+</blockquote>
+<p>也就是说，DBMS 是一组用于管理数据库的软件，常见的有 MySQL、SQLite、Oracle 等。我们对数据库本身进行操作不可避免的会很繁琐，当数据库中存在大量信息时人工管理这些数据更是不可能的，因此需要有一个能够方便管理、优化、存储等的软件辅助操作。数据库管理系统不仅仅是要对数据进行增删查改，还需要利用各种机制去实现数据库安全性保证、数据可用性保证等，我们甚至希望 DBMS 能够帮助我们优化数据库操作，使其能应对各种复杂的场景。</p>
+<h3 id="为什么要使用数据库？"><a href="#为什么要使用数据库？" class="headerlink" title="为什么要使用数据库？"></a>为什么要使用数据库？</h3><p>就算是在计算机不存在的时代，对于数据的存储也是必不可少的，早在远古时期就有“结绳计数”这种记录方式，到了奴隶时代、封建时代直至近代人类使用文字记录信息和数据，以人工管理这些数据。</p>
+<p>而在信息时代，我们更不可避免的要与数据打交道，并且我们想利用其他介质（如磁盘）存储这些数据：学籍信息、身份证信息乃至超市账单流水等。我们可以很自然地想到，把这些数据以文本的形式记录下来，不就可以方便管理了吗？比如我们使用表格文件（如 csv、Excel 表格）存储这些数据，就足够实现一定规模数据下的数据管理。</p>
+<p>然而这种存储和管理方式是有很大缺陷的：</p>
+<ol>
+<li><strong>数据的冗余和不一致</strong>：由于文件和程序可能由不同的用户创建，因此其格式可能并不统一，语言也可能并不相同，此外，当多个文件中包含相同的数据元素时，修改其一并不会对其他文件造成影响，可能会出现<strong>数据不一致</strong>的现象。</li>
+<li><strong>数据访问困难</strong>：对文件的查询和处理操作可能并不一致，当数据发生变化后文件的处理操作可能会发生变化，没有一种通用的有效方法去操作数据，因此该应用十分复杂。</li>
+<li><strong>数据孤立</strong>：由于数据分散在不同文件中，文件格式又可能不一致，因此难以检索数据。</li>
+<li><strong>完整性问题</strong>：使用文件来管理数据时缺少数据的<strong>一致性约束</strong>，有时候会希望对输入数据进行检查，约束数据范围可以避免数据引发的错误。</li>
+<li><strong>原子性问题</strong>：当处理发生故障时，为了保证数据库的一致性，必须保证错误的数据不被写入或者解决错误并正常写入，这就是<strong>原子性</strong>——要么全部发生要么不发生。然而传统的文件处理系统难以保证原子性。</li>
+<li><strong>并发访问异常</strong>：为了提高系统的性能和访问速度，通常需要允许多个用户同时操作数据，因此需要进行并发的操作，然而这却可能导致数据的不一致。比如两个进程同时操作账户金额，由于并不能确定他们执行的先后顺序，可能会导致这两个进程对数据的更新发生冲突。</li>
+<li><strong>安全性问题</strong>：数据安全性是很重要的一环，但文件管理系统显然不能完美解决这一问题。</li>
+</ol>
+<p>因此我们希望有一种数据系统能够帮我们解决以上问题，于是出现了数据库。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="数据库系统"><a href="#数据库系统" class="headerlink" title="数据库系统"></a>数据库系统</h3><p><strong>数据库系统（Database System，DBS）</strong>由<strong>数据库</strong>、<strong>数据库管理系统</strong>（包括其应用开发工具）、<strong>应用程序</strong>和<strong>数据库管理员（DBA）</strong>组成的存储、管理、处理和维护数据的系统。</p>
+<h3 id="数据视图"><a href="#数据视图" class="headerlink" title="数据视图"></a>数据视图</h3><p>数据在数据库内的底层存储自有其复杂的实现方式，然而作为普通用户，我们并不需要去直接接触这些底层数据结构。数据库系统的一个主要目的是给用户提供数据的<strong>抽象视图</strong>，并隐藏数据存储和维护的细节。</p>
+<h4 id="数据抽象"><a href="#数据抽象" class="headerlink" title="数据抽象"></a>数据抽象</h4><p>通过对底层数据的多次抽象，我们可以得到想要的解决方案：</p>
+<ul>
+<li>物理层：抽象的最低层次，描述数据的实际存储方式，详细描述了数据复杂的底层结构。</li>
+<li>逻辑层：高于物理层，描述数据库中存储什么数据以及数据之间存在哪些关系。</li>
+<li>视图层：抽象的最高层次，用多个视图描述数据库的部分内容，实现简化数据操作。</li>
+</ul>
+<h4 id="实例和模式"><a href="#实例和模式" class="headerlink" title="实例和模式"></a>实例和模式</h4><ul>
+<li>实例：特定时刻存储在数据库中信息的集合称为数据库的一个实例。</li>
+<li>模式：数据库的总体设计，发生变化的情况不频繁。如物理模式在物理层描述数据库的设计；逻辑模式在逻辑层描述数据库的设计；子模式在视图层描述数据库的不同视图。</li>
+</ul>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p><strong>数据模型（Data Model）</strong>是<strong>对现实世界数据特征的抽象</strong>。</p>
+<p>数据模型是数据库系统的<strong>核心和基础</strong>。将现实世界抽象为信息世界，然后将信息世界转换为机器世界。</p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>概念模型：用于数据库设计</li>
+<li>逻辑模型和物理模型：用于数据库管理系统的实现</li>
+</ul>
+<h4 id="组成要素"><a href="#组成要素" class="headerlink" title="组成要素"></a>组成要素</h4><ul>
+<li>数据结构：描述数据库的组成对象以及对象之间的联系</li>
+<li>数据操作：对数据库中各种对象（型）的实例（值）允许执行的操作的集合，包括数据操作及有关的操作规则</li>
+<li>数据的完整性约束条件：一组完整性规则</li>
+</ul>
+<h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h3><h4 id="信息世界中的基本概念"><a href="#信息世界中的基本概念" class="headerlink" title="信息世界中的基本概念"></a>信息世界中的基本概念</h4><ul>
+<li>实体：客观存在并可相互区别的事物</li>
+<li>属性：实体所具有的某一特征</li>
+<li>码：唯一标识实体的属性集</li>
+<li>实体型：用实体名及其属性名集合来抽象和刻画同类实体</li>
+<li>实体集：同一类型实体的集合</li>
+<li>联系：实体之间的联系通常是指不同实体集之间的联系，有<strong>一对一</strong>、<strong>一对多</strong>、<strong>多对多</strong></li>
+</ul>
+<h5 id="实体-联系模型"><a href="#实体-联系模型" class="headerlink" title="实体-联系模型"></a>实体-联系模型</h5><p>实体-联系（E-R）是概念模型的一种表示方法</p>
+<h4 id="逻辑模型"><a href="#逻辑模型" class="headerlink" title="逻辑模型"></a>逻辑模型</h4><ul>
+<li><p>层次模型</p>
+</li>
+<li><p>网状模型</p>
+</li>
+<li><p>关系模型</p>
+<p>1970 年，美国 IBM 公司 San Jose 研究室的研究员<strong>Edgar Frank Codd</strong>首次提出数据库系统的关系模型，开创了数据库关系方法和关系数据理论的研究，为数据库技术奠定了理论基础，于 1981 年获得 ACM 图灵奖。</p>
+<p>数据结构：</p>
+<ul>
+<li>关系</li>
+<li>元组</li>
+<li>属性</li>
+<li>码</li>
+<li>域</li>
+<li>分量</li>
+</ul>
+<p>操作：</p>
+<ul>
+<li>增（插入）</li>
+<li>删（删除）</li>
+<li>查（查询）</li>
+<li>改（更新）</li>
+</ul>
+<p>完整性约束：</p>
+<ul>
+<li>实体完整性</li>
+<li>参照完整性</li>
+<li>用户定义的完整性</li>
+</ul>
+</li>
+<li><p>面向对象模型</p>
+</li>
+<li><p>对象关系数据模型</p>
+</li>
+<li><p>半结构化数据模型</p>
+</li>
+</ul>
+<h3 id="数据库系统结构"><a href="#数据库系统结构" class="headerlink" title="数据库系统结构"></a>数据库系统结构</h3><h4 id="存储管理器"><a href="#存储管理器" class="headerlink" title="存储管理器*"></a>存储管理器*</h4><h4 id="查询处理器"><a href="#查询处理器" class="headerlink" title="查询处理器*"></a>查询处理器*</h4><h2 id="数据模型-1"><a href="#数据模型-1" class="headerlink" title="数据模型"></a>数据模型</h2><blockquote>
+<p>实体-联系（E-R）数据模型基于对现实世界的这样一种认识：世界由一组称为<strong>实体</strong>的基本对象及这些对象间的联系组成。此模型的提出是为了有助于数据库设计,这是通过允许定义企业模式来实现的,企业模式代表了数据库的全局逻辑结构。E-R 模型是一种语义模型模型的语义方面主要体现在模型力图去表达数据的意义。E-R 模型在将现实世界事实的含义和相互关 联映射到概念模式方面非常有用,因此,许多数据库设计工具都利用了 E-R 模型的概念。</p>
+</blockquote>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>E-R 模型的三个主要概念是：<strong>实体集</strong>、<strong>联系集</strong>和<strong>属性</strong>。</p>
+<h4 id="实体集"><a href="#实体集" class="headerlink" title="实体集*"></a>实体集*</h4><h4 id="联系集"><a href="#联系集" class="headerlink" title="联系集*"></a>联系集*</h4><h4 id="属性"><a href="#属性" class="headerlink" title="属性*"></a>属性*</h4>
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/'>
-            阅读全文
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/>https://blog.secriy.com/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-21T23:11:38+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年4月21日</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          
   
-    
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>数据库</p></a></div>
 
 
-	
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/&title=数据库系统概论 - Secriy's Blog&summary=有关数据库相关知识的学习探讨。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/&title=数据库系统概论 - Secriy's Blog&summary=有关数据库相关知识的学习探讨。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2020/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/&title=数据库系统概论 - Secriy's Blog&summary=有关数据库相关知识的学习探讨。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2020/10/08/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>古典密码</p>
+          <p class='content'>密码学之古典密码。
+
+
+
+分类古典密码一般分为置换和代换两种方式。
+
+置换密码
+列置换
+周期置换
+
+
+代换密码
+单表代换
+夺标代换
+
+
+
+置换密码置换密码（Permutation Cipher）...</p>
+        </a>
+      
+      
+        <a class='next' href='/2020/08/24/PowerShell%E9%A3%9F%E7%94%A8%E7%AC%94%E8%AE%B0/'>
+          <p class='title'>PowerShell食用笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>PowerShell 的操作。
+
+
+
+PowerShell 脚本PowerShel 脚本实际很强大，不过用的人相对来说少了点。平时可以用来执行一系列指令，蛮方便的。
+例如 Hexo 的提交，可以...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -632,146 +914,19 @@
     
     
 
-<section class="widget blogger shadow floatable desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box circle' href='/about/'>
-          <img no-lazy src='https://upyun.secriy.com/statics/img/avatar.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Secriy's Blog</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@secriy.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/Secriy"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://music.163.com/#/user/home?id=494386912"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-  
-
-  <section class="widget category shadow floatable desktop">
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"
-            id="categoriesE4BFA1E681AFE5AE89E585A8"
-            ><div class='name'>信息安全</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-            id="categoriesE5ADA6E4B9A0E7AC94E8AEB0"
-            ><div class='name'>学习笔记</div><div class='badge'>(9)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"
-            id="categoriesE68A80E69CAFE7A094E7A9B6"
-            ><div class='name'>技术研究</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/" href="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/"
-            id="categoriesE691B8E9B1BCE58892E6B0B4"
-            ><div class='name'>摸鱼划水</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/" href="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/"
-            id="categoriesE6938DE4BD9CE6898BE5868C"
-            ><div class='name'>操作手册</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/" href="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/"
-            id="categoriesE7BB8FE9AA8CE69599E7A88B"
-            ><div class='name'>经验教程</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/"
-            id="categoriesE8BDAFE4BBB6E5B7A5E585B7"
-            ><div class='name'>软件工具</div><div class='badge'>(2)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow floatable desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/Aircrack-ng/" style="font-size: 14px; color: #000">Aircrack-ng</a> <a href="/tags/CSGO/" style="font-size: 14px; color: #000">CSGO</a> <a href="/tags/CTF/" style="font-size: 14px; color: #000">CTF</a> <a href="/tags/Git/" style="font-size: 14px; color: #000">Git</a> <a href="/tags/Golang/" style="font-size: 24px; color: #ddd">Golang</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #000">Hexo</a> <a href="/tags/Kali-Linux/" style="font-size: 20.67px; color: #939393">Kali Linux</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #4a4a4a">Linux</a> <a href="/tags/MySQL/" style="font-size: 14px; color: #000">MySQL</a> <a href="/tags/Proxy/" style="font-size: 14px; color: #000">Proxy</a> <a href="/tags/Windows/" style="font-size: 20.67px; color: #939393">Windows</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="font-size: 14px; color: #000">信息安全</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 14px; color: #000">密码学</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20.67px; color: #939393">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17.33px; color: #4a4a4a">数据结构</a> <a href="/tags/%E6%97%A0%E7%BA%BF%E6%94%BB%E5%87%BB/" style="font-size: 14px; color: #000">无线攻击</a> <a href="/tags/%E6%B8%85%E7%90%86%E4%BC%98%E5%8C%96/" style="font-size: 14px; color: #000">清理优化</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14px; color: #000">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 14px; color: #000">网络</a> <a href="/tags/%E8%89%B2%E5%BD%A9/" style="font-size: 14px; color: #000">色彩</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 14px; color: #000">计算机网络</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 14px; color: #000">设计</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E5%BC%95%E5%85%A5"><span class="toc-text">概念引入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%9F"><span class="toc-text">什么是数据库？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="toc-text">什么是数据库管理系统？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%9F"><span class="toc-text">为什么要使用数据库？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F"><span class="toc-text">数据库系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%A7%86%E5%9B%BE"><span class="toc-text">数据视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%BD%E8%B1%A1"><span class="toc-text">数据抽象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%92%8C%E6%A8%A1%E5%BC%8F"><span class="toc-text">实例和模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0"><span class="toc-text">组成要素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B"><span class="toc-text">概念模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">信息世界中的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93-%E8%81%94%E7%B3%BB%E6%A8%A1%E5%9E%8B"><span class="toc-text">实体-联系模型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%A8%A1%E5%9E%8B"><span class="toc-text">逻辑模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-text">数据库系统结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">存储管理器*</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-text">查询处理器*</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B-1"><span class="toc-text">数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E9%9B%86"><span class="toc-text">实体集*</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E9%9B%86"><span class="toc-text">联系集*</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-text">属性*</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -782,120 +937,20 @@
     
     
 
-<section class="widget shadow floatable desktop">
+<section class="widget text shadow floatable desktop">
   
   <header>
     
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
     
   </header>
 
 
   <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>26 篇</div>
-        </div>
-      
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
 
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2018/06/02'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Wed Apr 21 2021 23:11:57 GMT+0800 (GMT+08:00)</div>
-            <div id="last-update-show">2021-04-21 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2021-04-21 日';
-          }
-        </script>
-        
-      
-    </div>
+    
   </div>
 </section>
 
@@ -905,20 +960,21 @@
 </aside>
 
 
+
 		  
 		  <!--此文件用来存放一些不方便取值的变量-->
 <!--思路大概是将值藏到重加载的区域内-->
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="数据库系统概论";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
 </script>
 

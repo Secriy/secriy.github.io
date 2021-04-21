@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,9 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2021/3 - Secriy&#39;s Blog</title>
+  <title>MySQL深入学习：基础知识 - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="数据库,MySQL">
   
 
+  
+    <meta name="description" content="MySQL 数据库深入学习，有关基础知识的巩固理解。">
   
 
   <!-- feed -->
@@ -66,7 +68,7 @@
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur floatable " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -489,7 +491,7 @@
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  search' style="display: ;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
           
@@ -561,70 +563,539 @@
           
 
 <div class='l_main'>
-	
-		
-  <section class="post-list">
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
     
-      
+    
+    
+      <h1 class="title">
+        MySQL深入学习：基础知识
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-        数据结构学习笔记（一）
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <div class="note quote cyan"><p>数据结构相关复习总结笔记。</p></div>
-    
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+    </a>
   </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年4月21日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="MySQL深入学习：基础知识" data-path="/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
   
-    <div class='meta-v3' line_style='dashed'>
-      <div>
-        
-        <time>2021-03-15</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  <a href="/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>MySQL 数据库深入学习，有关基础知识的巩固理解。</p></div>
+
+<a id="more"></a>
+
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="常见概念"><a href="#常见概念" class="headerlink" title="常见概念"></a>常见概念</h3><ol>
+<li>数据库（database）：保存有组织数据的容器（通常是一个文件或一组文件）</li>
+<li>表（table）：一种结构化的清单文件，可用于存储特定类型的数据</li>
+<li>模式（schema）：关于数据库和表的布局及特性信息</li>
+<li>列（column）：表中的一个字段，属于同一种类的一组数据</li>
+<li>数据类型（datatype）：数据库中每列都有特定的一种数据类型，如数字、字符串等</li>
+<li>行（row）：表中的一个记录（record），是相关联（属于同一对象）的一组数据</li>
+<li>主键（primary key）：表中每一行都应有的唯一标识符，能够区分每一个行，但并非必须存在主键，通常不进行更新操作</li>
+</ol>
+<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><p>SQL（Structured Query Language，结构化查询语言）是一种专门用来与数据库通信的语言，其并非是编程语言。</p>
+<p>SQL 的优点：</p>
+<ul>
+<li>SQL 并不指定某一个 DBMS，在大多数 DBMS 中 SQL 都是通用的（但是不同的 DBMS 可能有不同的实现）</li>
+<li>SQL 语法简单</li>
+<li>SQL 能够进行复杂的数据库操作</li>
+</ul>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>MySQL 是一个 RDBMS，即关系数据库管理系统，广泛应用于各个领域，它的主要特点有：</p>
+<ul>
+<li>开源，免费使用</li>
+<li>性能较好</li>
+<li>简单易上手</li>
+</ul>
+<h4 id="DBMS-分类"><a href="#DBMS-分类" class="headerlink" title="DBMS 分类"></a>DBMS 分类</h4><p>DBMS 按照应用场景可分为两类：</p>
+<ul>
+<li>基于共享文件系统的 DBMS：通常应用于桌面环境，不用于高端和关键应用（如 Microsoft Access）</li>
+<li>基于 C/S 的 DBMS：通常用于服务器，只将结果发送到客户端（如 MySQL）</li>
+</ul>
+<h4 id="版本历史"><a href="#版本历史" class="headerlink" title="版本历史"></a>版本历史</h4><p>1995 年，MySQL 1.0 发布，仅供内部使用。</p>
+<p>1996 年，MySQL 3.11.1 发布，直接跳过了 MySQL 2.x 版本。</p>
+<p>1999 年，MySQL AB 公司成立。同年，发布 MySQL 3.23，该版本集成了 Berkeley DB 存储引擎。该引擎由 Sleepycat 公司开发，支持事务。在集成该引擎的过程中，对源码进行了改造，为后续可插拔式存储引擎架构奠定了基础。</p>
+<p>2000 年，ISAM 升级为 MyISAM 存储引擎。同年，MySQL 基于 GPL 协议开放源码。</p>
+<p>2002 年，MySQL 4.0 发布，集成了后来大名鼎鼎的 InnoDB 存储引擎。该引擎由 Innobase 公司开发，支持事务，支持行级锁，适用于 OLTP 等高并发场景。</p>
+<p>2005 年，MySQL 5.0 发布，开始支持游标，存储过程，触发器，视图，XA 事务等特性。同年，Oracle 收购 Innobase 公司。</p>
+<p>2008 年，Sun 以 10 亿美金收购 MySQL AB。同年，发布 MySQL 5.1，其开始支持定时器（Event scheduler），分区，基于行的复制等特性。</p>
+<p>2009 年，Oracle 以 74 亿美金收购 Sun 公司。</p>
+<p>2010 年，<strong>MySQL 5.5</strong>发布，其包括如下重要特性及更新。</p>
+<ul>
+<li>InnoDB 代替 MyISAM 成为 MySQL 默认的存储引擎。</li>
+<li>多核扩展，能更充分地使用多核 CPU。</li>
+<li>InnoDB 的性能提升，包括支持索引的快速创建，表压缩，I/O 子系统的性能提升，PURGE 操作从主线程中剥离出来，Buffer Pool 可拆分为多个 Instances。</li>
+<li>半同步复制。</li>
+<li>引入 utf8mb4 字符集，可用来存储 emoji 表情。</li>
+<li>引入 metadata locks（元数据锁）。</li>
+<li>分区表的增强，新增两个分区类型：RANGE COLUMNS 和 LIST COLUMNS。</li>
+<li>MySQL 企业版引入线程池。</li>
+<li>可配置 IO 读写线程的数量（innodb_read_io_threads，innodb_write_io_threads）。在此之前，其数量为 1，且不可配置。</li>
+<li>引入 innodb_io_capacity 选项，用于控制脏页刷新的数量。</li>
+</ul>
+<p>2013 年，<strong>MySQL 5.6</strong>发布，其包括如下重要特性及更新。</p>
+<ul>
+<li>GTID 复制。</li>
+<li>无损复制。</li>
+<li>延迟复制。</li>
+<li>基于库级别的并行复制。</li>
+<li>mysqlbinlog 可远程备份 binlog。</li>
+<li>对 TIME, DATETIME 和 TIMESTAMP 进行了重构，可支持小数秒。DATETIME 的空间需求也从之前的 8 个字节减少到 5 个字节。</li>
+<li>Online DDL。ALTER 操作不再阻塞 DML。</li>
+<li>可传输表空间（transportable tablespaces）。</li>
+<li>统计信息的持久化。避免主从之间或数据库重启后，同一个 SQL 的执行计划有差异。</li>
+<li>全文索引。</li>
+<li>InnoDB Memcached plugin。</li>
+<li>EXPLAIN 可用来查看 DELETE，INSERT，REPLACE，UPDATE 等 DML 操作的执行计划，在此之前，只支持 SELECT 操作。</li>
+<li>分区表的增强，包括最大可用分区数增加至 8192，支持分区和非分区表之间的数据交换，操作时显式指定分区。</li>
+<li>Redo Log 总大小的限制从之前的 4G 扩展至 512G。</li>
+<li>Undo Log 可保存在独立表空间中，因其是随机 IO，更适合放到 SSD 中。但仍然不支持空间的自动回收。</li>
+<li>可 dump 和 load Buffer pool 的状态，避免数据库重启后需要较长的预热时间。</li>
+<li>InnoDB 内部的性能提升，包括拆分 kernel mutex，引入独立的刷新线程，可设置多个 purge 线程。</li>
+<li>优化器性能提升，引入了 ICP，MRR，BKA 等特性，针对子查询进行了优化。</li>
+</ul>
+<blockquote>
+<p>可以说，MySQL 5.6 是 MySQL 历史上一个里程碑式的版本，这也是目前生产上应用得最广泛的版本。</p>
+</blockquote>
+<p>2015 年，<strong>MySQL 5.7</strong>发布，其包括如下重要特性及更新。</p>
+<ul>
+<li>组复制</li>
+<li>InnoDB Cluster</li>
+<li>多源复制</li>
+<li>增强半同步（AFTER_SYNC）</li>
+<li>基于 WRITESET 的并行复制。</li>
+<li>在线开启 GTID 复制。</li>
+<li>在线设置复制过滤规则。</li>
+<li>在线修改 Buffer pool 的大小。</li>
+<li>在同一长度编码字节内，修改 VARCHAR 的大小只需修改表的元数据，无需创建临时表。</li>
+<li>可设置 NUMA 架构的内存分配策略（innodb_numa_interleave）。</li>
+<li>透明页压缩（Transparent Page Compression）。</li>
+<li>UNDO 表空间的自动回收。</li>
+<li>查询优化器的重构和增强。</li>
+<li>可查看当前正在执行的 SQL 的执行计划（EXPLAIN FOR CONNECTION）。</li>
+<li>引入了查询改写插件（Query Rewrite Plugin），可在服务端对查询进行改写。</li>
+<li>EXPLAIN FORMAT=JSON 会显示成本信息，这样可直观的比较两种执行计划的优劣。</li>
+<li>引入了虚拟列，类似于 Oracle 中的函数索引。</li>
+<li>新实例不再默认创建 test 数据库及匿名用户。</li>
+<li>引入 ALTER USER 命令，可用来修改用户密码，密码的过期策略，及锁定用户等。</li>
+<li>mysql.user 表中存储密码的字段从 password 修改为 authentication_string。</li>
+<li>表空间加密。</li>
+<li>优化了 Performance Schema，其内存使用减少。</li>
+<li>Performance Schema 引入了众多 instrumentation。常用的有 Memory usage instrumentation，可用来查看 MySQL 的内存使用情况，Metadata Locking Instrumentation，可用来查看 MDL 的持有情况，Stage Progress instrumentation，可用来查看 Online DDL 的进度。</li>
+<li>同一触发事件（INSERT，DELETE，UPDATE），同一触发时间（BEFORE，AFTER），允许创建多个触发器。在此之前，只允许创建一个触发器。</li>
+<li>InnoDB 原生支持分区表，在此之前，是通过 ha_partition 接口来实现的。</li>
+<li>分区表支持可传输表空间特性。</li>
+<li>集成了 SYS 数据库，简化了 MySQL 的管理及异常问题的定位。</li>
+<li>原生支持 JSON 类型，并引入了众多 JSON 函数。</li>
+<li>引入了新的逻辑备份工具-mysqlpump，支持表级别的多线程备份。</li>
+<li>引入了新的客户端工具-mysqlsh，其支持三种语言：JavaScript, Python and SQL。两种 API：X DevAPI，AdminAPI，其中，前者可将 MySQL 作为文档型数据库进行操作，后者用于管理 InnoDB Cluster。</li>
+<li>mysql_install_db 被 mysqld –initialize 代替，用来进行实例的初始化。</li>
+<li>原生支持 systemd。</li>
+<li>引入了 super_read_only 选项。</li>
+<li>可设置 SELECT 操作的超时时长（max_execution_time）。</li>
+<li>可通过 SHUTDOWN 命令关闭 MySQL 实例。</li>
+<li>引入了 innodb_deadlock_detect 选项，在高并发场景下，可使用该选项来关闭死锁检测。</li>
+<li>引入了 Optimizer Hints，可在语句级别控制优化器的行为，如是否开启 ICP，MRR 等，在此之前，只有 Index Hints。</li>
+<li>GIS 的增强，包括使用 Boost.Geometry 替代之前的 GIS 算法，InnoDB 开始支持空间索引。</li>
+</ul>
+<p>2018 年，<strong>MySQL 8.0</strong>发布，其包括如下重要特性及更新。</p>
+<ul>
+<li>引入了原生的，基于 InnoDB 的数据字典。数据字典表位于 mysql 库中，对用户不可见，同 mysql 库的其它系统表一样，保存在数据目录下的 mysql.ibd 文件中。不再置于 mysql 目录下。</li>
+<li>Atomic DDL。</li>
+<li>重构了 INFORMATION_SCHEMA，其中，部分表已重构为基于数据字典的视图，在此之前，其为临时表。</li>
+<li>PERFORMANCE_SCHEMA 查询性能提升，其已内置多个索引。</li>
+<li>不可见索引（Invisible index）。</li>
+<li>降序索引。</li>
+<li>直方图。</li>
+<li>公用表表达式（Common table expressions）。</li>
+<li>窗口函数（Window functions）。</li>
+<li>角色（Role）。</li>
+<li>资源组（Resource Groups），可用来控制线程的优先级及其能使用的资源，目前，能被管理的资源只有 CPU。</li>
+<li>引入了 innodb_dedicated_server 选项，可基于服务器的内存来动态设置 innodb_buffer_pool_size，innodb_log_file_size 和 innodb_flush_method。</li>
+<li>快速加列（ALGORITHM=INSTANT）。</li>
+<li>JSON 字段的部分更新（JSON Partial Updates）。</li>
+<li>自增主键的持久化。</li>
+<li>可持久化全局变量（SET PERSIST）。</li>
+<li>默认字符集由 latin1 修改为 utf8mb4。</li>
+<li>默认开启 UNDO 表空间，且支持在线调整数量（innodb_undo_tablespaces）。在 MySQL 5.7 中，默认不开启，若要开启，只能初始化时设置。</li>
+<li>备份锁。</li>
+<li>Redo Log 的优化，包括允许多个用户线程并发写入 log buffer，可动态修改 innodb_log_buffer_size 的大小。</li>
+<li>默认的认证插件由 mysql_native_password 更改为 caching_sha2_password。</li>
+<li>默认的内存临时表由 MEMORY 引擎更改为 TempTable 引擎，相比于前者，后者支持以变长方式存储 VARCHAR，VARBINARY 等变长字段。从 MySQL 8.0.13 开始，TempTable 引擎支持 BLOB 字段。</li>
+<li>Grant 不再隐式创建用户。</li>
+<li>SELECT … FOR SHARE 和 SELECT … FOR UPDATE 语句中引入 NOWAIT 和 SKIP LOCKED 选项，解决电商场景热点行问题。</li>
+<li>正则表达式的增强，新增了 4 个相关函数，REGEXP_INSTR()，REGEXP_LIKE()，REGEXP_REPLACE()，REGEXP_SUBSTR()。</li>
+<li>查询优化器在制定执行计划时，会考虑数据是否在 Buffer Pool 中。而在此之前，是假设数据都在磁盘中。</li>
+<li>ha_partition 接口从代码层移除，如果要使用分区表，只能使用 InnoDB 存储引擎。</li>
+<li>引入了更多细粒度的权限来替代 SUPER 权限，现在授予 SUPER 权限会提示 warning。</li>
+<li>GROUP BY 语句不再隐式排序。</li>
+<li>MySQL 5.7 引入的表空间加密特性可对 Redo Log 和 Undo Log 进行加密。</li>
+<li>information_schema 中的 innodb_locks 和 innodb_lock_waits 表被移除，取而代之的是 performance_schema 中的 data_locks 和 data_lock_waits 表。</li>
+<li>引入 performance_schema.variables_info 表，记录了参数的来源及修改情况。</li>
+<li>增加了对于客户端报错信息的统计（performance_schema.events_errors_summary_xxx）。</li>
+<li>可统计查询的响应时间分布（call sys.ps_statement_avg_latency_histogram()）。</li>
+<li>支持直接修改列名（ALTER TABLE … RENAME COLUMN old_name TO new_name）。</li>
+<li>用户密码可设置重试策略（Reuse Policy）。</li>
+<li>移除 PASSWORD()函数。这就意味着无法通过“SET PASSWORD … = PASSWORD(‘auth_string’) ”命令修改用户密码。</li>
+<li>代码层移除 Query Cache 模块，故 Query Cache 相关的变量和操作均不再支持。</li>
+<li>BLOB, TEXT, GEOMETRY 和 JSON 字段允许设置默认值。</li>
+<li>可通过 RESTART 命令重启 MySQL 实例。</li>
+</ul>
+<h3 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h3><p>使用<code>mysql -u[user] -p[pass]</code>命令进入 mysql 命令模式</p>
+<p>这里给出常用的参数：</p>
+<pre><code>-u // 指定用户名
+-p // 指定密码
+-P // 指定端口
+-h // 指定主机名</code></pre>
+<h4 id="命令规范"><a href="#命令规范" class="headerlink" title="命令规范"></a>命令规范</h4><ul>
+<li>命令输入在<code>mysql&gt;</code>之后</li>
+<li>每条命令都使用<code>;</code>结束</li>
+<li>使用<code>help</code>命令查看帮助信息</li>
+</ul>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>使用<code>help</code>命令查看所有命令：</p>
+<pre><code class="shell">mysql&gt; help
+
+For information about MySQL products and services, visit:
+   http://www.mysql.com/
+For developer information, including the MySQL Reference Manual, visit:
+   http://dev.mysql.com/
+To buy MySQL Enterprise support, training, or other products, visit:
+   https://shop.mysql.com/
+
+List of all MySQL commands:
+Note that all text commands must be first on line and end with &#39;;&#39;
+?         (\?) Synonym for `help&#39;.
+clear     (\c) Clear the current input statement.
+connect   (\r) Reconnect to the server. Optional arguments are db and host.
+delimiter (\d) Set statement delimiter.
+ego       (\G) Send command to mysql server, display result vertically.
+exit      (\q) Exit mysql. Same as quit.
+go        (\g) Send command to mysql server.
+help      (\h) Display this help.
+notee     (\t) Don&#39;t write into outfile.
+print     (\p) Print current command.
+prompt    (\R) Change your mysql prompt.
+quit      (\q) Quit mysql.
+rehash    (\#) Rebuild completion hash.
+source    (\.) Execute an SQL script file. Takes a file name as an argument.
+status    (\s) Get status information from the server.
+system    (\!) Execute a system shell command.
+tee       (\T) Set outfile [to_outfile]. Append everything into given outfile.
+use       (\u) Use another database. Takes database name as argument.
+charset   (\C) Switch to another charset. Might be needed for processing binlog with multi-byte charsets.
+warnings  (\W) Show warnings after every statement.
+nowarning (\w) Don&#39;t show warnings after every statement.
+resetconnection(\x) Clean session context.
+
+For server side help, type &#39;help contents&#39;</code></pre>
+<p>查询所有数据库：</p>
+<pre><code class="shell">mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)</code></pre>
+<p>切换到某一个数据库：</p>
+<pre><code class="shell">mysql&gt; use [db_name];
+Database changed</code></pre>
+<p>查询当前选择的数据库中的所有可用表：</p>
+<pre><code class="shell">mysql&gt; show tables;
+mysql&gt; show tables from [db_name]; // 查询指定数据库中的所有可用表
++-------------------+
+| Tables_in_acgfate |
++-------------------+
+| accounts          |
+| users             |
++-------------------+
+2 rows in set (0.01 sec)</code></pre>
+<p>查询指定表中的所有列：</p>
+<pre><code class="shell">mysql&gt; show columns from [table];
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | bigint unsigned  | NO   | PRI | NULL    | auto_increment |
+| created_at | datetime(3)      | YES  |     | NULL    |                |
+| updated_at | datetime(3)      | YES  |     | NULL    |                |
+| deleted_at | datetime(3)      | YES  | MUL | NULL    |                |
+| username   | longtext         | YES  |     | NULL    |                |
+| password   | longtext         | YES  |     | NULL    |                |
+| nickname   | longtext         | YES  |     | NULL    |                |
+| mail       | longtext         | YES  |     | NULL    |                |
+| avatar     | longtext         | YES  |     | NULL    |                |
+| gender     | longtext         | YES  |     | NULL    |                |
+| level      | tinyint unsigned | YES  |     | NULL    |                |
+| join_time  | datetime(3)      | YES  |     | NULL    |                |
+| silence    | tinyint(1)       | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+13 rows in set (0.01 sec)</code></pre>
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><h5 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h5><h6 id="按列查询"><a href="#按列查询" class="headerlink" title="按列查询"></a>按列查询</h6><pre><code class="sql">SELECT [column] FROM [table];
+SELECT [column1], [column2] FROM [table];
+SELECT * FROM [table];</code></pre>
+<ul>
+<li>以上的简单查询语句得到的记录列表顺序是以数据底层的顺序为依据，而不是记录的先后顺序</li>
+<li>SQL 语句关键字不区分大小写</li>
+<li>SQL 语句中所有的空格会被忽略</li>
+</ul>
+<h6 id="查询不同的行"><a href="#查询不同的行" class="headerlink" title="查询不同的行"></a>查询不同的行</h6><p>表中某些列的数据可能是存在重复的，使用<code>DISTINCT</code>关键字可以查询不重复的单列记录：</p>
+<pre><code class="sql">SELECT DISTINCT [column] FROM [table]</code></pre>
+<ul>
+<li><p>当指定多个列时，DISTINCT 会应用于所有的这些列，也就是多个列的唯一组合，如：</p>
+<table>
+<thead>
+<tr>
+<th align="center">city</th>
+<th align="center">provience</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A1</td>
+<td align="center">LA</td>
+</tr>
+<tr>
+<td align="center">A2</td>
+<td align="center">LA</td>
+</tr>
+<tr>
+<td align="center">A1</td>
+<td align="center">LB</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>当存在多个<code>NULL</code>值时，会把其当作同名看待，最终只返回一个<code>NULL</code></p>
+</li>
+</ul>
+<h6 id="限制结果"><a href="#限制结果" class="headerlink" title="限制结果"></a>限制结果</h6><p>使用<code>LIMIT</code>子句可以限定查询的范围，而不是查询整个表的记录：</p>
+<pre><code class="sql">SELECT [column] FROM [table] LIMIT 5; // 查询前5行
+SELECT [column] FROM [table] LIMIT 5, 5 // 查询从第6行开始的5条记录</code></pre>
+<ul>
+<li>使用 LIMIT 查询得到的结果是按照记录顺序有序输出的</li>
+<li><code>LIMIT num1, num2</code>中，num1 从 0 开始，因此 5 代表第六行</li>
+<li>当 LIMIT 指定的行数大于符合条件的记录数时，返回最大的记录条数</li>
+</ul>
+<h6 id="限定表名"><a href="#限定表名" class="headerlink" title="限定表名"></a>限定表名</h6><pre><code class="sql">SELECT [table].[column] FROM [table]</code></pre>
+<h5 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h5><h6 id="按指定列排序"><a href="#按指定列排序" class="headerlink" title="按指定列排序"></a>按指定列排序</h6><pre><code class="sql">SELECT [column1] FROM [table] ORDER BY [column2]
+SELECT [column1] FROM [table] ORDER BY [column2] DESC // 按降序排序</code></pre>
+<ul>
+<li>ORDER BY 默认升序排序</li>
+<li>选择排序的列并不一定要显示</li>
+<li>排序的规则（如 A 和 a 的大小）取决于数据库的设置，在字典排序中，A 被视为与 a 相同</li>
+</ul>
+<h6 id="按多个列排序"><a href="#按多个列排序" class="headerlink" title="按多个列排序"></a>按多个列排序</h6><pre><code class="sql">SELECT [column1] FROM [table] ORDER BY [column2], [column3]
+SELECT [column1] FROM [table] ORDER BY [column2] DESC, [column3]</code></pre>
+<ul>
+<li>排序时会按照从左到右的顺序，首先按<code>[column2]</code>，排序，接着使用<code>[column3]</code>排序</li>
+<li>可以将<code>DESC</code>放在指定列的后面让这一列降序排序</li>
+</ul>
+<h5 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h5>
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/'>
-            阅读全文
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/>https://blog.secriy.com/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-21T23:11:42+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年4月21日</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          
   
-    
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>数据库</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/MySQL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>MySQL</p></a></div>
 
 
-	
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=MySQL深入学习：基础知识 - Secriy's Blog&summary=MySQL 数据库深入学习，有关基础知识的巩固理解。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=MySQL深入学习：基础知识 - Secriy's Blog&summary=MySQL 数据库深入学习，有关基础知识的巩固理解。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=MySQL深入学习：基础知识 - Secriy's Blog&summary=MySQL 数据库深入学习，有关基础知识的巩固理解。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/04/21/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8BGC/'>
+          <p class='title'>Golang学习之GC<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Golang 垃圾回收机制的学习与探究。
+
+
+
+垃圾回收编程语言在运行时会申请和分配内存给变量等，内存占用就会不断增大，因此需要垃圾回收（GC）机制去回收不再需要的内存空间。
+垃圾回收机制一般分...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -632,146 +1103,19 @@
     
     
 
-<section class="widget blogger shadow floatable desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box circle' href='/about/'>
-          <img no-lazy src='https://upyun.secriy.com/statics/img/avatar.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Secriy's Blog</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@secriy.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/Secriy"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://music.163.com/#/user/home?id=494386912"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-  
-
-  <section class="widget category shadow floatable desktop">
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"
-            id="categoriesE4BFA1E681AFE5AE89E585A8"
-            ><div class='name'>信息安全</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-            id="categoriesE5ADA6E4B9A0E7AC94E8AEB0"
-            ><div class='name'>学习笔记</div><div class='badge'>(9)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"
-            id="categoriesE68A80E69CAFE7A094E7A9B6"
-            ><div class='name'>技术研究</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/" href="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/"
-            id="categoriesE691B8E9B1BCE58892E6B0B4"
-            ><div class='name'>摸鱼划水</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/" href="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/"
-            id="categoriesE6938DE4BD9CE6898BE5868C"
-            ><div class='name'>操作手册</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/" href="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/"
-            id="categoriesE7BB8FE9AA8CE69599E7A88B"
-            ><div class='name'>经验教程</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/"
-            id="categoriesE8BDAFE4BBB6E5B7A5E585B7"
-            ><div class='name'>软件工具</div><div class='badge'>(2)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow floatable desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/Aircrack-ng/" style="font-size: 14px; color: #000">Aircrack-ng</a> <a href="/tags/CSGO/" style="font-size: 14px; color: #000">CSGO</a> <a href="/tags/CTF/" style="font-size: 14px; color: #000">CTF</a> <a href="/tags/Git/" style="font-size: 14px; color: #000">Git</a> <a href="/tags/Golang/" style="font-size: 24px; color: #ddd">Golang</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #000">Hexo</a> <a href="/tags/Kali-Linux/" style="font-size: 20.67px; color: #939393">Kali Linux</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #4a4a4a">Linux</a> <a href="/tags/MySQL/" style="font-size: 14px; color: #000">MySQL</a> <a href="/tags/Proxy/" style="font-size: 14px; color: #000">Proxy</a> <a href="/tags/Windows/" style="font-size: 20.67px; color: #939393">Windows</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="font-size: 14px; color: #000">信息安全</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 14px; color: #000">密码学</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20.67px; color: #939393">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17.33px; color: #4a4a4a">数据结构</a> <a href="/tags/%E6%97%A0%E7%BA%BF%E6%94%BB%E5%87%BB/" style="font-size: 14px; color: #000">无线攻击</a> <a href="/tags/%E6%B8%85%E7%90%86%E4%BC%98%E5%8C%96/" style="font-size: 14px; color: #000">清理优化</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14px; color: #000">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 14px; color: #000">网络</a> <a href="/tags/%E8%89%B2%E5%BD%A9/" style="font-size: 14px; color: #000">色彩</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 14px; color: #000">计算机网络</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 14px; color: #000">设计</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5"><span class="toc-text">常见概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DBMS-%E5%88%86%E7%B1%BB"><span class="toc-text">DBMS 分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%8E%86%E5%8F%B2"><span class="toc-text">版本历史</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%84%E8%8C%83"><span class="toc-text">命令规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C"><span class="toc-text">数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2"><span class="toc-text">排序查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-text">条件查询</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -782,120 +1126,20 @@
     
     
 
-<section class="widget shadow floatable desktop">
+<section class="widget text shadow floatable desktop">
   
   <header>
     
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
     
   </header>
 
 
   <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>26 篇</div>
-        </div>
-      
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
 
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2018/06/02'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Wed Apr 21 2021 23:11:57 GMT+0800 (GMT+08:00)</div>
-            <div id="last-update-show">2021-04-21 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2021-04-21 日';
-          }
-        </script>
-        
-      
-    </div>
+    
   </div>
 </section>
 
@@ -905,20 +1149,21 @@
 </aside>
 
 
+
 		  
 		  <!--此文件用来存放一些不方便取值的变量-->
 <!--思路大概是将值藏到重加载的区域内-->
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="MySQL深入学习：基础知识";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
 </script>
 
