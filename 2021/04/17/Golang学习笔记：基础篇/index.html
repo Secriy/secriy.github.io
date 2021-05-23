@@ -1339,7 +1339,7 @@ func printSlice(s []int) &#123;
     fmt.Printf(&quot;len=%d cap=%d %v\n&quot;, len(s), cap(s), s)
 &#125;</code></pre>
 <p>上述代码的四个切片底层共用一个数组，他们各自包含了起始元素的地址、切片长度和切片容量：</p>
-<p><img src="/images/Golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%AF%87/slice.png" class="lazyload" data-srcset="/images/Golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%AF%87/slice.png" srcset="data:image/png;base64,666" alt="slice"></p>
+<p><img src="/2021/04/17/Golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%AF%87/slice.png" class="lazyload" data-srcset="/2021/04/17/Golang%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%AF%87/slice.png" srcset="data:image/png;base64,666" alt="slice"></p>
 <ul>
 <li>切片<code>s</code>从数组的首位开始，长度和容量均等于数组的大小</li>
 <li>切片<code>s1</code>从数组的首位开始，长度为 0，但从首位开始计算数组的长度为 6，即切片的容量为 6</li>
@@ -1949,7 +1949,7 @@ func main() &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-23T16:13:02+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-23T16:16:04+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2021年5月23日</p>
