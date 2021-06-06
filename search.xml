@@ -257,7 +257,7 @@
             
             <tag> Windows </tag>
             
-            <tag> 网络 </tag>
+            <tag> Network </tag>
             
         </tags>
       
@@ -307,7 +307,7 @@
       
         <tags>
             
-            <tag> 数据库 </tag>
+            <tag> Database </tag>
             
         </tags>
       
@@ -333,6 +333,8 @@
         <tags>
             
             <tag> Windows </tag>
+            
+            <tag> Powershell </tag>
             
         </tags>
       
@@ -382,9 +384,9 @@
       
         <tags>
             
-            <tag> 设计 </tag>
+            <tag> Design </tag>
             
-            <tag> 色彩 </tag>
+            <tag> Chromatics </tag>
             
         </tags>
       
@@ -434,7 +436,7 @@
       
         <tags>
             
-            <tag> 清理优化 </tag>
+            <tag> Crack </tag>
             
         </tags>
       
@@ -461,6 +463,8 @@
             
             <tag> Proxy </tag>
             
+            <tag> Network </tag>
+            
         </tags>
       
     </entry>
@@ -484,7 +488,7 @@
       
         <tags>
             
-            <tag> 信息安全 </tag>
+            <tag> Security </tag>
             
         </tags>
       
@@ -509,7 +513,9 @@
       
         <tags>
             
-            <tag> 数据库 </tag>
+            <tag> Database </tag>
+            
+            <tag> Crack </tag>
             
         </tags>
       
@@ -535,6 +541,8 @@
         <tags>
             
             <tag> CSGO </tag>
+            
+            <tag> Games </tag>
             
         </tags>
       
@@ -665,7 +673,7 @@
             
             <tag> Kali Linux </tag>
             
-            <tag> 无线攻击 </tag>
+            <tag> Wireless </tag>
             
         </tags>
       
