@@ -22,13 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Windows常见故障解决 - Secriy&#39;s Blog</title>
+  <title>Binary Tree - Secriy&#39;s Blog</title>
   
-    <meta name="keywords" content="Windows">
+    <meta name="keywords" content="Data Structure">
   
 
   
-    <meta name="description" content="Windows 常见故障解决。">
+    <meta name="description" content="数据结构之二叉树的相关学习。">
   
 
   <!-- feed -->
@@ -573,7 +573,7 @@
     
     
       <h1 class="title">
-        Windows常见故障解决
+        Binary Tree
       </h1>
       <div class='new-meta-box'>
         
@@ -593,7 +593,7 @@
   <div class='new-meta-item category'>
     <a class='notlink'>
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <a class="category-link" href="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/">经验教程</a>
+      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
     </a>
   </div>
 
@@ -604,7 +604,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年3月17日</p>
+    <p>发布于：2021年6月2日</p>
   </a>
 </div>
 
@@ -615,7 +615,7 @@
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Windows常见故障解决" data-path="/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">
+      <div id="lc-pv" data-title="Binary Tree" data-path="/2021/06/02/Binary%20Tree/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -630,9 +630,9 @@
             
 <div class="new-meta-item comments-count">
   
-  <a href="/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/#comments">
+  <a href="/2021/06/02/Binary%20Tree/#comments">
     <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">0</span>
+    <span class="valine-comment-count" data-xid="/2021/06/02/Binary%20Tree/">0</span>
     <span class="leancloud-comments-count">&nbsp;</span>
   </a>
 </div>
@@ -647,34 +647,12 @@
 
   
   
-  <div class="note quote cyan"><p>Windows 常见故障解决。</p></div>
+  <div class="note quote cyan"><p>数据结构之二叉树的相关学习。</p></div>
 
 <a id="more"></a>
 
-<h2 id="系统问题"><a href="#系统问题" class="headerlink" title="系统问题"></a>系统问题</h2><h3 id="系统软件问题"><a href="#系统软件问题" class="headerlink" title="系统软件问题"></a>系统软件问题</h3><ol>
-<li><p>开始菜单无反应，任务栏假死，且无法联网</p>
-<ul>
-<li><p>解决方法：</p>
-<ul>
-<li><p>Powershell 中输入命令：</p>
-<pre><code class="powershell">Get-AppxPackage | % &#123; Add-AppxPackage -DisableDevelopmentMode -Register &quot;$($_.InstallLocation)\AppxManifest.xml&quot; -verbose &#125;</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>浏览器黑屏</p>
-<ul>
-<li>产生原因：更新显卡驱动后缓存异常</li>
-<li>解决方法：清理 GPU 缓存<ul>
-<li>Chrome：删除<em>C:\Users\用户名\AppData\Local\Microsoft\Edge\User Data\ShaderCache\GPUCache</em>下所有文件</li>
-<li>Edge：删除<em>C:\Users\用户名\AppData\Local\Microsoft\Edge\User Data\ShaderCache\GPUCache</em>下所有文件</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
+<h2 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h2><h3 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h3><pre><code class="go"></code></pre>
+<h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3>
   
   
     
@@ -686,7 +664,7 @@
           <blockquote>
             
               
-                <p>本文永久链接：<a href=https://blog.secriy.com/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/>https://blog.secriy.com/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/</a></p>
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/06/02/Binary%20Tree/>https://blog.secriy.com/2021/06/02/Binary%20Tree/</a></p>
               
             
           </blockquote>
@@ -703,10 +681,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-20T22:56:21+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-06T11:49:16+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年4月20日</p>
+    <p>更新于：2021年6月6日</p>
   </a>
 </div>
 
@@ -715,7 +693,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Windows/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Windows</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Data-Structure/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Data Structure</p></a></div>
 
 
         
@@ -728,7 +706,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/&title=Windows常见故障解决 - Secriy's Blog&summary=Windows 常见故障解决。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/06/02/Binary%20Tree/&title=Binary Tree - Secriy's Blog&summary=数据结构之二叉树的相关学习。"
           
           >
           
@@ -740,7 +718,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/&title=Windows常见故障解决 - Secriy's Blog&summary=Windows 常见故障解决。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/06/02/Binary%20Tree/&title=Binary Tree - Secriy's Blog&summary=数据结构之二叉树的相关学习。"
           
           >
           
@@ -752,7 +730,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2020/03/17/Windows%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/&title=Windows常见故障解决 - Secriy's Blog&summary=Windows 常见故障解决。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/06/02/Binary%20Tree/&title=Binary Tree - Secriy's Blog&summary=数据结构之二叉树的相关学习。"
           
           >
           
@@ -782,19 +760,25 @@
   
     <div class="prev-next">
       
-        <a class='prev' href='/2020/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>计算机网络学习笔记</p>
-          <p class='content'>学习计算机网络能够理解网络协议的原理和具体实现，加深对计算机网络体系的认知。
+        <a class='prev' href='/2021/06/06/Hash-Table/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Hash Table</p>
+          <p class='content'>Hash Table（散列表）的实现和应用。
 
 
 
-基础概念计算机网络计算机网络由若干结点和连接这些结点的链路组成。网络中的结点可以是计算机、集线器、交换机和路由...</p>
+</p>
         </a>
       
       
-        <a class='next' href='/2020/03/10/Navicat-Premium%E5%AE%89%E8%A3%85%E7%A0%B4%E8%A7%A3/'>
-          <p class='title'>Navicat Premium安装破解<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Navicat Premium 是一套多连接数据库开发工具，让你在单一应用程序中同时连接多达七种数据库：MySQL、MariaDB、MongoDB、SQL Server、SQLite、Oracl...</p>
+        <a class='next' href='/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/'>
+          <p class='title'>MySQL深入学习：基础知识<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>本文是对 MySQL 的学习总结，包含 MySQL 数据库系统的基础知识。
+
+
+
+数据库常见概念
+数据库（database）：保存有组织数据的容器（通常是一个文件或一组文件）
+表（table）：...</p>
         </a>
       
     </div>
@@ -837,7 +821,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98"><span class="toc-text">系统问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="toc-text">系统软件问题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="toc-text">二叉树的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-text">前序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-text">中序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-text">后序遍历</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -879,7 +863,7 @@
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="Windows常见故障解决";
+  pdata.postTitle="Binary Tree";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
