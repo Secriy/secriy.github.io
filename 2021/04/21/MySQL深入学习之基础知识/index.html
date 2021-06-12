@@ -678,135 +678,6 @@
 <li>基于共享文件系统的 DBMS：通常应用于桌面环境，不用于高端和关键应用（如 Microsoft Access）</li>
 <li>基于 C/S 的 DBMS：通常用于服务器，只将结果发送到客户端（如 MySQL）</li>
 </ul>
-<h4 id="版本历史"><a href="#版本历史" class="headerlink" title="版本历史"></a>版本历史</h4><p>1995 年，MySQL 1.0 发布，仅供内部使用。</p>
-<p>1996 年，MySQL 3.11.1 发布，直接跳过了 MySQL 2.x 版本。</p>
-<p>1999 年，MySQL AB 公司成立。同年，发布 MySQL 3.23，该版本集成了 Berkeley DB 存储引擎。该引擎由 Sleepycat 公司开发，支持事务。在集成该引擎的过程中，对源码进行了改造，为后续可插拔式存储引擎架构奠定了基础。</p>
-<p>2000 年，ISAM 升级为 MyISAM 存储引擎。同年，MySQL 基于 GPL 协议开放源码。</p>
-<p>2002 年，MySQL 4.0 发布，集成了后来大名鼎鼎的 InnoDB 存储引擎。该引擎由 Innobase 公司开发，支持事务，支持行级锁，适用于 OLTP 等高并发场景。</p>
-<p>2005 年，MySQL 5.0 发布，开始支持游标，存储过程，触发器，视图，XA 事务等特性。同年，Oracle 收购 Innobase 公司。</p>
-<p>2008 年，Sun 以 10 亿美金收购 MySQL AB。同年，发布 MySQL 5.1，其开始支持定时器（Event scheduler），分区，基于行的复制等特性。</p>
-<p>2009 年，Oracle 以 74 亿美金收购 Sun 公司。</p>
-<p>2010 年，<strong>MySQL 5.5</strong>发布，其包括如下重要特性及更新。</p>
-<ul>
-<li>InnoDB 代替 MyISAM 成为 MySQL 默认的存储引擎。</li>
-<li>多核扩展，能更充分地使用多核 CPU。</li>
-<li>InnoDB 的性能提升，包括支持索引的快速创建，表压缩，I/O 子系统的性能提升，PURGE 操作从主线程中剥离出来，Buffer Pool 可拆分为多个 Instances。</li>
-<li>半同步复制。</li>
-<li>引入 utf8mb4 字符集，可用来存储 emoji 表情。</li>
-<li>引入 metadata locks（元数据锁）。</li>
-<li>分区表的增强，新增两个分区类型：RANGE COLUMNS 和 LIST COLUMNS。</li>
-<li>MySQL 企业版引入线程池。</li>
-<li>可配置 IO 读写线程的数量（innodb_read_io_threads，innodb_write_io_threads）。在此之前，其数量为 1，且不可配置。</li>
-<li>引入 innodb_io_capacity 选项，用于控制脏页刷新的数量。</li>
-</ul>
-<p>2013 年，<strong>MySQL 5.6</strong>发布，其包括如下重要特性及更新。</p>
-<ul>
-<li>GTID 复制。</li>
-<li>无损复制。</li>
-<li>延迟复制。</li>
-<li>基于库级别的并行复制。</li>
-<li>mysqlbinlog 可远程备份 binlog。</li>
-<li>对 TIME, DATETIME 和 TIMESTAMP 进行了重构，可支持小数秒。DATETIME 的空间需求也从之前的 8 个字节减少到 5 个字节。</li>
-<li>Online DDL。ALTER 操作不再阻塞 DML。</li>
-<li>可传输表空间（transportable tablespaces）。</li>
-<li>统计信息的持久化。避免主从之间或数据库重启后，同一个 SQL 的执行计划有差异。</li>
-<li>全文索引。</li>
-<li>InnoDB Memcached plugin。</li>
-<li>EXPLAIN 可用来查看 DELETE，INSERT，REPLACE，UPDATE 等 DML 操作的执行计划，在此之前，只支持 SELECT 操作。</li>
-<li>分区表的增强，包括最大可用分区数增加至 8192，支持分区和非分区表之间的数据交换，操作时显式指定分区。</li>
-<li>Redo Log 总大小的限制从之前的 4G 扩展至 512G。</li>
-<li>Undo Log 可保存在独立表空间中，因其是随机 IO，更适合放到 SSD 中。但仍然不支持空间的自动回收。</li>
-<li>可 dump 和 load Buffer pool 的状态，避免数据库重启后需要较长的预热时间。</li>
-<li>InnoDB 内部的性能提升，包括拆分 kernel mutex，引入独立的刷新线程，可设置多个 purge 线程。</li>
-<li>优化器性能提升，引入了 ICP，MRR，BKA 等特性，针对子查询进行了优化。</li>
-</ul>
-<blockquote>
-<p>可以说，MySQL 5.6 是 MySQL 历史上一个里程碑式的版本，这也是目前生产上应用得最广泛的版本。</p>
-</blockquote>
-<p>2015 年，<strong>MySQL 5.7</strong>发布，其包括如下重要特性及更新。</p>
-<ul>
-<li>组复制</li>
-<li>InnoDB Cluster</li>
-<li>多源复制</li>
-<li>增强半同步（AFTER_SYNC）</li>
-<li>基于 WRITESET 的并行复制。</li>
-<li>在线开启 GTID 复制。</li>
-<li>在线设置复制过滤规则。</li>
-<li>在线修改 Buffer pool 的大小。</li>
-<li>在同一长度编码字节内，修改 VARCHAR 的大小只需修改表的元数据，无需创建临时表。</li>
-<li>可设置 NUMA 架构的内存分配策略（innodb_numa_interleave）。</li>
-<li>透明页压缩（Transparent Page Compression）。</li>
-<li>UNDO 表空间的自动回收。</li>
-<li>查询优化器的重构和增强。</li>
-<li>可查看当前正在执行的 SQL 的执行计划（EXPLAIN FOR CONNECTION）。</li>
-<li>引入了查询改写插件（Query Rewrite Plugin），可在服务端对查询进行改写。</li>
-<li>EXPLAIN FORMAT=JSON 会显示成本信息，这样可直观的比较两种执行计划的优劣。</li>
-<li>引入了虚拟列，类似于 Oracle 中的函数索引。</li>
-<li>新实例不再默认创建 test 数据库及匿名用户。</li>
-<li>引入 ALTER USER 命令，可用来修改用户密码，密码的过期策略，及锁定用户等。</li>
-<li>mysql.user 表中存储密码的字段从 password 修改为 authentication_string。</li>
-<li>表空间加密。</li>
-<li>优化了 Performance Schema，其内存使用减少。</li>
-<li>Performance Schema 引入了众多 instrumentation。常用的有 Memory usage instrumentation，可用来查看 MySQL 的内存使用情况，Metadata Locking Instrumentation，可用来查看 MDL 的持有情况，Stage Progress instrumentation，可用来查看 Online DDL 的进度。</li>
-<li>同一触发事件（INSERT，DELETE，UPDATE），同一触发时间（BEFORE，AFTER），允许创建多个触发器。在此之前，只允许创建一个触发器。</li>
-<li>InnoDB 原生支持分区表，在此之前，是通过 ha_partition 接口来实现的。</li>
-<li>分区表支持可传输表空间特性。</li>
-<li>集成了 SYS 数据库，简化了 MySQL 的管理及异常问题的定位。</li>
-<li>原生支持 JSON 类型，并引入了众多 JSON 函数。</li>
-<li>引入了新的逻辑备份工具-mysqlpump，支持表级别的多线程备份。</li>
-<li>引入了新的客户端工具-mysqlsh，其支持三种语言：JavaScript, Python and SQL。两种 API：X DevAPI，AdminAPI，其中，前者可将 MySQL 作为文档型数据库进行操作，后者用于管理 InnoDB Cluster。</li>
-<li>mysql_install_db 被 mysqld –initialize 代替，用来进行实例的初始化。</li>
-<li>原生支持 systemd。</li>
-<li>引入了 super_read_only 选项。</li>
-<li>可设置 SELECT 操作的超时时长（max_execution_time）。</li>
-<li>可通过 SHUTDOWN 命令关闭 MySQL 实例。</li>
-<li>引入了 innodb_deadlock_detect 选项，在高并发场景下，可使用该选项来关闭死锁检测。</li>
-<li>引入了 Optimizer Hints，可在语句级别控制优化器的行为，如是否开启 ICP，MRR 等，在此之前，只有 Index Hints。</li>
-<li>GIS 的增强，包括使用 Boost.Geometry 替代之前的 GIS 算法，InnoDB 开始支持空间索引。</li>
-</ul>
-<p>2018 年，<strong>MySQL 8.0</strong>发布，其包括如下重要特性及更新。</p>
-<ul>
-<li>引入了原生的，基于 InnoDB 的数据字典。数据字典表位于 mysql 库中，对用户不可见，同 mysql 库的其它系统表一样，保存在数据目录下的 mysql.ibd 文件中。不再置于 mysql 目录下。</li>
-<li>Atomic DDL。</li>
-<li>重构了 INFORMATION_SCHEMA，其中，部分表已重构为基于数据字典的视图，在此之前，其为临时表。</li>
-<li>PERFORMANCE_SCHEMA 查询性能提升，其已内置多个索引。</li>
-<li>不可见索引（Invisible index）。</li>
-<li>降序索引。</li>
-<li>直方图。</li>
-<li>公用表表达式（Common table expressions）。</li>
-<li>窗口函数（Window functions）。</li>
-<li>角色（Role）。</li>
-<li>资源组（Resource Groups），可用来控制线程的优先级及其能使用的资源，目前，能被管理的资源只有 CPU。</li>
-<li>引入了 innodb_dedicated_server 选项，可基于服务器的内存来动态设置 innodb_buffer_pool_size，innodb_log_file_size 和 innodb_flush_method。</li>
-<li>快速加列（ALGORITHM=INSTANT）。</li>
-<li>JSON 字段的部分更新（JSON Partial Updates）。</li>
-<li>自增主键的持久化。</li>
-<li>可持久化全局变量（SET PERSIST）。</li>
-<li>默认字符集由 latin1 修改为 utf8mb4。</li>
-<li>默认开启 UNDO 表空间，且支持在线调整数量（innodb_undo_tablespaces）。在 MySQL 5.7 中，默认不开启，若要开启，只能初始化时设置。</li>
-<li>备份锁。</li>
-<li>Redo Log 的优化，包括允许多个用户线程并发写入 log buffer，可动态修改 innodb_log_buffer_size 的大小。</li>
-<li>默认的认证插件由 mysql_native_password 更改为 caching_sha2_password。</li>
-<li>默认的内存临时表由 MEMORY 引擎更改为 TempTable 引擎，相比于前者，后者支持以变长方式存储 VARCHAR，VARBINARY 等变长字段。从 MySQL 8.0.13 开始，TempTable 引擎支持 BLOB 字段。</li>
-<li>Grant 不再隐式创建用户。</li>
-<li>SELECT … FOR SHARE 和 SELECT … FOR UPDATE 语句中引入 NOWAIT 和 SKIP LOCKED 选项，解决电商场景热点行问题。</li>
-<li>正则表达式的增强，新增了 4 个相关函数，REGEXP_INSTR()，REGEXP_LIKE()，REGEXP_REPLACE()，REGEXP_SUBSTR()。</li>
-<li>查询优化器在制定执行计划时，会考虑数据是否在 Buffer Pool 中。而在此之前，是假设数据都在磁盘中。</li>
-<li>ha_partition 接口从代码层移除，如果要使用分区表，只能使用 InnoDB 存储引擎。</li>
-<li>引入了更多细粒度的权限来替代 SUPER 权限，现在授予 SUPER 权限会提示 warning。</li>
-<li>GROUP BY 语句不再隐式排序。</li>
-<li>MySQL 5.7 引入的表空间加密特性可对 Redo Log 和 Undo Log 进行加密。</li>
-<li>information_schema 中的 innodb_locks 和 innodb_lock_waits 表被移除，取而代之的是 performance_schema 中的 data_locks 和 data_lock_waits 表。</li>
-<li>引入 performance_schema.variables_info 表，记录了参数的来源及修改情况。</li>
-<li>增加了对于客户端报错信息的统计（performance_schema.events_errors_summary_xxx）。</li>
-<li>可统计查询的响应时间分布（call sys.ps_statement_avg_latency_histogram()）。</li>
-<li>支持直接修改列名（ALTER TABLE … RENAME COLUMN old_name TO new_name）。</li>
-<li>用户密码可设置重试策略（Reuse Policy）。</li>
-<li>移除 PASSWORD()函数。这就意味着无法通过“SET PASSWORD … = PASSWORD(‘auth_string’) ”命令修改用户密码。</li>
-<li>代码层移除 Query Cache 模块，故 Query Cache 相关的变量和操作均不再支持。</li>
-<li>BLOB, TEXT, GEOMETRY 和 JSON 字段允许设置默认值。</li>
-<li>可通过 RESTART 命令重启 MySQL 实例。</li>
-</ul>
 <h3 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h3><p>使用<code>mysql -u[user] -p[pass]</code>命令进入 mysql 命令模式</p>
 <p>这里给出常用的参数：</p>
 <pre><code>-u // 指定用户名
@@ -985,10 +856,10 @@ SELECT [column1] FROM [table] ORDER BY [column2] DESC, [column3]</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-06T11:57:52+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-09T10:41:57+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月6日</p>
+    <p>更新于：2021年6月9日</p>
   </a>
 </div>
 
@@ -1064,25 +935,26 @@ SELECT [column1] FROM [table] ORDER BY [column2] DESC, [column3]</code></pre>
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/06/02/Binary%20Tree/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Binary Tree</p>
-          <p class='content'>数据结构之二叉树的相关学习。
+        <a class='prev' href='/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>腾讯云函数部署CloudMusic-LevelUp脚本</p>
+          <p class='content'>腾讯云函数部署 CloudMusic-LevelUp 脚本具体操作说明。
 
 
 
-二叉树的遍历前序遍历
-中序遍历后序遍历</p>
+部署下载仓库创建云函数
+打开腾讯云官网，登录，在产品中找到云函数入口
+
+进入云函数管理控制台，在函数服务中新建云函...</p>
         </a>
       
       
-        <a class='next' href='/2021/04/21/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8BGC/'>
-          <p class='title'>Golang学习之GC<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>本文是对 Golang 中垃圾处理机制的深入理解和学习。
+        <a class='next' href='/2021/04/20/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8Bdefer/'>
+          <p class='title'>Golang学习之defer<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>本文是 Golang 中 defer 语句的学习和深入理解。
 
 
 
-垃圾回收编程语言在运行时会申请和分配内存给变量等，内存占用就会不断增大，因此需要垃圾回收（GC）机制去回收不再需要的内存空间。
-垃...</p>
+知识点一、有关 defer 的执行顺序程序执行到 defer 语句时，并不会直接执行 defer 后的语句，而是将其存入该函数...</p>
         </a>
       
     </div>
@@ -1125,7 +997,7 @@ SELECT [column1] FROM [table] ORDER BY [column2] DESC, [column3]</code></pre>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5"><span class="toc-text">常见概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DBMS-%E5%88%86%E7%B1%BB"><span class="toc-text">DBMS 分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%8E%86%E5%8F%B2"><span class="toc-text">版本历史</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%84%E8%8C%83"><span class="toc-text">命令规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C"><span class="toc-text">数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2"><span class="toc-text">排序查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-text">条件查询</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5"><span class="toc-text">常见概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DBMS-%E5%88%86%E7%B1%BB"><span class="toc-text">DBMS 分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%84%E8%8C%83"><span class="toc-text">命令规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C"><span class="toc-text">数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2"><span class="toc-text">排序查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-text">条件查询</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </section>
 
