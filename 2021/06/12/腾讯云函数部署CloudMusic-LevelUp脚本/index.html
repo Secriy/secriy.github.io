@@ -640,20 +640,25 @@
   
   <div class="note quote cyan"><p>腾讯云函数部署 CloudMusic-LevelUp 脚本具体操作说明。</p></div>
 
-<a id="more"></a>
+<span id="more"></span>
 
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="下载仓库"><a href="#下载仓库" class="headerlink" title="下载仓库"></a>下载仓库</h3><h3 id="创建云函数"><a href="#创建云函数" class="headerlink" title="创建云函数"></a>创建云函数</h3><ol>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="下载仓库"><a href="#下载仓库" class="headerlink" title="下载仓库"></a>下载仓库</h3><pre><code class="shell">git clone https://github.com/Secriy/CloudMusic-LevelUp.git</code></pre>
+<h3 id="创建云函数"><a href="#创建云函数" class="headerlink" title="创建云函数"></a>创建云函数</h3><ol>
 <li><p>打开<a target="_blank" rel="noopener" href="https://cloud.tencent.com/">腾讯云官网</a>，登录，在产品中找到云函数入口</p>
 </li>
 <li><p>进入云函数管理控制台，在函数服务中新建云函数，按图中说明配置基础设置：</p>
-<p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612194839032.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612194839032.png" srcset="data:image/png;base64,666" alt="image-20210612194839032"></p>
+<div class="gallery ">
+              <p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612194839032.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612194839032.png" srcset="data:image/png;base64,666" alt="figue1"></p>
+            </div>
 </li>
 <li><p>将高级配置中的环境配置-内存改为 64MB，执行超时时间改为 900，其他默认不改动，点击创建</p>
 </li>
 </ol>
 <h3 id="配置云函数"><a href="#配置云函数" class="headerlink" title="配置云函数"></a>配置云函数</h3><ol>
 <li><p>创建完成后进入函数管理页面，在在线 IDE 中打开一个终端：</p>
-<p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612195607701.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612195607701.png" srcset="data:image/png;base64,666" alt="image-20210612195607701"></p>
+<div class="gallery ">
+              <p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612195607701.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612195607701.png" srcset="data:image/png;base64,666" alt="image-20210612195607701"></p>
+            </div>
 </li>
 <li><p>在终端中执行如下指令安装依赖：</p>
 <pre><code class="shell">cd src/ &amp;&amp; pip3 install -r requirements.txt -t .</code></pre>
@@ -662,14 +667,24 @@
 </li>
 <li><p>修改<em>index.py</em>文件，将其中的<code>infos</code>变量各值修改为脚本所需参数（参数说明见 README），除账号密码外其余参数可选填</p>
 </li>
-<li><p>所有项目修改完成后，点击部署：<br><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200259590.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200259590.png" srcset="data:image/png;base64,666" alt="image-20210612200259590"></p>
+<li><p>所有项目修改完成后，点击部署：</p>
+<div class="gallery ">
+              <p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200259590.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200259590.png" srcset="data:image/png;base64,666" alt="image-20210612200259590"></p>
+            </div>
+
 </li>
 </ol>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>部署成功即可测试，测试时间可能有些长（几分钟），如结果没有问题，可以进行下一步，否则进行错误排查</p>
 <p>正常的日志输出如下：</p>
-<p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200659717.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200659717.png" srcset="data:image/png;base64,666" alt="image-20210612200659717"></p>
+<div class="gallery ">
+              <p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200659717.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612200659717.png" srcset="data:image/png;base64,666" alt="image-20210612200659717"></p>
+            </div>
+
 <h3 id="配置触发器"><a href="#配置触发器" class="headerlink" title="配置触发器"></a>配置触发器</h3><p>在触发管理-创建触发器中按下图填写（定时任务名称使用默认即可）：</p>
-<p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612201012958.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612201012958.png" srcset="data:image/png;base64,666" alt="image-20210612201012958"></p>
+<div class="gallery ">
+              <p><img src="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612201012958.png" class="lazyload" data-srcset="/2021/06/12/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%87%BD%E6%95%B0%E9%83%A8%E7%BD%B2CloudMusic-LevelUp%E8%84%9A%E6%9C%AC/image-20210612201012958.png" srcset="data:image/png;base64,666" alt="image-20210612201012958"></p>
+            </div>
+
 <p>其中触发周期可以自定义，选择自定义出发周期可以使用 Cron 表达式创建，最后点击提交即可。</p>
 
   
@@ -700,10 +715,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-12T20:13:58+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-22T13:34:46+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月12日</p>
+    <p>更新于：2021年6月22日</p>
   </a>
 </div>
 
@@ -775,6 +790,16 @@
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2021/06/22/%E5%89%91%E6%8C%87Offer%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>剑指Offer刷题笔记</p>
+          <p class='content'>剑指 Offer 刷题记录。
+
+
+
+JZ01：二维数组中的查找
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数...</p>
+        </a>
       
       
         <a class='next' href='/2021/04/21/MySQL%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/'>
@@ -1072,7 +1097,7 @@ var loadCSS = function( href, before, media, attributes ){
   loadCSS("https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
   
   
-  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/solarized-light.min.css", window.volantis.loadcss);
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
   
 </script>
 <!-- required -->

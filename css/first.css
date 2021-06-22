@@ -113,22 +113,22 @@ body.modal-active {
   background: rgba(33,150,243,0.2);
 }
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.9rem;
 }
 h2 {
   font-size: 1.8rem;
 }
 h3 {
-  font-size: 1.45rem;
+  font-size: 1.5rem;
 }
 h4 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 h5 {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 h6 {
-  font-size: 1rem;
+  font-size: 1.15rem;
 }
 h1,
 h2,
@@ -937,7 +937,7 @@ th {
   flex-shrink: 0;
   line-height: 64px;
   padding: 0 24px;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-family: "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Helvetica, monospace;
 }
 .l_header #wrapper .nav-main .title img {
@@ -1713,7 +1713,7 @@ ul.list-v >li>a:hover {
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 #u-search .modal-body .modal-results .result .digest {
   display: block;

@@ -649,7 +649,7 @@
   
   <div class="note quote cyan"><p>本文是 Golang 中 defer 语句的学习和深入理解。</p></div>
 
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="一、有关-defer-的执行顺序"><a href="#一、有关-defer-的执行顺序" class="headerlink" title="一、有关 defer 的执行顺序"></a>一、有关 defer 的执行顺序</h3><p>程序执行到 defer 语句时，并不会直接执行 defer 后的语句，而是将其存入该函数的栈中，等待最后函数返回后出栈执行，因此当多个 defer 出现的时候，执行顺序遵循 FILO。</p>
 <h3 id="二、defer-和-return-执行的先后"><a href="#二、defer-和-return-执行的先后" class="headerlink" title="二、defer 和 return 执行的先后"></a>二、defer 和 return 执行的先后</h3><p>同时包含 defer 和 return 语句的函数执行顺序如下：</p>
@@ -1126,7 +1126,7 @@ var loadCSS = function( href, before, media, attributes ){
   loadCSS("https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
   
   
-  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/solarized-light.min.css", window.volantis.loadcss);
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
   
 </script>
 <!-- required -->

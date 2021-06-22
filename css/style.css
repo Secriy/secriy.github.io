@@ -1377,7 +1377,7 @@ p.p.h2 {
 }
 span.p.h1,
 p.p.h1 {
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   color: var(--color-h1);
   padding-top: 2em;
 }
@@ -1390,19 +1390,19 @@ p.p.h2 {
 }
 span.p.h3,
 p.p.h3 {
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   color: var(--color-h3);
   padding-top: 2em;
 }
 span.p.h4,
 p.p.h4 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--color-h4);
   padding-top: 2em;
 }
 span.p.h5,
 p.p.h5 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--color-h5);
   padding-top: 1.5em;
 }
@@ -3720,7 +3720,7 @@ footer.footer .copyright p {
   border-radius: 8px;
 }
 .l_main .post h1.title {
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   margin: 0;
   border-bottom: none;
   padding-bottom: 4px;
@@ -3958,7 +3958,7 @@ footer.footer .copyright p {
 article#comments p[ct] {
   margin-top: 0;
   margin-bottom: 1em;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--color-text);
   font-weight: 600;
 }
@@ -4211,7 +4211,7 @@ img.lazyload:not(.placeholder).loaded {
 }
 .l_main .article .prev-next >a p.title {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .l_main .article .prev-next >a p.title >i {
   width: 1rem;
