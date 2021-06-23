@@ -22,13 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Golang中字符串类型的底层实现 - Secriy&#39;s Blog</title>
+  <title>Golang Notes - Secriy&#39;s Blog</title>
   
     <meta name="keywords" content="Golang,Programming">
   
 
   
-    <meta name="description" content="字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。">
+    <meta name="description" content="本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。">
   
 
   <!-- feed -->
@@ -573,7 +573,7 @@
     
     
       <h1 class="title">
-        Golang中字符串类型的底层实现
+        Golang Notes
       </h1>
       <div class='new-meta-box'>
         
@@ -604,7 +604,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年4月14日</p>
+    <p>发布于：2021年6月22日</p>
   </a>
 </div>
 
@@ -615,7 +615,7 @@
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Golang中字符串类型的底层实现" data-path="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
+      <div id="lc-pv" data-title="Golang Notes" data-path="/2021/06/22/Golang-Notes/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -630,9 +630,9 @@
             
 <div class="new-meta-item comments-count">
   
-  <a href="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/#comments">
+  <a href="/2021/06/22/Golang-Notes/#comments">
     <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">0</span>
+    <span class="valine-comment-count" data-xid="/2021/06/22/Golang-Notes/">0</span>
     <span class="leancloud-comments-count">&nbsp;</span>
   </a>
 </div>
@@ -647,46 +647,27 @@
 
   
   
-  <div class="note quote cyan"><p>字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。</p></div>
+  <div class="note quote cyan"><p>本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。</p></div>
 
 <span id="more"></span>
 
-<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>编写一段代码，声明并初始化字符串变量<code>a</code>，值为<code>golang</code>，输出该变量的值。</p>
-<pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    fmt.Println(a)
-&#125;</code></pre>
-<p>使用<strong>compile</strong>工具将源码编译成汇编程序，可以看到刚刚定义的字符串变量的值：</p>
-<pre><code class="assembly">go.string.&quot;golang&quot; SRODATA dupok size=6
-        0x0000 67 6f 6c 61 6e 67</code></pre>
-<p>其中，<code>SRODATA</code>标记表示数据是只读的，因此其被分配的内存空间同样是只读的。由于字符串的只读特性，所有对于字符串的写操作都是通过拷贝实现的。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>字符串包含两部分，指向字符串存储位置开头的指针以及字符串的长度。在 C 语言中，为了确定字符串的结束位置，会自动在字符串末尾添加<code>\0</code>，而 Golang 采用存储字符串长度的方法确定字符串的末尾。</p>
-<pre><code class="go">type StringHeader struct &#123;
-    Data uintptr
-    Len  int
-&#125;</code></pre>
-<h2 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h2><h3 id="截取"><a href="#截取" class="headerlink" title="截取"></a>截取</h3><p>截取是对字符串的部分读取，无需创建字符串拷贝：</p>
-<pre><code class="go">fmt.Println(s1[4])
-fmt.Println(s1[1:2])
-fmt.Println(s1[:])</code></pre>
-<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    var b = a[:]
-    fmt.Println(&amp;a)    // 0xc00003e240
-    fmt.Println(&amp;b)    // 0xc00003e250
-&#125;</code></pre>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ol>
+<li>字符串底层是只读数组，不允许修改</li>
+<li>string 与 []byte 类型间的转换是复制，存在不小的损耗</li>
+<li><code>len()</code>返回的是字符串的字节数，一个中文字符占三字节</li>
+</ol>
+<h3 id="nil"><a href="#nil" class="headerlink" title="nil"></a><code>nil</code></h3><ol>
+<li>不能使用使用<code>nil</code>初始化一个未指定类型的变量</li>
+<li>不能使用值为<code>nil</code>的 Slice 或 Map</li>
+<li><code>nil</code>只能赋给 func、pointer、chan、interface、map、slice 类型的变量</li>
+</ol>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><ol>
+<li>Golang 中只有值传递，但两个 slice 可能共用一个底层的 Array，修改其一另一个也会发生改变</li>
+</ol>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><ol>
+<li>数组作为函数参数时为值拷贝</li>
+<li>map、slice、chan、pointer 同样是值拷贝，但因为其底层采用的是指针的结构，因此在函数内能直接修改实参</li>
+</ol>
 
   
   
@@ -699,7 +680,7 @@ func main() &#123;
           <blockquote>
             
               
-                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/>https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/</a></p>
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/06/22/Golang-Notes/>https://blog.secriy.com/2021/06/22/Golang-Notes/</a></p>
               
             
           </blockquote>
@@ -716,10 +697,10 @@ func main() &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-22T19:24:02+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-23T13:48:47+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月22日</p>
+    <p>更新于：2021年6月23日</p>
   </a>
 </div>
 
@@ -741,7 +722,7 @@ func main() &#123;
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/06/22/Golang-Notes/&title=Golang Notes - Secriy's Blog&summary=本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。"
           
           >
           
@@ -753,7 +734,7 @@ func main() &#123;
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/06/22/Golang-Notes/&title=Golang Notes - Secriy's Blog&summary=本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。"
           
           >
           
@@ -765,7 +746,7 @@ func main() &#123;
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/06/22/Golang-Notes/&title=Golang Notes - Secriy's Blog&summary=本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。"
           
           >
           
@@ -795,24 +776,15 @@ func main() &#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/04/17/Golang-Basic-Tutorial/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Golang Basic Tutorial</p>
-          <p class='content'>本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。
-
-
-
-命令行操作Golang 提供了完整的操作命令，用于管理和操作项...</p>
-        </a>
       
-      
-        <a class='next' href='/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/'>
-          <p class='title'>数据结构学习笔记（一）<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>数据结构相关复习总结笔记。
+        <a class='next' href='/2021/06/22/%E5%89%91%E6%8C%87Offer%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/'>
+          <p class='title'>剑指Offer刷题笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>剑指 Offer 刷题记录。
 
 
 
-顺序表介绍在学习顺序表之前先要知道线性表，线性表是由具有$n&gt;=0$个相同数据类型的数据元素组成的有限序列，线性表是将数据一对一地存储到物理空间之中。
-顺...</p>
+JZ01：二维数组中的查找
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数...</p>
         </a>
       
     </div>
@@ -855,7 +827,7 @@ func main() &#123;
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C"><span class="toc-text">字符串操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E5%8F%96"><span class="toc-text">截取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6"><span class="toc-text">复制</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-text">注意</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#String"><span class="toc-text">String</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nil"><span class="toc-text">nil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function"><span class="toc-text">Function</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -897,7 +869,7 @@ func main() &#123;
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="Golang中字符串类型的底层实现";
+  pdata.postTitle="Golang Notes";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

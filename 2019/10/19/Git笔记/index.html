@@ -22,13 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Golang中字符串类型的底层实现 - Secriy&#39;s Blog</title>
+  <title>Git笔记 - Secriy&#39;s Blog</title>
   
-    <meta name="keywords" content="Golang,Programming">
+    <meta name="keywords" content="Git">
   
 
   
-    <meta name="description" content="字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。">
+    <meta name="description" content="Git 常用操作笔记。">
   
 
   <!-- feed -->
@@ -573,7 +573,7 @@
     
     
       <h1 class="title">
-        Golang中字符串类型的底层实现
+        Git笔记
       </h1>
       <div class='new-meta-box'>
         
@@ -593,7 +593,7 @@
   <div class='new-meta-item category'>
     <a class='notlink'>
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+      <a class="category-link" href="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/">操作手册</a>
     </a>
   </div>
 
@@ -604,7 +604,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年4月14日</p>
+    <p>发布于：2019年10月19日</p>
   </a>
 </div>
 
@@ -615,7 +615,7 @@
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Golang中字符串类型的底层实现" data-path="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
+      <div id="lc-pv" data-title="Git笔记" data-path="/2019/10/19/Git%E7%AC%94%E8%AE%B0/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -630,9 +630,9 @@
             
 <div class="new-meta-item comments-count">
   
-  <a href="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/#comments">
+  <a href="/2019/10/19/Git%E7%AC%94%E8%AE%B0/#comments">
     <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">0</span>
+    <span class="valine-comment-count" data-xid="/2019/10/19/Git%E7%AC%94%E8%AE%B0/">0</span>
     <span class="leancloud-comments-count">&nbsp;</span>
   </a>
 </div>
@@ -647,46 +647,149 @@
 
   
   
-  <div class="note quote cyan"><p>字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。</p></div>
+  <div class="note quote cyan"><p>Git 常用操作笔记。</p></div>
 
 <span id="more"></span>
 
-<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>编写一段代码，声明并初始化字符串变量<code>a</code>，值为<code>golang</code>，输出该变量的值。</p>
-<pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    fmt.Println(a)
-&#125;</code></pre>
-<p>使用<strong>compile</strong>工具将源码编译成汇编程序，可以看到刚刚定义的字符串变量的值：</p>
-<pre><code class="assembly">go.string.&quot;golang&quot; SRODATA dupok size=6
-        0x0000 67 6f 6c 61 6e 67</code></pre>
-<p>其中，<code>SRODATA</code>标记表示数据是只读的，因此其被分配的内存空间同样是只读的。由于字符串的只读特性，所有对于字符串的写操作都是通过拷贝实现的。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>字符串包含两部分，指向字符串存储位置开头的指针以及字符串的长度。在 C 语言中，为了确定字符串的结束位置，会自动在字符串末尾添加<code>\0</code>，而 Golang 采用存储字符串长度的方法确定字符串的末尾。</p>
-<pre><code class="go">type StringHeader struct &#123;
-    Data uintptr
-    Len  int
-&#125;</code></pre>
-<h2 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h2><h3 id="截取"><a href="#截取" class="headerlink" title="截取"></a>截取</h3><p>截取是对字符串的部分读取，无需创建字符串拷贝：</p>
-<pre><code class="go">fmt.Println(s1[4])
-fmt.Println(s1[1:2])
-fmt.Println(s1[:])</code></pre>
-<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    var b = a[:]
-    fmt.Println(&amp;a)    // 0xc00003e240
-    fmt.Println(&amp;b)    // 0xc00003e250
-&#125;</code></pre>
+<h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><h3 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h3><ul>
+<li><code>--version</code></li>
+<li><code>--help</code></li>
+<li><code>-C &lt;path&gt;</code></li>
+<li><code>-c &lt;name&gt;=&lt;value&gt;</code></li>
+<li><code>--exec-path[=&lt;path&gt;]</code></li>
+<li><code>--html-path</code></li>
+<li><code>--man-path</code></li>
+<li><code>--info-path</code></li>
+<li><code>-p | --paginate | -P | --no-pager</code></li>
+<li><code>--no-replace-objects</code></li>
+<li><code>--bare</code></li>
+<li><code>--git-dir=&lt;path&gt;</code></li>
+<li><code>--work-tree=&lt;path&gt;</code></li>
+<li><code>--namespace=&lt;name&gt;</code></li>
+<li><code>--super-prefix=&lt;path&gt;</code></li>
+<li><code>--config-env=&lt;name&gt;=&lt;envvar&gt;</code></li>
+</ul>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><ul>
+<li>clone</li>
+<li>init</li>
+</ul>
+<h4 id="最近的改动"><a href="#最近的改动" class="headerlink" title="最近的改动"></a>最近的改动</h4><ul>
+<li>add</li>
+<li>mv</li>
+<li>restore</li>
+<li>rm</li>
+<li>sparse-checkout</li>
+</ul>
+<h4 id="检查历史和状态"><a href="#检查历史和状态" class="headerlink" title="检查历史和状态"></a>检查历史和状态</h4><ul>
+<li>bisect</li>
+<li>diff</li>
+<li>grep</li>
+<li>log</li>
+<li>show</li>
+<li>status</li>
+</ul>
+<h4 id="分支与提交"><a href="#分支与提交" class="headerlink" title="分支与提交"></a>分支与提交</h4><ul>
+<li>branch</li>
+<li>commit</li>
+<li>merge</li>
+<li>rebase</li>
+<li>reset</li>
+<li>switch</li>
+<li>tag</li>
+</ul>
+<h4 id="多人协同"><a href="#多人协同" class="headerlink" title="多人协同"></a>多人协同</h4><ul>
+<li>fetch</li>
+<li>pull</li>
+<li>push</li>
+</ul>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><blockquote>
+<p>个人代码工作空间称为工作区</p>
+</blockquote>
+<h3 id="初始化和提交"><a href="#初始化和提交" class="headerlink" title="初始化和提交"></a>初始化和提交</h3><ol>
+<li><p>初始化仓库</p>
+<pre><code class="shell">git init</code></pre>
+</li>
+<li><p>添加文件到暂存区</p>
+<pre><code class="shell">git add README.md</code></pre>
+</li>
+<li><p>提交本次修改</p>
+<pre><code class="shell">git commit -m &quot;First Commit&quot;</code></pre>
+</li>
+</ol>
+<h3 id="提交到远程仓库"><a href="#提交到远程仓库" class="headerlink" title="提交到远程仓库"></a>提交到远程仓库</h3><ol>
+<li><p>添加远程仓库</p>
+<pre><code class="shell">git remote add origin &lt;remote-address&gt;</code></pre>
+<p> <code>origin</code>作为远程仓库名，可自定义。</p>
+</li>
+<li><p>提交远程仓库</p>
+<pre><code class="shell">git push origin master</code></pre>
+</li>
+</ol>
+<h3 id="回退版本"><a href="#回退版本" class="headerlink" title="回退版本"></a>回退版本</h3><ol>
+<li><p>修改上次的提交</p>
+<pre><code class="shell">git commit --amend</code></pre>
+<p> 执行后会打开编辑器，可以编辑上一次的提交信息以及修改上一次的提交内容，关闭编辑器以结束修改。</p>
+</li>
+<li><p>撤销暂存区内容</p>
+<pre><code class="shell">git reset HEAD</code></pre>
+<p> <code>HEAD</code>指向最后一次提交</p>
+</li>
+<li><p>撤销提交</p>
+<ul>
+<li><p>撤销到指定提交，并撤销暂存区内容</p>
+<pre><code class="shell">git reset --mixed HEAD^</code></pre>
+<p><code>HEAD^</code>代指<code>HEAD</code>前一次提交。</p>
+</li>
+<li><p>撤销到指定提交，并保留暂存区内容</p>
+<pre><code class="shell">git reset --soft HEAD^</code></pre>
+<p>保留的暂存区内容是被撤销的提交中所有的改动。</p>
+</li>
+<li><p>撤销到指定提交，并撤销暂存区内容，将工作区回滚到指定提交的状态</p>
+<pre><code class="shell">git reset --hard HEAD^</code></pre>
+</li>
+</ul>
+</li>
+<li><p>撤销历史某次提交</p>
+<pre><code class="shell">git revert &lt;SHA&gt;</code></pre>
+<p> <code>&lt;SHA&gt;</code>指指定某次提交的散列值。</p>
+<p> 撤销后会自动新增一次提交，其内容为撤销指定提交后的内容。</p>
+<p> 如果出现冲突会要求处理冲突再进行提交。</p>
+</li>
+</ol>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>默认会创建主干分支，一般为<code>master</code>，由于美国<em>Black Lives Matter</em>运动，很多企业和机构改为使用<code>main</code>。</p>
+<ol>
+<li><p>查看所有分支</p>
+<pre><code class="shell">git branch</code></pre>
+<p> 标<code>*</code>的分支即当前分支。</p>
+<p> 查看所有分支的版本：</p>
+<pre><code class="shell">git branch -v</code></pre>
+</li>
+<li><p>创建新分支</p>
+<pre><code class="shell">git branch &lt;name&gt;</code></pre>
+</li>
+<li><p>切换到新分支</p>
+<pre><code class="shell">git switch &lt;name&gt;</code></pre>
+<p> 创建并切换到新分支：</p>
+<pre><code class="shell">git switch -c &lt;name&gt;</code></pre>
+</li>
+<li><p>合并指定分支到当前分支</p>
+<pre><code class="shell">git merge &lt;name&gt;</code></pre>
+</li>
+</ol>
+<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><ol>
+<li><p>拉取远程仓库内容</p>
+<pre><code class="shell">git pull</code></pre>
+<p> 默认获取远程主分支内容，合并到本地主分支。</p>
+<p> <code>git pull</code>实际上是<code>git fetch</code>和<code>git merge</code>的组合。</p>
+</li>
+<li><p>手动拉取<br> 拉取远程分支：</p>
+<pre><code class="shell">git fetch</code></pre>
+<p> 合并到本地分支：</p>
+<pre><code class="shell">git merge &lt;remote&gt;/&lt;branch&gt;</code></pre>
+<p> 示例：</p>
+<pre><code class="shell">git merge origin/master</code></pre>
+</li>
+</ol>
 
   
   
@@ -699,7 +802,7 @@ func main() &#123;
           <blockquote>
             
               
-                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/>https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/</a></p>
+                <p>本文永久链接：<a href=https://blog.secriy.com/2019/10/19/Git%E7%AC%94%E8%AE%B0/>https://blog.secriy.com/2019/10/19/Git%E7%AC%94%E8%AE%B0/</a></p>
               
             
           </blockquote>
@@ -716,10 +819,10 @@ func main() &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-22T19:24:02+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-23T13:48:56+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月22日</p>
+    <p>更新于：2021年6月23日</p>
   </a>
 </div>
 
@@ -728,7 +831,7 @@ func main() &#123;
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Golang</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Programming/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Programming</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Git/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Git</p></a></div>
 
 
         
@@ -741,7 +844,7 @@ func main() &#123;
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2019/10/19/Git%E7%AC%94%E8%AE%B0/&title=Git笔记 - Secriy's Blog&summary=Git 常用操作笔记。"
           
           >
           
@@ -753,7 +856,7 @@ func main() &#123;
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2019/10/19/Git%E7%AC%94%E8%AE%B0/&title=Git笔记 - Secriy's Blog&summary=Git 常用操作笔记。"
           
           >
           
@@ -765,7 +868,7 @@ func main() &#123;
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2019/10/19/Git%E7%AC%94%E8%AE%B0/&title=Git笔记 - Secriy's Blog&summary=Git 常用操作笔记。"
           
           >
           
@@ -795,24 +898,26 @@ func main() &#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/04/17/Golang-Basic-Tutorial/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Golang Basic Tutorial</p>
-          <p class='content'>本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。
+        <a class='prev' href='/2019/10/19/WiFiCrack/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>WiFiCrack</p>
+          <p class='content'>WiFiCrack 笔记。
 
 
 
-命令行操作Golang 提供了完整的操作命令，用于管理和操作项...</p>
+开启监听airmon-ng start wlan0
+扫描信号airodump-ng wlan0mon
+选定 Wi-Fi 监听airodump-ng wlan0m...</p>
         </a>
       
       
-        <a class='next' href='/2021/03/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/'>
-          <p class='title'>数据结构学习笔记（一）<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>数据结构相关复习总结笔记。
+        <a class='next' href='/2019/07/14/%E6%97%A0%E7%BA%BF%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/'>
+          <p class='title'>无线渗透笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>使用 Aircrack-ng 套件进行无线攻击测试。
 
 
 
-顺序表介绍在学习顺序表之前先要知道线性表，线性表是由具有$n&gt;=0$个相同数据类型的数据元素组成的有限序列，线性表是将数据一对一地存储到物理空间之中。
-顺...</p>
+无线监听技术原理无线网卡的 4 种工作模式
+Managed：用于设备与 AP 直接连接， 无线网卡的驱动程序依赖无线 AP 管理整个通...</p>
         </a>
       
     </div>
@@ -855,7 +960,7 @@ func main() &#123;
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C"><span class="toc-text">字符串操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E5%8F%96"><span class="toc-text">截取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6"><span class="toc-text">复制</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="toc-text">命令行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0"><span class="toc-text">可选参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E7%9A%84%E6%94%B9%E5%8A%A8"><span class="toc-text">最近的改动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E5%8E%86%E5%8F%B2%E5%92%8C%E7%8A%B6%E6%80%81"><span class="toc-text">检查历史和状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E4%B8%8E%E6%8F%90%E4%BA%A4"><span class="toc-text">分支与提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E5%90%8C"><span class="toc-text">多人协同</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-text">操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E6%8F%90%E4%BA%A4"><span class="toc-text">初始化和提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">提交到远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80%E7%89%88%E6%9C%AC"><span class="toc-text">回退版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">远程仓库</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -897,7 +1002,7 @@ func main() &#123;
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="Golang中字符串类型的底层实现";
+  pdata.postTitle="Git笔记";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
