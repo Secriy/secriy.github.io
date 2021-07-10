@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -22,13 +24,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>Golang中字符串类型的底层实现 - Secriy&#39;s Blog</title>
-  
-    <meta name="keywords" content="Golang,Programming">
+  <title>标签：Go - Secriy&#39;s Blog</title>
   
 
-  
-    <meta name="description" content="字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。">
   
 
   <!-- feed -->
@@ -491,7 +489,7 @@
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper post search' style="display: none;">
+        <div id="full" class='cover-wrapper  search' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
           
@@ -562,279 +560,212 @@
         <div class="body-wrapper" id="pjax-container">
           
 
+
 <div class='l_main'>
-  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
   
-
-
-  
-  <div class="article-meta" id="top">
     
-    
-    
-      <h1 class="title">
-        Golang中字符串类型的底层实现
-      </h1>
-      <div class='new-meta-box'>
-        
-          
-            
-<div class='new-meta-item author'>
-  <a class='author' href="/" rel="nofollow">
-    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
-    <p>Secriy</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class='new-meta-item category'>
-    <a class='notlink'>
-      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-    </a>
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年4月14日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class="new-meta-item browse leancloud">
-    <a class='notlink'>
       
-      <div id="lc-pv" data-title="Golang中字符串类型的底层实现" data-path="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
-        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
-        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-        次浏览
-      </div>
-    </a>
-  </div>
-
-
+  <section class="post-list">
+    
+      
+        
           
         
           
-            
-<div class="new-meta-item comments-count">
-  
-  <a href="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/#comments">
-    <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">0</span>
-    <span class="leancloud-comments-count">&nbsp;</span>
-  </a>
-</div>
-
-
+        
           
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/06/22/Go-Notes/">
+        Go Notes
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      <div class="note quote cyan"><p>本文是对 Golang 基础知识的关键点进行的总结以及常见错误的解释。</p></div>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='dashed'>
+      <div>
+        
+        <time>2021-06-22</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
         
       </div>
-    
-  </div>
-
-
-  
-  
-  <div class="note quote cyan"><p>字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。</p></div>
-
-<span id="more"></span>
-
-<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>编写一段代码，声明并初始化字符串变量<code>a</code>，值为<code>golang</code>，输出该变量的值。</p>
-<pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    fmt.Println(a)
-&#125;</code></pre>
-<p>使用<strong>compile</strong>工具将源码编译成汇编程序，可以看到刚刚定义的字符串变量的值：</p>
-<pre><code class="assembly">go.string.&quot;golang&quot; SRODATA dupok size=6
-        0x0000 67 6f 6c 61 6e 67</code></pre>
-<p>其中，<code>SRODATA</code>标记表示数据是只读的，因此其被分配的内存空间同样是只读的。由于字符串的只读特性，所有对于字符串的写操作都是通过拷贝实现的。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>字符串包含两部分，指向字符串存储位置开头的指针以及字符串的长度。在 C 语言中，为了确定字符串的结束位置，会自动在字符串末尾添加<code>\0</code>，而 Golang 采用存储字符串长度的方法确定字符串的末尾。</p>
-<pre><code class="go">type StringHeader struct &#123;
-    Data uintptr
-    Len  int
-&#125;</code></pre>
-<h2 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h2><h3 id="截取"><a href="#截取" class="headerlink" title="截取"></a>截取</h3><p>截取是对字符串的部分读取，无需创建字符串拷贝：</p>
-<pre><code class="go">fmt.Println(s1[4])
-fmt.Println(s1[1:2])
-fmt.Println(s1[:])</code></pre>
-<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><pre><code class="go">package main
-
-import (
-    &quot;fmt&quot;
-)
-
-func main() &#123;
-    var a = &quot;golang&quot;
-    var b = a[:]
-    fmt.Println(&amp;a)    // 0xc00003e240
-    fmt.Println(&amp;b)    // 0xc00003e250
-&#125;</code></pre>
-
-  
-  
-    
-    <div class='footer'>
       
-      
-      
-        <div class='copyright'>
-          <blockquote>
-            
-              
-                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/>https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/</a></p>
-              
-            
-          </blockquote>
+        <div>
+          <a class='readmore' href='/2021/06/22/Go-Notes/'>
+            阅读全文
+          </a>
         </div>
       
-      
     </div>
   
-  
-    
 
-
-  <div class='article-meta' id="bottom">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-28T19:19:50+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月28日</p>
-  </a>
 </div>
 
+          </div>
         
       
         
-          
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable">
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Golang</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Programming/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Programming</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
+  
+  
+  
     
-      
-        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
+    <h2 class="article-title" >
+      <a href="/2021/04/20/Go-Learning-defer/">
+        Go Learning: defer
+      </a>
+    </h2>
+  
+  <div class='md'>
     
-      
-        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/&title=Golang中字符串类型的底层实现 - Secriy's Blog&summary=字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。"
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
-    
-      
-    
-      
+      <div class="note quote cyan"><p>本文是 Golang 中 defer 语句的学习和深入理解。</p></div>
     
   </div>
+  
+    <div class='meta-v3' line_style='dashed'>
+      <div>
+        
+        <time>2021-04-20</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/04/20/Go-Learning-defer/'>
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
 </div>
 
-
-
+          </div>
         
       
-    </div>
-  </div>
-
-
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable">
   
   
-
   
-    <div class="prev-next">
-      
-        <a class='prev' href='/2021/04/17/Golang-Basic-Tutorial/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Golang Basic Tutorial</p>
-          <p class='content'>本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。
-
-
-
-命令行操作Golang 提供了完整的操作命令，用于管理和操作项...</p>
-        </a>
-      
-      
-        <a class='next' href='/2020/12/08/Windows%E7%A8%8B%E5%BA%8F%E7%BD%91%E5%8D%A1%E5%88%86%E6%B5%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/'>
-          <p class='title'>Windows程序网卡分流解决方案<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>让 Windows 平台应用程序通过不同网卡进行联网。
-
-
-
-起因&amp;需求由于校园网网速过慢（只有 50Mbps），以及限速策略不方便，Steam 满速下载时基本上就干不了其他事情了，看个...</p>
-        </a>
-      
-    </div>
   
-</article>
-
-
-  
-
-  <article class="post white-box reveal shadow floatable" id="comments">
-    <p ct><i class='fas fa-comments'></i> 评论</p>
     
-    <div id="valine_container" class="valine_thread">
-  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+    <h2 class="article-title" >
+      <a href="/2021/04/17/Go-Basic-Tutorial/">
+        Go Basic Tutorial
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      <div class="note quote cyan"><p>本文是 Golang 的基础学习笔记，大多是对*<a target="_blank" rel="noopener" href="https://tour.golang.org/">A Tour of Go</a><em>的翻译总结，并参考了</em><a target="_blank" rel="noopener" href="http://www.gopl.io/">The Go Programming Language</a>*的部分内容自行实现了相关代码并对知识点进行了梳理。</p></div>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='dashed'>
+      <div>
+        
+        <time>2021-04-17</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/04/17/Go-Basic-Tutorial/'>
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
 </div>
 
-  </article>
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/04/14/Go%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
+        Go字符串类型的底层实现
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      <div class="note quote cyan"><p>字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。</p></div>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='dashed'>
+      <div>
+        
+        <time>2021-04-14</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/04/14/Go%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/'>
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+    
+  </section>
+  
+    
+  
 
 
-
-
-
-
+    
+  
 </div>
 <aside class='l_side'>
   
@@ -842,19 +773,141 @@ func main() &#123;
     
     
 
+<section class="widget blogger shadow floatable desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box circle' href='/about/'>
+          <img no-lazy src='https://upyun.secriy.com/statics/img/avatar.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Secriy's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@secriy.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/Secriy"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=494386912"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
 
+  
 
-  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+  
+    
+    
+  
+
+  <section class="widget category shadow floatable desktop">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
     
   </header>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C"><span class="toc-text">字符串操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E5%8F%96"><span class="toc-text">截取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6"><span class="toc-text">复制</span></a></li></ol></li></ol>
+      <ul class="entry navigation">
+        
+          <li><a class="flat-box"
+            title="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"
+            id="categoriesE4BFA1E681AFE5AE89E585A8"
+            ><div class='name'>信息安全</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+            id="categoriesE5ADA6E4B9A0E7AC94E8AEB0"
+            ><div class='name'>学习笔记</div><div class='badge'>(5)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/" href="/categories/%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/"
+            id="categoriesE6938DE4BD9CE6898BE5868C"
+            ><div class='name'>操作手册</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" href="/categories/%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/"
+            id="categoriesE7AE97E6B395E588B7E9A298"
+            ><div class='name'>算法刷题</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/" href="/categories/%E7%BB%8F%E9%AA%8C%E6%95%99%E7%A8%8B/"
+            id="categoriesE7BB8FE9AA8CE69599E7A88B"
+            ><div class='name'>经验教程</div><div class='badge'>(6)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/"
+            id="categoriesE8BDAFE4BBB6E5B7A5E585B7"
+            ><div class='name'>软件工具</div><div class='badge'>(2)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow floatable desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/Algorithms/" style="font-size: 14px; color: #000">Algorithms</a> <a href="/tags/CSGO/" style="font-size: 14px; color: #000">CSGO</a> <a href="/tags/CTF/" style="font-size: 14px; color: #000">CTF</a> <a href="/tags/Crack/" style="font-size: 19px; color: #6f6f6f">Crack</a> <a href="/tags/Database/" style="font-size: 19px; color: #6f6f6f">Database</a> <a href="/tags/Games/" style="font-size: 14px; color: #000">Games</a> <a href="/tags/Git/" style="font-size: 14px; color: #000">Git</a> <a href="/tags/Go/" style="font-size: 24px; color: #ddd">Go</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #000">Hexo</a> <a href="/tags/Kali-Linux/" style="font-size: 19px; color: #6f6f6f">Kali Linux</a> <a href="/tags/Linux/" style="font-size: 19px; color: #6f6f6f">Linux</a> <a href="/tags/MySQL/" style="font-size: 14px; color: #000">MySQL</a> <a href="/tags/Network/" style="font-size: 19px; color: #6f6f6f">Network</a> <a href="/tags/Powershell/" style="font-size: 14px; color: #000">Powershell</a> <a href="/tags/Programming/" style="font-size: 24px; color: #ddd">Programming</a> <a href="/tags/Proxy/" style="font-size: 14px; color: #000">Proxy</a> <a href="/tags/Security/" style="font-size: 14px; color: #000">Security</a> <a href="/tags/Software/" style="font-size: 19px; color: #6f6f6f">Software</a> <a href="/tags/Windows/" style="font-size: 19px; color: #6f6f6f">Windows</a> <a href="/tags/Wireless/" style="font-size: 14px; color: #000">Wireless</a>
     </div>
   </section>
 
@@ -865,20 +918,125 @@ func main() &#123;
     
     
 
-<section class="widget text shadow floatable desktop">
+<section class="widget shadow floatable desktop">
   
   <header>
     
-      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
     
   </header>
 
 
   <div class='content'>
-    
-      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+    <div class="webinfo">
+      
+        <div class="webinfo-item">
+          <div>文章数目：</div>
+          <div>20 篇</div>
+        </div>
+      
 
-    
+      
+        <div class="webinfo-item">
+          <div>已运行时间：</div>
+          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
+        </div>
+        <script>
+          var BirthDay = new Date(new Date('2018/06/02'));
+          var today = new Date();
+          var timeold = (today.getTime() - BirthDay.getTime());
+          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
+          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
+        </script>
+      
+
+
+      
+        <div class="webinfo-item">
+          <div>本站总字数：</div>
+          <div>27.7k 字</div>
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站访客数：</div>
+          
+          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
+          
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站总访问量：</div>
+          
+          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
+          
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>最后活动时间：</div>
+          
+            <div id="last-update" style="display: none;">Sat Jul 10 2021 17:27:04 GMT+0800 (中国标准时间)</div>
+            <div id="last-update-show">2021-07-10 日</div>
+          
+        </div>
+        
+        <script>
+          function timeago(dateTimeStamp) {
+              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
+              var hour = minute * 60;
+              var day = hour * 24;
+              var week = day * 7;
+              var month = day * 30;
+              var now = new Date().getTime(); //获取当前时间毫秒
+              var diffValue = now - dateTimeStamp; //时间差
+              if (diffValue < 0) {
+                  return;
+              }
+              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
+              var hourC = diffValue / hour;
+              var dayC = diffValue / day;
+              var weekC = diffValue / week;
+              var monthC = diffValue / month;
+              if (monthC >= 1 && monthC <= 3) {
+                  result = " " + parseInt(monthC) + " 月前"
+              } else if (weekC >= 1 && weekC <= 3) {
+                  result = " " + parseInt(weekC) + " 周前"
+              } else if (dayC >= 1 && dayC <= 6) {
+                  result = " " + parseInt(dayC) + " 天前"
+              } else if (hourC >= 1 && hourC <= 23) {
+                  result = " " + parseInt(hourC) + " 小时前"
+              } else if (minC >= 1 && minC <= 59) {
+                  result = " " + parseInt(minC) + " 分钟前"
+              } else if (diffValue >= 0 && diffValue <= minute) {
+                  result = "刚刚"
+              } else {
+                  var datetime = new Date();
+                  datetime.setTime(dateTimeStamp);
+                  var Nyear = datetime.getFullYear();
+                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+                  result = Nyear + "-" + Nmonth + "-" + Ndate
+              }
+              return result;
+          }
+          var lastUpDate = document.getElementById('last-update').innerHTML;
+          try {
+            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
+          } catch (error) {
+            document.getElementById('last-update-show').innerHTML = '2021-07-10 日';
+          }
+        </script>
+        
+      
+    </div>
   </div>
 </section>
 
@@ -888,15 +1046,14 @@ func main() &#123;
 </aside>
 
 
-
 		  
 		  <!--此文件用来存放一些不方便取值的变量-->
 <!--思路大概是将值藏到重加载的区域内-->
 
 <script>
   window.pdata={}
-  pdata.ispage=true;
-  pdata.postTitle="Golang中字符串类型的底层实现";
+  pdata.ispage=false;
+  pdata.postTitle="";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

@@ -22,13 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Golang Basic Tutorial - Secriy&#39;s Blog</title>
+  <title>Go Basic Tutorial - Secriy&#39;s Blog</title>
   
-    <meta name="keywords" content="Golang,Programming">
+    <meta name="keywords" content="Go,Programming">
   
 
   
-    <meta name="description" content="本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。">
+    <meta name="description" content="本文是 Golang 的基础学习笔记，大多是对*A Tour of Go的翻译总结，并参考了The Go Programming Language*的部分内容自行实现了相关代码并对知识点进行了梳理。">
   
 
   <!-- feed -->
@@ -573,7 +573,7 @@
     
     
       <h1 class="title">
-        Golang Basic Tutorial
+        Go Basic Tutorial
       </h1>
       <div class='new-meta-box'>
         
@@ -615,7 +615,7 @@
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Golang Basic Tutorial" data-path="/2021/04/17/Golang-Basic-Tutorial/">
+      <div id="lc-pv" data-title="Go Basic Tutorial" data-path="/2021/04/17/Go-Basic-Tutorial/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -630,9 +630,9 @@
             
 <div class="new-meta-item comments-count">
   
-  <a href="/2021/04/17/Golang-Basic-Tutorial/#comments">
+  <a href="/2021/04/17/Go-Basic-Tutorial/#comments">
     <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/2021/04/17/Golang-Basic-Tutorial/">0</span>
+    <span class="valine-comment-count" data-xid="/2021/04/17/Go-Basic-Tutorial/">0</span>
     <span class="leancloud-comments-count">&nbsp;</span>
   </a>
 </div>
@@ -647,7 +647,7 @@
 
   
   
-  <div class="note quote cyan"><p>本文是 Golang 的基础学习笔记，大多是对<em>A Tour of Go</em> 的翻译总结，自行实现了相关代码并对知识点进行了梳理。</p></div>
+  <div class="note quote cyan"><p>本文是 Golang 的基础学习笔记，大多是对*<a target="_blank" rel="noopener" href="https://tour.golang.org/">A Tour of Go</a><em>的翻译总结，并参考了</em><a target="_blank" rel="noopener" href="http://www.gopl.io/">The Go Programming Language</a>*的部分内容自行实现了相关代码并对知识点进行了梳理。</p></div>
 
 <span id="more"></span>
 
@@ -887,6 +887,9 @@ float32 float64 // 浮点数
 
 complex64 complex128 // 复数</code></pre>
 <p>其中，<code>int</code>、<code>uint</code>、<code>uintptr</code>类型的大小会随位宽的不同而不同，比如在 32 位环境下，它们都占 32bit，而在 64 位环境下它们会占 64bit。</p>
+<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><p>Golang 支持自定义类型，使用<code>type</code>关键字指定，并要求指定其底层类型：</p>
+<pre><code class="go">type MyTypeA int
+type MyTypeB string</code></pre>
 <h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量（Varrible）是编程语言中最基本的量，基本的变量操作有”声明“、”定义“、”初始化“和”赋值“四种。</p>
 <ul>
 <li><strong>声明（declare）</strong>：告诉编译器/解析器这个变量的存在，但不分配内存空间</li>
@@ -912,6 +915,22 @@ func main() &#123;
     var a int
 &#125;</code></pre>
 <pre><code>xxx\main.go:4:6: a declared but not used</code></pre>
+<h4 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h4><p>使用<code>=</code>来对变量进行赋值：</p>
+<pre><code class="go">var a int
+a = 12</code></pre>
+<p>使用元组赋值可以对多个变量进行赋值：</p>
+<pre><code class="go">var a, b int
+a, b = 1, 2
+
+// a = 1
+// b = 2</code></pre>
+<p>利用元组赋值可以进行变量值的交换：</p>
+<pre><code class="go">var a, b int
+a, b = 1, 2
+a, b = b, a
+
+// a = 2
+// b = 1</code></pre>
 <h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>可以在变量声明时手动初始化：</p>
 <pre><code class="go">var a int = 10
 fmt.Println(a) // 10</code></pre>
@@ -948,7 +967,7 @@ fmt.Println(c) // 30</code></pre>
 func add(a int, b int) (int, string) &#123;
     return a + b, &quot;Golang&quot; // 函数add返回了两个值
 &#125;</code></pre>
-<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>常量（Constant）的声明类似于变量，但使用<code>const</code>关键字，常量只可以是字符、字符串、布尔值和数值型，必须是编译期就确定的值。</p>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><h4 id="声明-1"><a href="#声明-1" class="headerlink" title="声明"></a>声明</h4><p>常量（Constant）的声明类似于变量，但使用<code>const</code>关键字，常量只可以是字符、字符串、布尔值和数值型，必须是编译期就确定的值。</p>
 <p>常量是固定的值，在程序的整个运行过程中不会改变，变量一般存储与内存中的堆或栈中，位于数据段；而常量通常放在代码段，直接存储其数值，类型由编译器维护。</p>
 <pre><code class="go">const pi float64 = 3.1415926
 fmt.Println(pi) // 3.1415926</code></pre>
@@ -1042,7 +1061,7 @@ var f float64 = i
     v := 42
     fmt.Printf(&quot;%T\n&quot;, v) // int
 &#125;</code></pre>
-<p>通过反射也可以得到变量的类型（之后会详细介绍）：</p>
+<p>通过反射也可以得到变量的类型：</p>
 <pre><code class="go">func main() &#123;
     v := 42
     fmt.Println(reflect.TypeOf(v)) // int
@@ -1348,7 +1367,7 @@ func printSlice(s []int) &#123;
     fmt.Printf(&quot;len=%d cap=%d %v\n&quot;, len(s), cap(s), s)
 &#125;</code></pre>
 <p>上述代码的四个切片底层共用一个数组，他们各自包含了起始元素的地址、切片长度和切片容量：</p>
-<p><img src="/2021/04/17/Golang-Basic-Tutorial/slice.png" class="lazyload" data-srcset="/2021/04/17/Golang-Basic-Tutorial/slice.png" srcset="data:image/png;base64,666" alt="slice"></p>
+<p><img src="/2021/04/17/Go-Basic-Tutorial/slice.png" class="lazyload" data-srcset="/2021/04/17/Go-Basic-Tutorial/slice.png" srcset="data:image/png;base64,666" alt="slice"></p>
 <ul>
 <li>切片<code>s</code>从数组的首位开始，长度和容量均等于数组的大小</li>
 <li>切片<code>s1</code>从数组的首位开始，长度为 0，但从首位开始计算数组的长度为 6，即切片的容量为 6</li>
@@ -1413,7 +1432,7 @@ s = append(s, 1, 2 ,3)
 fmt.Println(s) // [0 1 2 3]</code></pre>
 <p>append 的第一个参数是原切片，其后一个或多个参数是需要添加的新元素，函数返回一个新的切片，他包含了原切片的所有元素和新元素。</p>
 <p>当切片的底层数组大小不足时会分配一个更大的数组，返回的切片会指向这个新分配的数组。</p>
-<h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><p>内建函数<code>range</code>用于在<code>for</code>循环中遍历<code>slice</code>和<code>map</code>：</p>
+<h4 id="遍历切片"><a href="#遍历切片" class="headerlink" title="遍历切片"></a>遍历切片</h4><p>内建函数<code>range</code>用于在<code>for</code>循环中遍历<code>slice</code>和<code>map</code>：</p>
 <pre><code class="go">slice := []int&#123;1, 2, 3 ,4, 5&#125;
 for i, v := range slice &#123;
     fmt.Printf(&quot;Index:%d Value:%d\n&quot;, i, v)
@@ -1449,7 +1468,7 @@ m[&quot;a&quot;] = 1
 fmt.Println(m)
 
 // panic: assignment to entry in nil map</code></pre>
-<h4 id="创建-map"><a href="#创建-map" class="headerlink" title="创建 map"></a>创建 map</h4><p>Golang 提供了内建的<code>make</code>方法，可以用来创建一个 map：</p>
+<h4 id="创建-Map"><a href="#创建-Map" class="headerlink" title="创建 Map"></a>创建 Map</h4><p>Golang 提供了内建的<code>make</code>方法，可以用来创建一个 map：</p>
 <pre><code class="go">m := make(map[string]int)
 m[&quot;A&quot;] = 1
 m[&quot;B&quot;] = 2
@@ -1459,7 +1478,7 @@ fmt.Println(m) // map[A:1 B:2]</code></pre>
 var m2 = make(map[string]int)
 fmt.Println(m1 == nil) // true
 fmt.Println(m2 == nil) // false</code></pre>
-<h4 id="map-字面量"><a href="#map-字面量" class="headerlink" title="map 字面量"></a>map 字面量</h4><p>map 字面量类似于 struct 字面量，但必须要指定 Key：</p>
+<h4 id="Map-字面量"><a href="#Map-字面量" class="headerlink" title="Map 字面量"></a>Map 字面量</h4><p>map 字面量类似于 struct 字面量，但必须要指定 Key：</p>
 <pre><code class="go">type age int
 var m = map[string]age&#123;
     &quot;Dog&quot;: 12,
@@ -1486,7 +1505,7 @@ var m2 = map[string]struct &#123;
 &#125;
 fmt.Println(m1)
 fmt.Println(m2)</code></pre>
-<h4 id="map-操作"><a href="#map-操作" class="headerlink" title="map 操作"></a>map 操作</h4><p>插入一个键值对：</p>
+<h4 id="Map-操作"><a href="#Map-操作" class="headerlink" title="Map 操作"></a>Map 操作</h4><p>插入一个键值对：</p>
 <pre><code class="go">m[key] = value</code></pre>
 <p>获取一个键值对的值：</p>
 <pre><code class="go">v := m[key]</code></pre>
@@ -1511,6 +1530,21 @@ if value, ok := m[&quot;Jerry&quot;]; ok &#123;
 // NOTEXIST 0
 // 12</code></pre>
 <p>当键值对不存在时，map 返回值数据类型的零值。</p>
+<h4 id="遍历-map"><a href="#遍历-map" class="headerlink" title="遍历 map"></a>遍历 map</h4><p>使用内建函数<code>range</code>对 Map 进行遍历：</p>
+<pre><code class="go">num := map[string]int&#123;
+    &quot;a&quot;: 1,
+    &quot;b&quot;: 2,
+    &quot;c&quot;: 3,
+&#125;
+
+for k, v := range num &#123;
+    fmt.Printf(&quot;Index:%q Value:%d\n&quot;, k, v)
+&#125;
+
+// Index:&quot;b&quot; Value:2
+// Index:&quot;c&quot; Value:3
+// Index:&quot;a&quot; Value:1</code></pre>
+<p>多次执行可以发现，其遍历的结果并非有序，这其实是有意为之，强制要求程序不会依赖 Map 底层具体的哈希函数实现。</p>
 <h3 id="函数值"><a href="#函数值" class="headerlink" title="函数值"></a>函数值</h3><p>函数值（Function Values）同样是一种数据类型，和其他类型一样可以被使用：</p>
 <pre><code class="go">func main() &#123;
     sum := calc(func(a, b int) int &#123;
@@ -2241,7 +2275,7 @@ func input(ch, sig chan int) &#123;
           <blockquote>
             
               
-                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/17/Golang-Basic-Tutorial/>https://blog.secriy.com/2021/04/17/Golang-Basic-Tutorial/</a></p>
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/04/17/Go-Basic-Tutorial/>https://blog.secriy.com/2021/04/17/Go-Basic-Tutorial/</a></p>
               
             
           </blockquote>
@@ -2258,10 +2292,10 @@ func input(ch, sig chan int) &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-28T19:19:50+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-10T17:17:25+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年6月28日</p>
+    <p>更新于：2021年7月10日</p>
   </a>
 </div>
 
@@ -2270,7 +2304,7 @@ func input(ch, sig chan int) &#123;
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Golang</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Programming/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Programming</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Go/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Go</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Programming/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Programming</p></a></div>
 
 
         
@@ -2283,7 +2317,7 @@ func input(ch, sig chan int) &#123;
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/17/Golang-Basic-Tutorial/&title=Golang Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/04/17/Go-Basic-Tutorial/&title=Go Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对*A Tour of Go的翻译总结，并参考了The Go Programming Language*的部分内容自行实现了相关代码并对知识点进行了梳理。"
           
           >
           
@@ -2295,7 +2329,7 @@ func input(ch, sig chan int) &#123;
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/17/Golang-Basic-Tutorial/&title=Golang Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/04/17/Go-Basic-Tutorial/&title=Go Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对*A Tour of Go的翻译总结，并参考了The Go Programming Language*的部分内容自行实现了相关代码并对知识点进行了梳理。"
           
           >
           
@@ -2307,7 +2341,7 @@ func input(ch, sig chan int) &#123;
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/17/Golang-Basic-Tutorial/&title=Golang Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对A Tour of Go 的翻译总结，自行实现了相关代码并对知识点进行了梳理。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/04/17/Go-Basic-Tutorial/&title=Go Basic Tutorial - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对*A Tour of Go的翻译总结，并参考了The Go Programming Language*的部分内容自行实现了相关代码并对知识点进行了梳理。"
           
           >
           
@@ -2337,8 +2371,8 @@ func input(ch, sig chan int) &#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/04/20/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8Bdefer/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Golang学习之defer</p>
+        <a class='prev' href='/2021/04/20/Go-Learning-defer/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Go Learning: defer</p>
           <p class='content'>本文是 Golang 中 defer 语句的学习和深入理解。
 
 
@@ -2347,8 +2381,8 @@ func input(ch, sig chan int) &#123;
         </a>
       
       
-        <a class='next' href='/2021/04/14/Golang%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/'>
-          <p class='title'>Golang中字符串类型的底层实现<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+        <a class='next' href='/2021/04/14/Go%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/'>
+          <p class='title'>Go字符串类型的底层实现<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>字符串是 Golang 中一种基本数据类型，同样也是绝大多数编程语言重要的一种基本数据类型，其基本特性是底层只读存储不可变。
 
 
@@ -2396,7 +2430,7 @@ func input(ch, sig chan int) &#123;
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-text">命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bug"><span class="toc-text">bug</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#build"><span class="toc-text">build</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%BC%96%E8%AF%91"><span class="toc-text">普通编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="toc-text">交叉编译</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clean"><span class="toc-text">clean</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#doc"><span class="toc-text">doc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#env"><span class="toc-text">env</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fix"><span class="toc-text">fix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fmt"><span class="toc-text">fmt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#generate"><span class="toc-text">generate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get"><span class="toc-text">get</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#install"><span class="toc-text">install</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mod"><span class="toc-text">mod</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">常用操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#run"><span class="toc-text">run</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#test"><span class="toc-text">test</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tool"><span class="toc-text">tool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#version"><span class="toc-text">version</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vet"><span class="toc-text">vet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80"><span class="toc-text">语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%85"><span class="toc-text">包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">基础数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">短变量声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%8F%98%E9%87%8F"><span class="toc-text">匿名变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E5%B8%B8%E9%87%8F"><span class="toc-text">数值型常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iota"><span class="toc-text">iota</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-text">类型推断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">命名返回值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="toc-text">流控制语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%EF%BC%88if%EF%BC%89"><span class="toc-text">判断（if）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%EF%BC%88for%EF%BC%89"><span class="toc-text">循环（for）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#continue"><span class="toc-text">continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break"><span class="toc-text">break</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%EF%BC%88switch%EF%BC%89"><span class="toc-text">选择（switch）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E8%BF%9F%EF%BC%88defer%EF%BC%89"><span class="toc-text">推迟（defer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">其他数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88"><span class="toc-text">结构体指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">结构体字面量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87"><span class="toc-text">切片</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">对数组的引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">切片字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E9%95%BF%E5%BA%A6%E5%92%8C%E5%AE%B9%E9%87%8F"><span class="toc-text">切片的长度和容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E5%88%87%E7%89%87"><span class="toc-text">空切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%87%E7%89%87"><span class="toc-text">创建切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%88%87%E7%89%87"><span class="toc-text">切片的切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%85%83%E7%B4%A0%E6%B7%BB%E5%8A%A0"><span class="toc-text">切片的元素添加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%8D%E5%8E%86"><span class="toc-text">遍历</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-map"><span class="toc-text">创建 map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map-%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">map 字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map-%E6%93%8D%E4%BD%9C"><span class="toc-text">map 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%80%BC"><span class="toc-text">函数值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%AD%E5%8C%85"><span class="toc-text">函数闭包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%92%8C%E6%8E%A5%E5%8F%A3"><span class="toc-text">方法和接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-text">指针接收者</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">隐式实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%80%BC"><span class="toc-text">接口的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">内部值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3"><span class="toc-text">空接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="toc-text">类型断言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B-Switch"><span class="toc-text">类型 Switch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stringers"><span class="toc-text">Stringers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Readers"><span class="toc-text">Readers</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91"><span class="toc-text">并发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Goroutines"><span class="toc-text">Goroutines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channels"><span class="toc-text">Channels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84-Channel"><span class="toc-text">带缓冲区的 Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84%E5%85%B3%E9%97%AD"><span class="toc-text">Channel 的关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84-range-%E6%93%8D%E4%BD%9C"><span class="toc-text">Channel 的 range 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select"><span class="toc-text">Select</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-text">TODO</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-text">命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bug"><span class="toc-text">bug</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#build"><span class="toc-text">build</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%BC%96%E8%AF%91"><span class="toc-text">普通编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="toc-text">交叉编译</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clean"><span class="toc-text">clean</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#doc"><span class="toc-text">doc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#env"><span class="toc-text">env</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fix"><span class="toc-text">fix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fmt"><span class="toc-text">fmt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#generate"><span class="toc-text">generate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get"><span class="toc-text">get</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#install"><span class="toc-text">install</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mod"><span class="toc-text">mod</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">常用操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#run"><span class="toc-text">run</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#test"><span class="toc-text">test</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tool"><span class="toc-text">tool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#version"><span class="toc-text">version</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vet"><span class="toc-text">vet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80"><span class="toc-text">语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%85"><span class="toc-text">包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">基础数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="toc-text">自定义类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">短变量声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%8F%98%E9%87%8F"><span class="toc-text">匿名变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E-1"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E5%B8%B8%E9%87%8F"><span class="toc-text">数值型常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iota"><span class="toc-text">iota</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-text">类型推断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">命名返回值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="toc-text">流控制语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%EF%BC%88if%EF%BC%89"><span class="toc-text">判断（if）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%EF%BC%88for%EF%BC%89"><span class="toc-text">循环（for）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#continue"><span class="toc-text">continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break"><span class="toc-text">break</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%EF%BC%88switch%EF%BC%89"><span class="toc-text">选择（switch）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E8%BF%9F%EF%BC%88defer%EF%BC%89"><span class="toc-text">推迟（defer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">其他数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88"><span class="toc-text">结构体指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">结构体字面量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87"><span class="toc-text">切片</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">对数组的引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">切片字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E9%95%BF%E5%BA%A6%E5%92%8C%E5%AE%B9%E9%87%8F"><span class="toc-text">切片的长度和容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E5%88%87%E7%89%87"><span class="toc-text">空切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%87%E7%89%87"><span class="toc-text">创建切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%88%87%E7%89%87"><span class="toc-text">切片的切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%85%83%E7%B4%A0%E6%B7%BB%E5%8A%A0"><span class="toc-text">切片的元素添加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E5%88%87%E7%89%87"><span class="toc-text">遍历切片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Map"><span class="toc-text">创建 Map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Map-%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">Map 字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Map-%E6%93%8D%E4%BD%9C"><span class="toc-text">Map 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%8D%E5%8E%86-map"><span class="toc-text">遍历 map</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%80%BC"><span class="toc-text">函数值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%AD%E5%8C%85"><span class="toc-text">函数闭包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%92%8C%E6%8E%A5%E5%8F%A3"><span class="toc-text">方法和接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-text">指针接收者</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">隐式实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%80%BC"><span class="toc-text">接口的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">内部值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3"><span class="toc-text">空接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="toc-text">类型断言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B-Switch"><span class="toc-text">类型 Switch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stringers"><span class="toc-text">Stringers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Readers"><span class="toc-text">Readers</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91"><span class="toc-text">并发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Goroutines"><span class="toc-text">Goroutines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channels"><span class="toc-text">Channels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84-Channel"><span class="toc-text">带缓冲区的 Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84%E5%85%B3%E9%97%AD"><span class="toc-text">Channel 的关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84-range-%E6%93%8D%E4%BD%9C"><span class="toc-text">Channel 的 range 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select"><span class="toc-text">Select</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-text">TODO</span></a></li></ol>
     </div>
   </section>
 
@@ -2438,7 +2472,7 @@ func input(ch, sig chan int) &#123;
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="Golang Basic Tutorial";
+  pdata.postTitle="Go Basic Tutorial";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
