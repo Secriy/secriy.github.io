@@ -651,7 +651,160 @@
 
 <span id="more"></span>
 
-<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><h3 id="14-Longest-Common-Prefix"><a href="#14-Longest-Common-Prefix" class="headerlink" title="14. Longest Common Prefix"></a>14. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-common-prefix/description/">Longest Common Prefix</a></h3><blockquote>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><h3 id="15-3Sum"><a href="#15-3Sum" class="headerlink" title="15. 3Sum"></a>15. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/3sum/description/">3Sum</a></h3><blockquote>
+<p>Given an integer array nums, return all the triplets <code>[nums[i], nums[j], nums[k]]</code> such that <code>i != j</code>, <code>i != k</code>, and <code>j != k</code>, and <code>nums[i] + nums[j] + nums[k] == 0</code>.</p>
+<p>Notice that the solution set must not contain duplicate triplets.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: nums = []
+Output: []</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: nums = [0]
+Output: []</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 3000</code></li>
+<li><code>-10^5 &lt;= nums[i] &lt;= 10^5</code></li>
+</ul>
+</blockquote>
+<h4 id="Ideas"><a href="#Ideas" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>排序+双指针解法。</li>
+</ul>
+<h4 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Common</p>
+<pre><code class="go">func threeSum(nums []int) [][]int &#123;
+    length := len(nums)
+    res := make([][]int, 0)
+    if length &lt; 3 &#123;
+        return res
+    &#125;
+    sort.Ints(nums)
+    for k, v := range nums &#123;
+        if v &gt; 0 &#123;
+            return res
+        &#125;
+        if k &gt; 0 &amp;&amp; v == nums[k-1] &#123;
+            continue
+        &#125;
+        left, right := k+1, length-1
+        for left &lt; right &#123;
+            sum := v + nums[left] + nums[right]
+            if sum == 0 &#123;
+                res = append(res, []int&#123;v, nums[left], nums[right]&#125;)
+                for left &lt; right &amp;&amp; nums[left] == nums[left+1] &#123;
+                    left++
+                &#125;
+                for left &lt; right &amp;&amp; nums[right] == nums[right-1] &#123;
+                    right--
+                &#125;
+                left++
+                right--
+            &#125; else if sum &gt; 0 &#123;
+                right--
+            &#125; else &#123;
+                left++
+            &#125;
+        &#125;
+
+    &#125;
+    return res
+&#125;</code></pre>
+</li>
+</ul>
+<h3 id="66-Plus-One"><a href="#66-Plus-One" class="headerlink" title="66. Plus One"></a>66. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/plus-one/description/">Plus One</a></h3><blockquote>
+<p>Given a <strong>non-empty</strong> array of decimal digits representing a non-negative integer, increment one to the integer.</p>
+<p>The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.</p>
+<p>You may assume the integer does not contain any leading zero, except the number 0 itself.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: digits = [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: digits = [0]
+Output: [1]</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= digits.length &lt;= 100</code></li>
+<li><code>0 &lt;= digits[i] &lt;= 9</code></li>
+</ul>
+</blockquote>
+<h4 id="Ideas-1"><a href="#Ideas-1" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>从数组末端开始遍历，当当前数字+1 后大于 9 即进位，将当前数字置 0。如果当前位置为数组首端，在数组前面插入一个 1 即可。</li>
+</ul>
+<h4 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Common</p>
+<pre><code class="go">func plusOne(digits []int) []int &#123;
+    for i := len(digits) - 1; i &gt;= 0; i-- &#123;
+        digits[i]++
+        if digits[i] &gt; 9 &#123;
+            digits[i] = 0
+            if i == 0 &#123;
+                digits = append([]int&#123;1&#125;, digits...)
+                break
+            &#125;
+            continue
+        &#125;
+        break
+    &#125;
+    return digits
+&#125;</code></pre>
+</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><h3 id="3-Longest-Substring-Without-Repeating-Characters"><a href="#3-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="3. Longest Substring Without Repeating Characters"></a>3. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-substring-without-repeating-characters/description/">Longest Substring Without Repeating Characters</a></h3><blockquote>
+<p>Given a string <code>s</code>, find the length of the <strong>longest substring</strong> without repeating characters.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: s = &quot;abcabcbb&quot;
+Output: 3
+Explanation: The answer is &quot;abc&quot;, with the length of 3.</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: s = &quot;bbbbb&quot;
+Output: 1
+Explanation: The answer is &quot;b&quot;, with the length of 1.</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: s = &quot;pwwkew&quot;
+Output: 3
+Explanation: The answer is &quot;wke&quot;, with the length of 3.
+Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.</code></pre>
+<p><strong>Example 4:</strong></p>
+<pre><code>Input: s = &quot;&quot;
+Output: 0</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 5 * 10^4</code></li>
+<li><code>s</code> consists of English letters, digits, symbols and spaces.</li>
+</ul>
+</blockquote>
+<h4 id="Ideas-2"><a href="#Ideas-2" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>使用滑动窗口解法，利用双指针确定最大的窗口。</li>
+</ul>
+<h4 id="Solutions-2"><a href="#Solutions-2" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Sliding-Window</p>
+<pre><code class="go">func lengthOfLongestSubstring(s string) int &#123;
+    res, left, right := 0, 0, 0
+    m := make(map[byte]bool, 0)
+    for right &lt; len(s) &#123;
+        if _, ok := m[s[right]]; !ok &#123;
+            m[s[right]] = true
+            if right-left+1 &gt; res &#123;
+                res = right - left + 1
+            &#125;
+            right++
+        &#125; else &#123;
+            delete(m, s[left])
+            left++
+        &#125;
+    &#125;
+    return res
+&#125;</code></pre>
+</li>
+</ul>
+<h3 id="14-Longest-Common-Prefix"><a href="#14-Longest-Common-Prefix" class="headerlink" title="14. Longest Common Prefix"></a>14. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-common-prefix/description/">Longest Common Prefix</a></h3><blockquote>
 <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
 <p>If there is no common prefix, return an empty string <code>&quot;&quot;</code>.</p>
 <p><strong>Example 1:</strong></p>
@@ -668,7 +821,174 @@ Explanation: There is no common prefix among the input strings.</code></pre>
 <li><code>strs[i]</code> consists of only lower-case English letters.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas"><a href="#Ideas" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h4><h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><h3 id="206-Reverse-Linked-List"><a href="#206-Reverse-Linked-List" class="headerlink" title="206. Reverse Linked List"></a>206. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-linked-list/description/">Reverse Linked List</a></h3><blockquote>
+<h4 id="Ideas-3"><a href="#Ideas-3" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-3"><a href="#Solutions-3" class="headerlink" title="Solutions"></a>Solutions</h4><h3 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20. Valid Parentheses"></a>20. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-parentheses/description/">Valid Parentheses</a></h3><blockquote>
+<p>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;&#123;&#39;</code>, <code>&#39;&#125;&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</p>
+<p>An input string is valid if:</p>
+<ol>
+<li>Open brackets must be closed by the same type of brackets.</li>
+<li>Open brackets must be closed in the correct order.</li>
+</ol>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: s = &quot;()&quot;
+Output: true</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: s = &quot;()[]&#123;&#125;&quot;
+Output: true</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: s = &quot;(]&quot;
+Output: false</code></pre>
+<p><strong>Example 4:</strong></p>
+<pre><code>Input: s = &quot;([)]&quot;
+Output: false</code></pre>
+<p><strong>Example 5:</strong></p>
+<pre><code>Input: s = &quot;&#123;[]&#125;&quot;
+Output: true</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of parentheses only <code>&#39;()[]&#123;&#125;&#39;</code>.</li>
+</ul>
+</blockquote>
+<h4 id="Ideas-4"><a href="#Ideas-4" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>循环将字符串里的<code>&#39;&#123;&#125;()[]&#39;</code>替换为空字符串，最终得到空字符串即为匹配。该解法实际效率较低。</li>
+<li>对于括号匹配问题常见的解法是使用栈匹配。</li>
+</ul>
+<h4 id="Solutions-4"><a href="#Solutions-4" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Replace</p>
+<pre><code class="go">func isValid(s string) bool &#123;
+    for strings.Contains(s, &quot;[]&quot;) || strings.Contains(s, &quot;&#123;&#125;&quot;) || strings.Contains(s, &quot;()&quot;) &#123;
+        s = strings.Replace(s, &quot;[]&quot;, &quot;&quot;, -1)
+        s = strings.Replace(s, &quot;&#123;&#125;&quot;, &quot;&quot;, -1)
+        s = strings.Replace(s, &quot;()&quot;, &quot;&quot;, -1)
+    &#125;
+    if s == &quot;&quot; &#123;
+        return true
+    &#125;
+    return false
+&#125;</code></pre>
+</li>
+<li><p>Stack</p>
+<pre><code class="go">func isValid(s string) bool &#123;
+    stack := make([]byte, 0)
+    length := 0
+    for _, v := range []byte(s) &#123;
+        stack = append(stack, v)
+        length++
+        for length &gt; 1 &#123;
+            left := stack[length-2]        // 仅用于增强代码可读性，可省略
+            right := stack[length-1]
+            if (left == &#39;(&#39; &amp;&amp; right == &#39;)&#39;) || (left == &#39;&#123;&#39; &amp;&amp; right == &#39;&#125;&#39;) || (left == &#39;[&#39; &amp;&amp; right == &#39;]&#39;) &#123;
+                length -= 2
+                stack = stack[:length]
+                continue
+            &#125;
+            break
+        &#125;
+    &#125;
+    return len(stack) == 0
+&#125;</code></pre>
+</li>
+</ul>
+<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><h3 id="21-Merge-Two-Sorted-Lists"><a href="#21-Merge-Two-Sorted-Lists" class="headerlink" title="21. Merge Two Sorted Lists"></a>21. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-two-sorted-lists/description/">Merge Two Sorted Lists</a></h3><blockquote>
+<p>Merge two sorted linked lists and return it as a <strong>sorted</strong> list. The list should be made by splicing together the nodes of the first two lists.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/merge_ex1.jpg" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/merge_ex1.jpg" srcset="data:image/png;base64,666" alt="img"></p>
+<pre><code>Input: l1 = [1,2,4], l2 = [1,3,4]
+Output: [1,1,2,3,4,4]</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: l1 = [], l2 = []
+Output: []</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: l1 = [], l2 = [0]
+Output: [0]</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in both lists is in the range <code>[0, 50]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+<li>Both <code>l1</code> and <code>l2</code> are sorted in <strong>non-decreasing</strong> order.</li>
+</ul>
+</blockquote>
+<h4 id="Ideas-5"><a href="#Ideas-5" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>递归解法。</li>
+</ul>
+<h4 id="Solutions-5"><a href="#Solutions-5" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>递归</p>
+<pre><code class="go">func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode &#123;
+    if l1 == nil &#123;
+        return l2
+    &#125;
+    if l2 == nil &#123;
+        return l1
+    &#125;
+    if l1.Val &lt; l2.Val &#123;
+        l1.Next = mergeTwoLists(l1.Next, l2)
+        return l1
+    &#125; else &#123;
+        l2.Next = mergeTwoLists(l1, l2.Next)
+        return l2
+    &#125;
+&#125;</code></pre>
+</li>
+</ul>
+<h3 id="160-Intersection-of-Two-Linked-Lists"><a href="#160-Intersection-of-Two-Linked-Lists" class="headerlink" title="160. Intersection of Two Linked Lists"></a>160. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/intersection-of-two-linked-lists/description/">Intersection of Two Linked Lists</a></h3><blockquote>
+<p>Given the heads of two singly linked-lists <code>headA</code> and <code>headB</code>, return <em>the node at which the two lists intersect</em>. If the two linked lists have no intersection at all, return <code>null</code>.</p>
+<p>For example, the following two linked lists begin to intersect at node <code>c1</code>:</p>
+<p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_statement.png" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_statement.png" srcset="data:image/png;base64,666" alt="img"></p>
+<p>It is <strong>guaranteed</strong> that there are no cycles anywhere in the entire linked structure.</p>
+<p><strong>Note</strong> that the linked lists must <strong>retain their original structure</strong> after the function returns.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_1_1.png" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_1_1.png" srcset="data:image/png;base64,666" alt="img"></p>
+<pre><code>Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+Output: Intersected at &#39;8&#39;
+Explanation: The intersected node&#39;s value is 8 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes before the intersected node in A; There are 3 nodes before the intersected node in B.</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_2.png" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_2.png" srcset="data:image/png;base64,666" alt="img"></p>
+<pre><code>Input: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+Output: Intersected at &#39;2&#39;
+Explanation: The intersected node&#39;s value is 2 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the intersected node in A; There are 1 node before the intersected node in B.</code></pre>
+<p><strong>Example 3:</strong></p>
+<p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_3.png" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/160_example_3.png" srcset="data:image/png;base64,666" alt="img"></p>
+<pre><code>Input: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+Output: No intersection
+Explanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.
+Explanation: The two lists do not intersect, so return null.</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes of <code>listA</code> is in the <code>m</code>.</li>
+<li>The number of nodes of <code>listB</code> is in the <code>n</code>.</li>
+<li><code>0 &lt;= m, n &lt;= 3 * 10^4</code></li>
+<li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>0 &lt;= skipA &lt;= m</code></li>
+<li><code>0 &lt;= skipB &lt;= n</code></li>
+<li><code>intersectVal</code> is <code>0</code> if <code>listA</code> and <code>listB</code> do not intersect.</li>
+<li><code>intersectVal == listA[skipA + 1] == listB[skipB + 1]</code> if <code>listA</code> and <code>listB</code> intersect.</li>
+</ul>
+<p><strong>Follow up:</strong> Could you write a solution that runs in <code>O(n)</code> time and use only <code>O(1)</code> memory?</p>
+</blockquote>
+<h4 id="Ideas-6"><a href="#Ideas-6" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>使用 Map 保存一个链表的所有节点，遍历第二个链表，如果在 Map 中已存在则返回。</li>
+</ul>
+<h4 id="Solutions-6"><a href="#Solutions-6" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Map</p>
+<pre><code class="go">func getIntersectionNode(headA, headB *ListNode) *ListNode &#123;
+    m := make(map[*ListNode]bool)
+    for headA != nil &#123;
+        m[headA] = true
+        headA = headA.Next
+    &#125;
+    for headB != nil &#123;
+        if _, ok := m[headB]; ok &#123;
+            return headB
+        &#125;
+        headB = headB.Next
+    &#125;
+    return nil
+&#125;</code></pre>
+</li>
+</ul>
+<h3 id="206-Reverse-Linked-List"><a href="#206-Reverse-Linked-List" class="headerlink" title="206. Reverse Linked List"></a>206. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-linked-list/description/">Reverse Linked List</a></h3><blockquote>
 <p>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</p>
 <p><strong>Example 1:</strong></p>
 <p><img src="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/rev1ex1.jpg" class="lazyload" data-srcset="/2021/07/15/LeetCode%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/rev1ex1.jpg" srcset="data:image/png;base64,666" alt="img"></p>
@@ -688,11 +1008,11 @@ Output: []</code></pre>
 </ul>
 <p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
 </blockquote>
-<h4 id="Ideas-1"><a href="#Ideas-1" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
+<h4 id="Ideas-7"><a href="#Ideas-7" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
 <li>遍历链表并重新创建一个链表，比较简单粗暴。</li>
 <li>记录前一个结点，并将当前节点指向前一结点。</li>
 </ol>
-<h4 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
+<h4 id="Solutions-7"><a href="#Solutions-7" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
 <li><p>略</p>
 </li>
 <li><p>反转</p>
@@ -728,17 +1048,17 @@ Output: [1,2]</code></pre>
 Output: [0,1]</code></pre>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><code>2 &lt;= nums.length &lt;= 104</code></li>
-<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
-<li><code>-109 &lt;= target &lt;= 109</code></li>
+<li><code>2 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>-10^9 &lt;= target &lt;= 10^9</code></li>
 <li><strong>Only one valid answer exists.</strong></li>
 </ul>
 <p><strong>Follow-up:</strong> Can you come up with an algorithm that is less than <code>O(n2) </code>time complexity?</p>
 </blockquote>
-<h4 id="Ideas-2"><a href="#Ideas-2" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-8"><a href="#Ideas-8" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>最容易想到的方式是使用 Map 存储遍历到的数字，并判断目标数字减去当前数字的结果是否在 Map 中，如过是直接返回。</li>
 </ul>
-<h4 id="Solutions-2"><a href="#Solutions-2" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-8"><a href="#Solutions-8" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Map</p>
 <pre><code class="go">func twoSum(nums []int, target int) []int &#123;
     m := make(map[int]int)
@@ -762,16 +1082,16 @@ Output: true</code></pre>
 Output: false</code></pre>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><code>1 &lt;= s.length, t.length &lt;= 5 * 104</code></li>
+<li><code>1 &lt;= s.length, t.length &lt;= 5 * 10^4</code></li>
 <li><code>s</code> and <code>t</code> consist of lowercase English letters.</li>
 </ul>
 <p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
 </blockquote>
-<h4 id="Ideas-3"><a href="#Ideas-3" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
+<h4 id="Ideas-9"><a href="#Ideas-9" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
 <li>使用 HashTable 存储<code>s</code>中所有字符的出现次数，和 t 进行对比，相同则返回<code>true</code>。</li>
 <li>和 HashTable 同样的思路，但由于存储的是小写字母，因此可以直接用一个长度为 26 的数组存储每一个字符的 ASCII 码值。</li>
 </ol>
-<h4 id="Solutions-3"><a href="#Solutions-3" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
+<h4 id="Solutions-9"><a href="#Solutions-9" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
 <li><p>HashTable</p>
 <pre><code class="go">func isAnagram(s string, t string) bool &#123;
     m := make(map[rune]int)
@@ -818,8 +1138,8 @@ Output: 5</code></pre>
 Output: 4</code></pre>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><code>1 &lt;= k &lt;= nums.length &lt;= 104</code></li>
-<li><code>-104 &lt;= nums[i] &lt;= 104</code></li>
+<li><code>1 &lt;= k &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
 </ul>
 </blockquote>
 <h2 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h2><h3 id="7-Reverse-Integer"><a href="#7-Reverse-Integer" class="headerlink" title="7. Reverse Integer"></a>7. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-integer/description/">Reverse Integer</a></h3><blockquote>
@@ -839,13 +1159,13 @@ Output: 21</code></pre>
 Output: 0</code></pre>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><code>-231 &lt;= x &lt;= 231 - 1</code></li>
+<li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
 </ul>
 </blockquote>
-<h4 id="Ideas-4"><a href="#Ideas-4" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-10"><a href="#Ideas-10" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>先提出符号，对数字进行循环对 10 取余来得到高一位数字，对地位数字循环乘 10 来进位。</li>
 </ul>
-<h4 id="Solutions-4"><a href="#Solutions-4" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-10"><a href="#Solutions-10" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Math</p>
 <pre><code class="go">func reverse(x int) int &#123;
     result := 0
@@ -880,15 +1200,15 @@ Explanation: Reads 01 from right to left. Therefore it is not a palindrome.</cod
 Output: false</code></pre>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li><code>-231 &lt;= x &lt;= 231 - 1</code></li>
+<li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
 </ul>
 <p><strong>Follow up:</strong> Could you solve it without converting the integer to a string?</p>
 </blockquote>
-<h4 id="Ideas-5"><a href="#Ideas-5" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-11"><a href="#Ideas-11" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>把数字转换为字符串，用双指针各自从左右遍历字符串判断二者对应字符是否相同，直到两个指针重叠。</li>
 <li>考虑不使用字符串的解法，参考第七题反转数字，可以将<code>x</code>的低位反转存入另一个变量中，并将<code>x</code>除以 10，最后判断二者是否相等。</li>
 </ul>
-<h4 id="Solutions-5"><a href="#Solutions-5" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-11"><a href="#Solutions-11" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>String</p>
 <pre><code class="go">func isPalindrome(x int) bool &#123;
     str := strconv.FormatInt(int64(x), 10)
@@ -957,11 +1277,11 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.</code></pre>
 <li>It is <strong>guaranteed</strong> that <code>s</code> is a valid roman numeral in the range <code>[1, 3999]</code>.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-6"><a href="#Ideas-6" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-12"><a href="#Ideas-12" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>最简单粗暴的解法就是使用<code>switch</code>语句判断每一种情况，当遇到能作为前缀的数字时判断后面的数字是否是组合数的情况，如果是则减去多余的值。</li>
 <li>仍然是<code>switch</code>判断每一种情况，但首先把其中带有前缀的字符替换为其他字符。</li>
 </ul>
-<h4 id="Solutions-6"><a href="#Solutions-6" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-12"><a href="#Solutions-12" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Switch</p>
 <pre><code class="go">func romanToInt(s string) int &#123;
     result := 0
@@ -1087,7 +1407,65 @@ func getVal(r rune) int &#123;
 &#125;</code></pre>
 </li>
 </ul>
+<h3 id="69-Sqrt-x"><a href="#69-Sqrt-x" class="headerlink" title="69. Sqrt(x)"></a>69. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/sqrtx/description/">Sqrt(x)</a></h3><blockquote>
+<p>Given a non-negative integer <code>x</code>, compute and return <em>the square root of</em> <code>x</code>.</p>
+<p>Since the return type is an integer, the decimal digits are <strong>truncated</strong>, and only <strong>the integer part</strong> of the result is returned.</p>
+<p><strong>Note:</strong> You are not allowed to use any built-in exponent function or operator, such as <code>pow(x, 0.5)</code> or <code>x ** 0.5</code>.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: x = 4
+Output: 2</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: x = 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since the decimal part is truncated, 2 is returned.</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= x &lt;= 2^31 - 1</code></li>
+</ul>
+</blockquote>
+<h4 id="Ideas-13"><a href="#Ideas-13" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>采用二分查找的方式，不断缩小范围。</li>
+</ul>
+<h4 id="Solutions-13"><a href="#Solutions-13" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>Binary Search</p>
+<pre><code class="go">func mySqrt(x int) int &#123;
+    if x == 1 &#123;
+        return 1
+    &#125;
+    left, right := 0, x
+    for &#123;
+        mid := (left + right) / 2
+        if mid*mid == x || left == right-1 &#123;
+            return mid
+        &#125;
+        if mid*mid &gt; x &#123;
+            right = mid
+        &#125; else &#123;
+            left = mid
+        &#125;
 
+    &#125;
+&#125;</code></pre>
+</li>
+</ul>
+<h2 id="Sorting"><a href="#Sorting" class="headerlink" title="Sorting"></a>Sorting</h2><h3 id="912-Sort-an-Array"><a href="#912-Sort-an-Array" class="headerlink" title="912. Sort an Array"></a>912. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/sort-an-array/description/">Sort an Array</a></h3><blockquote>
+<p>Given an array of integers <code>nums</code>, sort the array in ascending order.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: nums = [5,2,3,1]
+Output: [1,2,3,5]</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: nums = [5,1,1,2,0,0]
+Output: [0,0,1,1,2,5]</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 5 * 10^4</code></li>
+<li><code>-5 * 104 &lt;= nums[i] &lt;= 5 * 10^4</code></li>
+</ul>
+</blockquote>
+<h4 id="Ideas-14"><a href="#Ideas-14" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>使用快速排序。</li>
+</ul>
+<h4 id="Solutions-14"><a href="#Solutions-14" class="headerlink" title="Solutions"></a>Solutions</h4>
   
   
     
@@ -1116,10 +1494,10 @@ func getVal(r rune) int &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-16T17:11:30+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-20T15:30:08+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年7月16日</p>
+    <p>更新于：2021年7月20日</p>
   </a>
 </div>
 
@@ -1299,7 +1677,7 @@ JZ01：二维数组中的查找
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#String"><span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Longest-Common-Prefix"><span class="toc-text">14. Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linked-List"><span class="toc-text">Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Reverse-Linked-List"><span class="toc-text">206. Reverse Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-1"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-1"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binary-Tree"><span class="toc-text">Binary Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashTable"><span class="toc-text">HashTable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Two-Sum"><span class="toc-text">1. Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-2"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-2"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#242-Valid-Anagram"><span class="toc-text">242. Valid Anagram</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-3"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-3"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-Kth-Largest-Element-in-an-Array"><span class="toc-text">215. Kth Largest Element in an Array</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math"><span class="toc-text">Math</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-text">7. Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-4"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-4"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Palindrome-Number"><span class="toc-text">9. Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-5"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-5"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Roman-to-Integer"><span class="toc-text">13. Roman to Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-6"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-6"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3Sum"><span class="toc-text">15. 3Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#66-Plus-One"><span class="toc-text">66. Plus One</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-1"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-1"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String"><span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="toc-text">3. Longest Substring Without Repeating Characters</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-2"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-2"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Longest-Common-Prefix"><span class="toc-text">14. Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-3"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-3"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-Valid-Parentheses"><span class="toc-text">20. Valid Parentheses</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-4"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-4"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linked-List"><span class="toc-text">Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-Merge-Two-Sorted-Lists"><span class="toc-text">21. Merge Two Sorted Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-5"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-5"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#160-Intersection-of-Two-Linked-Lists"><span class="toc-text">160. Intersection of Two Linked Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-6"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-6"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Reverse-Linked-List"><span class="toc-text">206. Reverse Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-7"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-7"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binary-Tree"><span class="toc-text">Binary Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashTable"><span class="toc-text">HashTable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Two-Sum"><span class="toc-text">1. Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-8"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-8"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#242-Valid-Anagram"><span class="toc-text">242. Valid Anagram</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-9"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-9"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-Kth-Largest-Element-in-an-Array"><span class="toc-text">215. Kth Largest Element in an Array</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math"><span class="toc-text">Math</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-text">7. Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-10"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-10"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Palindrome-Number"><span class="toc-text">9. Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-11"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-11"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Roman-to-Integer"><span class="toc-text">13. Roman to Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-12"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-12"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#69-Sqrt-x"><span class="toc-text">69. Sqrt(x)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-13"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-13"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sorting"><span class="toc-text">Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#912-Sort-an-Array"><span class="toc-text">912. Sort an Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-14"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-14"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
