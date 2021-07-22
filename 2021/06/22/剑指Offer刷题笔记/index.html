@@ -810,22 +810,21 @@ func Pop() int&#123;
     return pHead
 &#125;</code></pre>
 <h4 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h4><pre><code class="go">func FindKthToTail( pHead *ListNode ,  k int ) *ListNode &#123;
-    if pHead == nil &#123;
-        return nil
-    &#125;
+    count := 0
     p := pHead
-    for ; k&gt;0; k-- &#123;
-        if p == nil &#123;
-            return nil
+    for pHead != nil &#123;
+        if count == k &#123;
+            p = p.Next
+        &#125; else &#123;
+            count++
         &#125;
-        p = p.Next
-    &#125;
-    for p != nil &#123;
-        p = p.Next
         pHead = pHead.Next
     &#125;
-
-    return pHead
+    // 防止k大于链表长度
+    if count != k &#123;
+        return nil
+    &#125;
+    return p
 &#125;</code></pre>
 <h2 id="JZ15：反转链表"><a href="#JZ15：反转链表" class="headerlink" title="JZ15：反转链表^"></a>JZ15：反转链表^</h2><blockquote>
 <p>输入一个链表，反转链表后，输出新链表的表头。</p>
@@ -945,10 +944,10 @@ func Pop() int&#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-16T17:10:48+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-22T20:35:07+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年7月16日</p>
+    <p>更新于：2021年7月22日</p>
   </a>
 </div>
 
