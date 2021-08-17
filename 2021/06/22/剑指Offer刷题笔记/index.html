@@ -1284,22 +1284,43 @@ func helper(node1, node2 *TreeNode) bool &#123;
     Helper []int
 &#125;
 
-</code></pre>
-</li>
-</ul>
-<p>  /** initialize your data structure here. */<br>  func Constructor() MinStack {<br>      return MinStack{make([]int, 0), make([]int, 0)}<br>  }</p>
-<p>  func (this *MinStack) Push(x int)  {<br>      if len(this.Helper) == 0 || x &lt;= this.Helper[len(this.Helper)-1] {<br>          this.Helper = append(this.Helper, x)<br>      }<br>      this.Nums = append(this.Nums, x)<br>  }</p>
-<p>  func (this *MinStack) Pop()  {<br>      num := this.Nums[len(this.Nums)-1]<br>      hnum := this.Helper[len(this.Helper)-1]<br>      this.Nums = this.Nums[:len(this.Nums)-1]<br>      if num == hnum {<br>          this.Helper = this.Helper[:len(this.Helper)-1]<br>      }<br>  }</p>
-<p>  func (this *MinStack) Top() int {<br>      return this.Nums[len(this.Nums)-1]<br>  }</p>
-<p>  func (this *MinStack) Min() int {<br>   return this.Helper[len(this.Helper)-1]<br>  }</p>
-<p>  /**</p>
-<ul>
-<li>Your MinStack object will be instantiated and called as such:</li>
-<li>obj := Constructor();</li>
-<li>obj.Push(x);</li>
-<li>obj.Pop();</li>
-<li>param_3 := obj.Top();</li>
-<li>param_4 := obj.Min();<br> */<pre><code></code></pre>
+/** initialize your data structure here. */
+func Constructor() MinStack &#123;
+    return MinStack&#123;make([]int, 0), make([]int, 0)&#125;
+&#125;
+
+func (this *MinStack) Push(x int)  &#123;
+    if len(this.Helper) == 0 || x &lt;= this.Helper[len(this.Helper)-1] &#123;
+    this.Helper = append(this.Helper, x)
+    &#125;
+    this.Nums = append(this.Nums, x)
+&#125;
+
+func (this *MinStack) Pop()  &#123;
+    num := this.Nums[len(this.Nums)-1]
+    hnum := this.Helper[len(this.Helper)-1]
+    this.Nums = this.Nums[:len(this.Nums)-1]
+    if num == hnum &#123;
+        this.Helper = this.Helper[:len(this.Helper)-1]
+    &#125;
+&#125;
+
+func (this *MinStack) Top() int &#123;
+    return this.Nums[len(this.Nums)-1]
+&#125;
+
+func (this *MinStack) Min() int &#123;
+    return this.Helper[len(this.Helper)-1]
+&#125;
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.Min();
+ */</code></pre>
 </li>
 </ul>
 <h2 id="31-栈的压入、弹出序列"><a href="#31-栈的压入、弹出序列" class="headerlink" title="31. 栈的压入、弹出序列"></a>31. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/">栈的压入、弹出序列</a></h2><h3 id="Ideas-24"><a href="#Ideas-24" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
@@ -1659,7 +1680,7 @@ func max(a, b int) int &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-17T10:43:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-17T11:01:23+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2021年8月17日</p>
