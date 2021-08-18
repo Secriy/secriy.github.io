@@ -713,6 +713,37 @@ Output: []</code></pre>
 &#125;</code></pre>
 </li>
 </ul>
+<h3 id="26-Remove-Duplicates-from-Sorted-Array"><a href="#26-Remove-Duplicates-from-Sorted-Array" class="headerlink" title="26. Remove Duplicates from Sorted Array"></a>26. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a></h3><h4 id="Ideas-1"><a href="#Ideas-1" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>双指针<ul>
+<li>left 移动条件：left 为 0 或 left 元素和 left-1 的元素不相等</li>
+<li>right 移动条件：right 和 left 不等（相等则用 right 覆盖 left）</li>
+</ul>
+</li>
+</ul>
+<h4 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<li><p>双指针</p>
+<pre><code class="go">func removeDuplicates(nums []int) int &#123;
+    left, right := 0, 1
+    for right &lt;= len(nums) &#123;
+        // left 左移条件
+        if left == 0 || nums[left-1] != nums[left] &#123;
+            left++
+        &#125;
+        // right 越界跳出（此时 left 左移条件已经执行了）
+        if right == len(nums) &#123;
+            break
+        &#125;
+        // right 右移条件
+        if nums[left] == nums[right] &#123;
+            right++
+        &#125; else &#123;
+            nums[left] = nums[right]
+        &#125;
+    &#125;
+    return left
+&#125;</code></pre>
+</li>
+</ul>
 <h3 id="66-Plus-One"><a href="#66-Plus-One" class="headerlink" title="66. Plus One"></a>66. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/plus-one/description/">Plus One</a></h3><blockquote>
 <p>Given a <strong>non-empty</strong> array of decimal digits representing a non-negative integer, increment one to the integer.</p>
 <p>The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.</p>
@@ -734,10 +765,10 @@ Output: [1]</code></pre>
 <li><code>0 &lt;= digits[i] &lt;= 9</code></li>
 </ul>
 </blockquote>
-<h4 id="Ideas-1"><a href="#Ideas-1" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-2"><a href="#Ideas-2" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>从数组末端开始遍历，当当前数字+1 后大于 9 即进位，将当前数字置 0。如果当前位置为数组首端，在数组前面插入一个 1 即可。</li>
 </ul>
-<h4 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-2"><a href="#Solutions-2" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Common</p>
 <pre><code class="go">func plusOne(digits []int) []int &#123;
     for i := len(digits) - 1; i &gt;= 0; i-- &#123;
@@ -786,14 +817,14 @@ Note that because m = 0, there are no elements in nums1. The 0 is only there to 
 </ul>
 <p><strong>Follow up:</strong> Can you come up with an algorithm that runs in <code>O(m + n)</code> time?</p>
 </blockquote>
-<h4 id="Ideas-2"><a href="#Ideas-2" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-3"><a href="#Ideas-3" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>设置三个指针，分别位于<code>nums1</code>（不含 0）末尾、<code>nums1</code>（含 0）末尾、<code>nums2</code>末尾，从后向前对比两个数组的末尾元素，取大者放入 0 元素位置。<ul>
 <li>时间复杂度：$O(m+n)$</li>
 <li>空间复杂度：$O(1)$</li>
 </ul>
 </li>
 </ul>
-<h4 id="Solutions-2"><a href="#Solutions-2" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-3"><a href="#Solutions-3" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Three Pointers</p>
 <pre><code class="go">func merge(nums1 []int, m int, nums2 []int, n int) &#123;
     index1, empty, index2 := m-1, m+n-1, n-1
@@ -834,10 +865,10 @@ Output: 0</code></pre>
 <li><code>s</code> consists of English letters, digits, symbols and spaces.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-3"><a href="#Ideas-3" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-4"><a href="#Ideas-4" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>使用滑动窗口解法，利用双指针确定最大的窗口。</li>
 </ul>
-<h4 id="Solutions-3"><a href="#Solutions-3" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-4"><a href="#Solutions-4" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Sliding-Window</p>
 <pre><code class="go">func lengthOfLongestSubstring(s string) int &#123;
     res, left, right := 0, 0, 0
@@ -855,6 +886,24 @@ Output: 0</code></pre>
         &#125;
     &#125;
     return res
+&#125;</code></pre>
+<pre><code class="go">func lengthOfLongestSubstring(s string) int &#123;
+    m := make(map[byte]int)
+    left, right := 0, 0
+    max := 0
+    for left &lt; len(s) &amp;&amp; right &lt; len(s) &#123;
+        // duplicate
+        if v, ok := m[s[right]]; ok &amp;&amp; v &gt;= left&#123;
+            left = v+1
+        &#125; else &#123;
+            if right-left+1 &gt; max &#123;
+                max = right-left+1
+            &#125;
+        &#125;
+        m[s[right]] = right
+        right++
+    &#125;
+    return max
 &#125;</code></pre>
 </li>
 </ul>
@@ -875,7 +924,7 @@ Explanation: There is no common prefix among the input strings.</code></pre>
 <li><code>strs[i]</code> consists of only lower-case English letters.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-4"><a href="#Ideas-4" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-4"><a href="#Solutions-4" class="headerlink" title="Solutions"></a>Solutions</h4><h3 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20. Valid Parentheses"></a>20. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-parentheses/description/">Valid Parentheses</a></h3><blockquote>
+<h4 id="Ideas-5"><a href="#Ideas-5" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-5"><a href="#Solutions-5" class="headerlink" title="Solutions"></a>Solutions</h4><h3 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20. Valid Parentheses"></a>20. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-parentheses/description/">Valid Parentheses</a></h3><blockquote>
 <p>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;&#123;&#39;</code>, <code>&#39;&#125;&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</p>
 <p>An input string is valid if:</p>
 <ol>
@@ -903,11 +952,11 @@ Output: true</code></pre>
 <li><code>s</code> consists of parentheses only <code>&#39;()[]&#123;&#125;&#39;</code>.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-5"><a href="#Ideas-5" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-6"><a href="#Ideas-6" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>循环将字符串里的<code>&#39;&#123;&#125;()[]&#39;</code>替换为空字符串，最终得到空字符串即为匹配。该解法实际效率较低。</li>
 <li>对于括号匹配问题常见的解法是使用栈匹配。</li>
 </ul>
-<h4 id="Solutions-5"><a href="#Solutions-5" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-6"><a href="#Solutions-6" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Replace</p>
 <pre><code class="go">func isValid(s string) bool &#123;
     for strings.Contains(s, &quot;[]&quot;) || strings.Contains(s, &quot;&#123;&#125;&quot;) || strings.Contains(s, &quot;()&quot;) &#123;
@@ -943,10 +992,10 @@ Output: true</code></pre>
 &#125;</code></pre>
 </li>
 </ul>
-<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><h3 id="19-Remove-Nth-Node-From-End-of-List"><a href="#19-Remove-Nth-Node-From-End-of-List" class="headerlink" title="19. Remove Nth Node From End of List"></a>19. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List</a></h3><h4 id="Ideas-6"><a href="#Ideas-6" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><h3 id="19-Remove-Nth-Node-From-End-of-List"><a href="#19-Remove-Nth-Node-From-End-of-List" class="headerlink" title="19. Remove Nth Node From End of List"></a>19. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List</a></h3><h4 id="Ideas-7"><a href="#Ideas-7" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li><strong>双指针</strong>，第一个指针一直往下走，并将倒数的数值<code>n</code>减一，直到<code>n==0</code>第二个指针再走，其中用<code>pre</code>指针记录第二个指针的原位置。第一个指针到底（为<code>nil</code>）时则返回。</li>
 </ul>
-<h4 id="Solutions-6"><a href="#Solutions-6" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-7"><a href="#Solutions-7" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>双指针</p>
 <pre><code class="go">func removeNthFromEnd(head *ListNode, n int) *ListNode &#123;
     pre, p1, p2 := head, head, head        // pre记录前置节点
@@ -970,23 +1019,25 @@ Output: true</code></pre>
 </li>
 <li><p>双指针（改良）</p>
 <pre><code class="go">func removeNthFromEnd(head *ListNode, n int) *ListNode &#123;
-    dummy := new(ListNode)    // 在head前防止虚拟节点，解决删除的是第一个元素的问题
+    dummy := new(ListNode) // 在 head 前防止虚拟节点，解决删除的是第一个元素的问题
     dummy.Next = head
-    pre, post:= dummy, head
-    for post.Next != nil &#123;
-        if n &gt; 1 &#123;
-            n--
-        &#125; else &#123;
-            pre = pre.Next
-        &#125;
-        post = post.Next
+    p := head    // p 是用于探底的指针
+    head = dummy
+    // p 先走
+    for n &gt; 0 &#123;
+        p = p.Next
+        n--
     &#125;
-    if post == head &#123;
-        return nil
+    // dummy 跟着往后走，直到 p 到底
+    for p != nil &#123;
+        dummy = dummy.Next
+        p = p.Next
     &#125;
-    pre.Next = pre.Next.Next
-    return dummy.Next
-&#125;</code></pre>
+    // 删除结点
+    dummy.Next = dummy.Next.Next
+    return head.Next
+&#125;
+</code></pre>
 </li>
 </ul>
 <h3 id="21-Merge-Two-Sorted-Lists"><a href="#21-Merge-Two-Sorted-Lists" class="headerlink" title="21. Merge Two Sorted Lists"></a>21. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-two-sorted-lists/description/">Merge Two Sorted Lists</a></h3><blockquote>
@@ -1008,10 +1059,10 @@ Output: [0]</code></pre>
 <li>Both <code>l1</code> and <code>l2</code> are sorted in <strong>non-decreasing</strong> order.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-7"><a href="#Ideas-7" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-8"><a href="#Ideas-8" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>递归解法。</li>
 </ul>
-<h4 id="Solutions-7"><a href="#Solutions-7" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-8"><a href="#Solutions-8" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>递归</p>
 <pre><code class="go">func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode &#123;
     if l1 == nil &#123;
@@ -1030,10 +1081,10 @@ Output: [0]</code></pre>
 &#125;</code></pre>
 </li>
 </ul>
-<h3 id="61-Rotate-List"><a href="#61-Rotate-List" class="headerlink" title="61. Rotate List"></a>61. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-list/">Rotate List</a></h3><h4 id="Ideas-8"><a href="#Ideas-8" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h3 id="61-Rotate-List"><a href="#61-Rotate-List" class="headerlink" title="61. Rotate List"></a>61. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-list/">Rotate List</a></h3><h4 id="Ideas-9"><a href="#Ideas-9" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>双指针解法，本题要求得到循环<code>n</code>次的链表，循环次数可能比链表本身的长度还要长，因此可以将链表串成循环链表，再将其从中间拆分<br>时间复杂度：$O(n+k)$<br>空间复杂度：$O(1)$</li>
 </ul>
-<h4 id="Solutions-8"><a href="#Solutions-8" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-9"><a href="#Solutions-9" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>双指针</p>
 <pre><code class="go">func rotateRight(head *ListNode, k int) *ListNode &#123;
     if head == nil &#123;
@@ -1061,7 +1112,7 @@ Output: [0]</code></pre>
 &#125;</code></pre>
 </li>
 </ul>
-<h3 id="92"><a href="#92" class="headerlink" title="92."></a>92.</h3><h4 id="Ideas-9"><a href="#Ideas-9" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-9"><a href="#Solutions-9" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h3 id="92"><a href="#92" class="headerlink" title="92."></a>92.</h3><h4 id="Ideas-10"><a href="#Ideas-10" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-10"><a href="#Solutions-10" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>反转</p>
 <pre><code class="go">func reverseBetween(head *ListNode, left, right int) *ListNode &#123;
     dummy := new(ListNode)
@@ -1108,7 +1159,7 @@ Explanation: There is no cycle in the linked list.</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
 </blockquote>
-<h4 id="Ideas-10"><a href="#Ideas-10" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-11"><a href="#Ideas-11" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>最简单的方法是使用 Map 保存结点，当遇到重复即返回。<ul>
 <li>时间复杂度：$O(n)$</li>
 <li>空间复杂度：$O(n)$</li>
@@ -1120,7 +1171,7 @@ Explanation: There is no cycle in the linked list.</code></pre>
 </ul>
 </li>
 </ul>
-<h4 id="Solutions-10"><a href="#Solutions-10" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-11"><a href="#Solutions-11" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Map</p>
 <pre><code class="go">func hasCycle(head *ListNode) bool &#123;
     m := make(map[*ListNode]bool)
@@ -1137,17 +1188,14 @@ Explanation: There is no cycle in the linked list.</code></pre>
 <li><p>Slow-Fast Pointer</p>
 <pre><code class="go">func hasCycle(head *ListNode) bool &#123;
     slow, fast := head, head
-    for &#123;
-        // 边界条件
-        if slow == nil || fast == nil || fast.Next == nil &#123;
-            return false
-        &#125;
+    for fast != nil &amp;&amp; fast.Next != nil &#123;
         slow = slow.Next
         fast = fast.Next.Next
         if slow == fast &#123;
             return true
         &#125;
     &#125;
+    return false
 &#125;</code></pre>
 </li>
 </ul>
@@ -1178,34 +1226,31 @@ Explanation: There is no cycle in the linked list.</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
 </blockquote>
-<h4 id="Ideas-11"><a href="#Ideas-11" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-12"><a href="#Ideas-12" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li><p>Map 解法同 141 题，记录指针即可。</p>
 </li>
 <li><p>快慢指针解法，当二者第一次相遇时将其中一个指针返回到链开头，二者以同样的速度往下遍历，直到二者相等即返回。</p>
 </li>
 </ul>
-<h4 id="Solutions-11"><a href="#Solutions-11" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-12"><a href="#Solutions-12" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>略</p>
 </li>
 <li><p>Slow-Fast Pointer</p>
 <pre><code class="go">func detectCycle(head *ListNode) *ListNode &#123;
     slow, fast := head, head
-    for &#123;
-        if slow == nil || fast == nil || fast.Next == nil &#123;
-            return nil
-        &#125;
+    for fast != nil &amp;&amp; fast.Next != nil &#123;
         slow = slow.Next
         fast = fast.Next.Next
         if slow == fast &#123;
-            break
+            fast = head
+            for fast != slow &#123;
+                slow = slow.Next
+                fast = fast.Next
+            &#125;
+            return fast
         &#125;
     &#125;
-    fast = head
-    for slow != fast &#123;
-        fast = fast.Next
-        slow = slow.Next
-    &#125;
-    return slow
+    return nil
 &#125;</code></pre>
 </li>
 </ul>
@@ -1246,11 +1291,11 @@ Explanation: The two lists do not intersect, so return null.</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Could you write a solution that runs in <code>O(n)</code> time and use only <code>O(1)</code> memory?</p>
 </blockquote>
-<h4 id="Ideas-12"><a href="#Ideas-12" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-13"><a href="#Ideas-13" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>使用 Map 保存一个链表的所有节点，遍历第二个链表，如果在 Map 中已存在则返回。</li>
 <li>两个链表的长度不同，让二者相遇的办法是让它们的长度变为一致，具体实现是让它们在到达链表末尾后跳转到对方的链首。</li>
 </ul>
-<h4 id="Solutions-12"><a href="#Solutions-12" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-13"><a href="#Solutions-13" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Map</p>
 <pre><code class="go">func getIntersectionNode(headA, headB *ListNode) *ListNode &#123;
     m := make(map[*ListNode]bool)
@@ -1310,12 +1355,12 @@ Output: []</code></pre>
 </ul>
 <p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
 </blockquote>
-<h4 id="Ideas-13"><a href="#Ideas-13" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-14"><a href="#Ideas-14" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>遍历链表并重新创建一个链表，比较简单粗暴。</li>
 <li>记录前一个结点，并将当前节点指向前一结点。</li>
 <li>递归</li>
 </ul>
-<h4 id="Solutions-13"><a href="#Solutions-13" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-14"><a href="#Solutions-14" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>反转</p>
 <pre><code class="go">func reverseList(head *ListNode) *ListNode &#123;
     var prev, next *ListNode
@@ -1367,11 +1412,11 @@ Output: [1,2]</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Recursive solution is trivial, could you do it iteratively?</p>
 </blockquote>
-<h4 id="Ideas-14"><a href="#Ideas-14" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-15"><a href="#Ideas-15" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>递归</li>
 <li>迭代</li>
 </ul>
-<h4 id="Solutions-14"><a href="#Solutions-14" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-15"><a href="#Solutions-15" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>递归</p>
 <pre><code class="go">func inorderTraversal(root *TreeNode) []int &#123;
     result := make([]int, 0)
@@ -1425,10 +1470,10 @@ Output: false</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Could you solve it both recursively and iteratively?</p>
 </blockquote>
-<h4 id="Ideas-15"><a href="#Ideas-15" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-16"><a href="#Ideas-16" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>常规递归解法。</li>
 </ul>
-<h4 id="Solutions-15"><a href="#Solutions-15" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-16"><a href="#Solutions-16" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Recursion</p>
 <pre><code class="go">func isSymmetric(root *TreeNode) bool &#123;
     return recursion(root.Left, root.Right)
@@ -1471,10 +1516,10 @@ Output: [0,1]</code></pre>
 </ul>
 <p><strong>Follow-up:</strong> Can you come up with an algorithm that is less than <code>O(n2) </code>time complexity?</p>
 </blockquote>
-<h4 id="Ideas-16"><a href="#Ideas-16" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-17"><a href="#Ideas-17" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>最容易想到的方式是使用 Map 存储遍历到的数字，并判断目标数字减去当前数字的结果是否在 Map 中，如过是直接返回。</li>
 </ul>
-<h4 id="Solutions-16"><a href="#Solutions-16" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-17"><a href="#Solutions-17" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Map</p>
 <pre><code class="go">func twoSum(nums []int, target int) []int &#123;
     m := make(map[int]int)
@@ -1503,11 +1548,11 @@ Output: false</code></pre>
 </ul>
 <p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
 </blockquote>
-<h4 id="Ideas-17"><a href="#Ideas-17" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
+<h4 id="Ideas-18"><a href="#Ideas-18" class="headerlink" title="Ideas"></a>Ideas</h4><ol>
 <li>使用 HashTable 存储<code>s</code>中所有字符的出现次数，和 t 进行对比，相同则返回<code>true</code>。</li>
 <li>和 HashTable 同样的思路，但由于存储的是小写字母，因此可以直接用一个长度为 26 的数组存储每一个字符的 ASCII 码值。</li>
 </ol>
-<h4 id="Solutions-17"><a href="#Solutions-17" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
+<h4 id="Solutions-18"><a href="#Solutions-18" class="headerlink" title="Solutions"></a>Solutions</h4><ol>
 <li><p>HashTable</p>
 <pre><code class="go">func isAnagram(s string, t string) bool &#123;
     m := make(map[rune]int)
@@ -1563,10 +1608,10 @@ Output: 0</code></pre>
 <li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
 </ul>
 </blockquote>
-<h4 id="Ideas-18"><a href="#Ideas-18" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-19"><a href="#Ideas-19" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>先提出符号，对数字进行循环对 10 取余来得到高一位数字，对地位数字循环乘 10 来进位。</li>
 </ul>
-<h4 id="Solutions-18"><a href="#Solutions-18" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-19"><a href="#Solutions-19" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Math</p>
 <pre><code class="go">func reverse(x int) int &#123;
     result := 0
@@ -1605,11 +1650,11 @@ Output: false</code></pre>
 </ul>
 <p><strong>Follow up:</strong> Could you solve it without converting the integer to a string?</p>
 </blockquote>
-<h4 id="Ideas-19"><a href="#Ideas-19" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-20"><a href="#Ideas-20" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>把数字转换为字符串，用双指针各自从左右遍历字符串判断二者对应字符是否相同，直到两个指针重叠。</li>
 <li>考虑不使用字符串的解法，参考第七题反转数字，可以将<code>x</code>的低位反转存入另一个变量中，并将<code>x</code>除以 10，最后判断二者是否相等。</li>
 </ul>
-<h4 id="Solutions-19"><a href="#Solutions-19" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-20"><a href="#Solutions-20" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>String</p>
 <pre><code class="go">func isPalindrome(x int) bool &#123;
     str := strconv.FormatInt(int64(x), 10)
@@ -1678,11 +1723,11 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.</code></pre>
 <li>It is <strong>guaranteed</strong> that <code>s</code> is a valid roman numeral in the range <code>[1, 3999]</code>.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-20"><a href="#Ideas-20" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-21"><a href="#Ideas-21" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>最简单粗暴的解法就是使用<code>switch</code>语句判断每一种情况，当遇到能作为前缀的数字时判断后面的数字是否是组合数的情况，如果是则减去多余的值。</li>
 <li>仍然是<code>switch</code>判断每一种情况，但首先把其中带有前缀的字符替换为其他字符。</li>
 </ul>
-<h4 id="Solutions-20"><a href="#Solutions-20" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-21"><a href="#Solutions-21" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Switch</p>
 <pre><code class="go">func romanToInt(s string) int &#123;
     result := 0
@@ -1824,10 +1869,10 @@ Explanation: The square root of 8 is 2.82842..., and since the decimal part is t
 <li><code>0 &lt;= x &lt;= 2^31 - 1</code></li>
 </ul>
 </blockquote>
-<h4 id="Ideas-21"><a href="#Ideas-21" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-22"><a href="#Ideas-22" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>采用二分查找的方式，不断缩小范围。</li>
 </ul>
-<h4 id="Solutions-21"><a href="#Solutions-21" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-22"><a href="#Solutions-22" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>Binary Search</p>
 <pre><code class="go">func mySqrt(x int) int &#123;
     if x == 1 &#123;
@@ -1863,10 +1908,10 @@ Output: [0,0,1,1,2,5]</code></pre>
 <li><code>-5 * 104 &lt;= nums[i] &lt;= 5 * 10^4</code></li>
 </ul>
 </blockquote>
-<h4 id="Ideas-22"><a href="#Ideas-22" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-23"><a href="#Ideas-23" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>使用快速排序。</li>
 </ul>
-<h4 id="Solutions-22"><a href="#Solutions-22" class="headerlink" title="Solutions"></a>Solutions</h4><h2 id="BackTracking"><a href="#BackTracking" class="headerlink" title="BackTracking"></a>BackTracking</h2><h3 id="17-Letter-Combinations-of-a-Phone-Number"><a href="#17-Letter-Combinations-of-a-Phone-Number" class="headerlink" title="17. Letter Combinations of a Phone Number"></a>17. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/">Letter Combinations of a Phone Number</a></h3><blockquote>
+<h4 id="Solutions-23"><a href="#Solutions-23" class="headerlink" title="Solutions"></a>Solutions</h4><h2 id="BackTracking"><a href="#BackTracking" class="headerlink" title="BackTracking"></a>BackTracking</h2><h3 id="17-Letter-Combinations-of-a-Phone-Number"><a href="#17-Letter-Combinations-of-a-Phone-Number" class="headerlink" title="17. Letter Combinations of a Phone Number"></a>17. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/">Letter Combinations of a Phone Number</a></h3><blockquote>
 <p>Given a string containing digits from <code>2-9</code> inclusive, return all possible letter combinations that the number could represent. Return the answer in <strong>any order</strong>.</p>
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" class="lazyload" data-srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" srcset="data:image/png;base64,666" alt="img"></p>
@@ -1885,10 +1930,10 @@ Output: [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</code></pre>
 <li><code>digits[i]</code> is a digit in the range <code>[&#39;2&#39;, &#39;9&#39;]</code>.</li>
 </ul>
 </blockquote>
-<h4 id="Ideas-23"><a href="#Ideas-23" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h4 id="Ideas-24"><a href="#Ideas-24" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>DFS 标准解法</li>
 </ul>
-<h4 id="Solutions-23"><a href="#Solutions-23" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-24"><a href="#Solutions-24" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>DFS</p>
 <pre><code class="go">var chars = [][]byte&#123;
     &#123;&#39;a&#39;, &#39;b&#39;, &#39;c&#39;&#125;,       // 2
@@ -1931,10 +1976,10 @@ func dfs(digits string, level int, str string) &#123;
 </code></pre>
 </li>
 </ul>
-<h3 id="39-Combination-Sum"><a href="#39-Combination-Sum" class="headerlink" title="39. Combination Sum"></a>39. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/combination-sum/">Combination Sum</a></h3><h4 id="Ideas-24"><a href="#Ideas-24" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h3 id="39-Combination-Sum"><a href="#39-Combination-Sum" class="headerlink" title="39. Combination Sum"></a>39. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/combination-sum/">Combination Sum</a></h3><h4 id="Ideas-25"><a href="#Ideas-25" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>回溯法</li>
 </ul>
-<h4 id="Solutions-24"><a href="#Solutions-24" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-25"><a href="#Solutions-25" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>回溯</p>
 <pre><code class="go">func combinationSum(candidates []int, target int) [][]int &#123;
     res := make([][]int, 0)
@@ -1963,10 +2008,10 @@ func backtracking(candidates []int, target, index int, res *[][]int, tmp *[]int)
 &#125;</code></pre>
 </li>
 </ul>
-<h3 id="46-Permutations"><a href="#46-Permutations" class="headerlink" title="46. Permutations"></a>46. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/permutations/">Permutations</a></h3><h4 id="Ideas-25"><a href="#Ideas-25" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h3 id="46-Permutations"><a href="#46-Permutations" class="headerlink" title="46. Permutations"></a>46. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/permutations/">Permutations</a></h3><h4 id="Ideas-26"><a href="#Ideas-26" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>典型回溯</li>
 </ul>
-<h4 id="Solutions-25"><a href="#Solutions-25" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-26"><a href="#Solutions-26" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>回溯</p>
 <pre><code class="go">func permute(nums []int) [][]int &#123;
     res := make([][]int, 0)
@@ -1999,10 +2044,10 @@ func backtracking(nums []int, res *[][]int, tmp *[]int, visited *[]bool) &#123;
 &#125;</code></pre>
 </li>
 </ul>
-<h3 id="47-Permutations-II"><a href="#47-Permutations-II" class="headerlink" title="47. Permutations II"></a>47. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/permutations-ii/">Permutations II</a></h3><h4 id="Ideas-26"><a href="#Ideas-26" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
-<li>回溯，相较于46题，需要跳过重复元素，因此首先要判断元素是否已经存在。</li>
+<h3 id="47-Permutations-II"><a href="#47-Permutations-II" class="headerlink" title="47. Permutations II"></a>47. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/permutations-ii/">Permutations II</a></h3><h4 id="Ideas-27"><a href="#Ideas-27" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<li>回溯，相较于 46 题，需要跳过重复元素，因此首先要判断元素是否已经存在。</li>
 </ul>
-<h4 id="Solutions-26"><a href="#Solutions-26" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-27"><a href="#Solutions-27" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>回溯</p>
 <pre><code class="go">func permuteUnique(nums []int) [][]int &#123;
     sort.Ints(nums)
@@ -2037,11 +2082,11 @@ func backtracking(nums []int, res *[][]int, tmp *[]int, visited *[]bool) &#123;
 &#125;</code></pre>
 </li>
 </ul>
-<h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><h3 id="122"><a href="#122" class="headerlink" title="122."></a>122.</h3><h4 id="Ideas-27"><a href="#Ideas-27" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><h3 id="122"><a href="#122" class="headerlink" title="122."></a>122.</h3><h4 id="Ideas-28"><a href="#Ideas-28" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>DP</li>
 <li>贪心</li>
 </ul>
-<h4 id="Solutions-27"><a href="#Solutions-27" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-28"><a href="#Solutions-28" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>DP</p>
 <pre><code class="go">func maxProfit(prices []int) int &#123;
     length := len(prices)
@@ -2067,10 +2112,10 @@ func max(a, b int) int &#123;
 <li><p>贪心</p>
 </li>
 </ul>
-<h2 id="Greedy"><a href="#Greedy" class="headerlink" title="Greedy"></a>Greedy</h2><h3 id="45-Jump-Game-II"><a href="#45-Jump-Game-II" class="headerlink" title="45. Jump Game II"></a>45. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-ii/">Jump Game II</a></h3><h4 id="Ideas-28"><a href="#Ideas-28" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
+<h2 id="Greedy"><a href="#Greedy" class="headerlink" title="Greedy"></a>Greedy</h2><h3 id="45-Jump-Game-II"><a href="#45-Jump-Game-II" class="headerlink" title="45. Jump Game II"></a>45. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-ii/">Jump Game II</a></h3><h4 id="Ideas-29"><a href="#Ideas-29" class="headerlink" title="Ideas"></a>Ideas</h4><ul>
 <li>贪心策略，从后找最靠左的能找到自己的位置，从该位置重复上述操作，直到数组开头。</li>
 </ul>
-<h4 id="Solutions-28"><a href="#Solutions-28" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h4 id="Solutions-29"><a href="#Solutions-29" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>贪心</p>
 <pre><code class="go">func jump(nums []int) int &#123;
     length := len(nums)
@@ -2086,7 +2131,7 @@ func max(a, b int) int &#123;
             &#125;
         &#125;
         count++
-    &#125;    
+    &#125;
     return count
 &#125;</code></pre>
 </li>
@@ -2114,7 +2159,7 @@ func max(a, b int) int &#123;
 &#125;</code></pre>
 </li>
 </ul>
-<h3 id="55-Jump-Game"><a href="#55-Jump-Game" class="headerlink" title="55. Jump Game"></a>55. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game/">Jump Game</a></h3><h4 id="Ideas-29"><a href="#Ideas-29" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-29"><a href="#Solutions-29" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
+<h3 id="55-Jump-Game"><a href="#55-Jump-Game" class="headerlink" title="55. Jump Game"></a>55. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game/">Jump Game</a></h3><h4 id="Ideas-30"><a href="#Ideas-30" class="headerlink" title="Ideas"></a>Ideas</h4><h4 id="Solutions-30"><a href="#Solutions-30" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
 <li><p>?</p>
 <pre><code class="go">func canJump(nums []int) bool &#123;
     if len(nums) == 1 &#123;
@@ -2166,10 +2211,10 @@ func max(a, b int) int &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-15T19:32:48+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-18T12:22:27+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年8月15日</p>
+    <p>更新于：2021年8月18日</p>
   </a>
 </div>
 
@@ -2247,12 +2292,11 @@ func max(a, b int) int &#123;
       
         <a class='prev' href='/2021/08/15/Assembly-Language/'>
           <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Assembly Language</p>
-          <p class='content'>对汇编语言的学习总结。
+          <p class='content'>汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。
 
 
 
-基础知识机器语言机器语言是机器指令的集合，以二进制表示，每一种 CPU 都有自己的机器指令集，机器指令指定 CPU 进行特定的任务。
-汇编语言机器指令全部由二进制编...</p>
+基础知识机器语言机器语言是机器指令的集合，以二进制表示，每一种 CPU 都有自己的机器指令集，机器指令指定 C...</p>
         </a>
       
       
@@ -2360,7 +2404,7 @@ func max(a, b int) int &#123;
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3Sum"><span class="toc-text">15. 3Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#66-Plus-One"><span class="toc-text">66. Plus One</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-1"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-1"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#88-Merge-Sorted-Array"><span class="toc-text">88. Merge Sorted Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-2"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-2"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String"><span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="toc-text">3. Longest Substring Without Repeating Characters</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-3"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-3"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Longest-Common-Prefix"><span class="toc-text">14. Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-4"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-4"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-Valid-Parentheses"><span class="toc-text">20. Valid Parentheses</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-5"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-5"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linked-List"><span class="toc-text">Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="toc-text">19. Remove Nth Node From End of List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-6"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-6"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-Merge-Two-Sorted-Lists"><span class="toc-text">21. Merge Two Sorted Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-7"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-7"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#61-Rotate-List"><span class="toc-text">61. Rotate List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-8"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-8"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#92"><span class="toc-text">92.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-9"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-9"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#141-Linked-List-Cycle"><span class="toc-text">141. Linked List Cycle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-10"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-10"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#142-Linked-List-Cycle-II"><span class="toc-text">142. Linked List Cycle II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-11"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-11"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#160-Intersection-of-Two-Linked-Lists"><span class="toc-text">160. Intersection of Two Linked Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-12"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-12"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Reverse-Linked-List"><span class="toc-text">206. Reverse Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-13"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-13"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binary-Tree"><span class="toc-text">Binary Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#94-Binary-Tree-Inorder-Traversal"><span class="toc-text">94. Binary Tree Inorder Traversal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-14"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-14"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#101-Symmetric-Tree"><span class="toc-text">101. Symmetric Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-15"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-15"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table"><span class="toc-text">Hash Table</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Two-Sum"><span class="toc-text">1. Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-16"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-16"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#242-Valid-Anagram"><span class="toc-text">242. Valid Anagram</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-17"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-17"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math"><span class="toc-text">Math</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-text">7. Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-18"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-18"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Palindrome-Number"><span class="toc-text">9. Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-19"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-19"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Roman-to-Integer"><span class="toc-text">13. Roman to Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-20"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-20"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#69-Sqrt-x"><span class="toc-text">69. Sqrt(x)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-21"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-21"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sorting"><span class="toc-text">Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#912-Sort-an-Array"><span class="toc-text">912. Sort an Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-22"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-22"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BackTracking"><span class="toc-text">BackTracking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#17-Letter-Combinations-of-a-Phone-Number"><span class="toc-text">17. Letter Combinations of a Phone Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-23"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-23"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#39-Combination-Sum"><span class="toc-text">39. Combination Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-24"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-24"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#46-Permutations"><span class="toc-text">46. Permutations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-25"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-25"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#47-Permutations-II"><span class="toc-text">47. Permutations II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-26"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-26"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-text">Dynamic Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#122"><span class="toc-text">122.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-27"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-27"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy"><span class="toc-text">Greedy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#45-Jump-Game-II"><span class="toc-text">45. Jump Game II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-28"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-28"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#55-Jump-Game"><span class="toc-text">55. Jump Game</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-29"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-29"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3Sum"><span class="toc-text">15. 3Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#26-Remove-Duplicates-from-Sorted-Array"><span class="toc-text">26. Remove Duplicates from Sorted Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-1"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-1"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#66-Plus-One"><span class="toc-text">66. Plus One</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-2"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-2"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#88-Merge-Sorted-Array"><span class="toc-text">88. Merge Sorted Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-3"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-3"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String"><span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="toc-text">3. Longest Substring Without Repeating Characters</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-4"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-4"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Longest-Common-Prefix"><span class="toc-text">14. Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-5"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-5"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-Valid-Parentheses"><span class="toc-text">20. Valid Parentheses</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-6"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-6"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linked-List"><span class="toc-text">Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="toc-text">19. Remove Nth Node From End of List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-7"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-7"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-Merge-Two-Sorted-Lists"><span class="toc-text">21. Merge Two Sorted Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-8"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-8"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#61-Rotate-List"><span class="toc-text">61. Rotate List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-9"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-9"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#92"><span class="toc-text">92.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-10"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-10"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#141-Linked-List-Cycle"><span class="toc-text">141. Linked List Cycle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-11"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-11"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#142-Linked-List-Cycle-II"><span class="toc-text">142. Linked List Cycle II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-12"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-12"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#160-Intersection-of-Two-Linked-Lists"><span class="toc-text">160. Intersection of Two Linked Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-13"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-13"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Reverse-Linked-List"><span class="toc-text">206. Reverse Linked List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-14"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-14"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binary-Tree"><span class="toc-text">Binary Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#94-Binary-Tree-Inorder-Traversal"><span class="toc-text">94. Binary Tree Inorder Traversal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-15"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-15"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#101-Symmetric-Tree"><span class="toc-text">101. Symmetric Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-16"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-16"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table"><span class="toc-text">Hash Table</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Two-Sum"><span class="toc-text">1. Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-17"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-17"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#242-Valid-Anagram"><span class="toc-text">242. Valid Anagram</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-18"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-18"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math"><span class="toc-text">Math</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Reverse-Integer"><span class="toc-text">7. Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-19"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-19"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Palindrome-Number"><span class="toc-text">9. Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-20"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-20"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Roman-to-Integer"><span class="toc-text">13. Roman to Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-21"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-21"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#69-Sqrt-x"><span class="toc-text">69. Sqrt(x)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-22"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-22"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sorting"><span class="toc-text">Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#912-Sort-an-Array"><span class="toc-text">912. Sort an Array</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-23"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-23"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BackTracking"><span class="toc-text">BackTracking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#17-Letter-Combinations-of-a-Phone-Number"><span class="toc-text">17. Letter Combinations of a Phone Number</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-24"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-24"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#39-Combination-Sum"><span class="toc-text">39. Combination Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-25"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-25"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#46-Permutations"><span class="toc-text">46. Permutations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-26"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-26"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#47-Permutations-II"><span class="toc-text">47. Permutations II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-27"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-27"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-text">Dynamic Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#122"><span class="toc-text">122.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-28"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-28"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy"><span class="toc-text">Greedy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#45-Jump-Game-II"><span class="toc-text">45. Jump Game II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-29"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-29"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#55-Jump-Game"><span class="toc-text">55. Jump Game</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ideas-30"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solutions-30"><span class="toc-text">Solutions</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
