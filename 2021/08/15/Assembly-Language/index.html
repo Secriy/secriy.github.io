@@ -663,7 +663,7 @@
 <blockquote>
 <p>指令和数据在内存或磁盘上并没有差别，都是一串二进制信息，同样的一串二进制数位如<code>1000100111011000</code>可以被看作是指令<code>MOV AX, BX</code>也可以被看作是数据<code>89D8H</code>。CPU 会按照特定机制把信息看作是指令或是数据，比如在不同的 CPU 指令周期把信息认作不同的类型。</p>
 </blockquote>
-<h4 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h4><p>存储器被抽象为线性的若干个单元，从 0 开始编号，如存储器有 128 个存储单元，编号从 0~127。每个存储单元大小为 8bit 即 1byte。</p>
+<h4 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h4><p>存储器被抽象为线性的若干个单元，从 0 开始编号，如存储器有 128 个存储单元，编号从 0~127。每个存储单元大小为 8 bits 即 1 byte。</p>
 <h4 id="CPU-读写存储器"><a href="#CPU-读写存储器" class="headerlink" title="CPU 读写存储器"></a>CPU 读写存储器</h4><p>CPU 需要通过以下三种信息来进行存储器上的数据读写：</p>
 <ol>
 <li>存储单元的地址（地址信息）；</li>
@@ -678,7 +678,7 @@
 </ol>
 <h3 id="三类总线"><a href="#三类总线" class="headerlink" title="三类总线"></a>三类总线</h3><h4 id="地址总线"><a href="#地址总线" class="headerlink" title="地址总线"></a>地址总线</h4><p>一根地址线可以表示 0、1 两个状态，因此可以寻 0、1 两个地址，10 根地址线可以寻址$2^{10}$即 1024 个地址（0~1023）。</p>
 <p>地址总线的宽度决定了 CPU 的寻址空间大小。</p>
-<h4 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h4><p>单根数据线可以一次传送 1bit 的信息，8 根数据线可以一次传送 8bit 的数据。8086CPU 有 16 根地址线，可以一次传送 16 位数据，即 2byte。读超过数据总线宽度的数据时需要多次读取。</p>
+<h4 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h4><p>单根数据线可以一次传送 1 bit 的信息，8 根数据线可以一次传送 8 bits 的数据。8086CPU 有 16 根地址线，可以一次传送 16 位数据，即 2 bytes。读超过数据总线宽度的数据时需要多次读取。</p>
 <p>数据总线的宽度决定了 CPU 单次能传输的数据量。</p>
 <h4 id="控制总线"><a href="#控制总线" class="headerlink" title="控制总线"></a>控制总线</h4><p>单根控制线提供了对外部部件的某一控制信息，如“读信号输出”控制线负责向外界传递读信号。</p>
 <p>控制总线的宽度决定了 CPU 对其他器件的控制能力。</p>
@@ -701,14 +701,20 @@
 <li>内部总线，负责连接各部件，在其中传送数据。</li>
 </ul>
 <p>8086CPU 中的寄存器（14 个）：AX、BX、CX、DX、SI、DI、SP、BP、IP、CS、SS、DS、ES、PSW。</p>
-<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>上述 8086CPU 的寄存器中，AX、BX、CX、DX 为通用寄存器，用于存放一般性的数据。其存储大小皆为 16bit。</p>
-<p>8086CPU 为了兼容为上代 8 位寄存器的 CPU 编写的程序，每个通用寄存器可以分为两个 8bit 寄存器使用：</p>
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>上述 8086CPU 的寄存器中，AX、BX、CX、DX 为通用寄存器，用于存放一般性的数据。其存储大小皆为 16 bits。</p>
+<p>8086CPU 为了兼容为上代 8 位寄存器的 CPU 编写的程序，每个通用寄存器可以分为两个 8-bit 寄存器使用：</p>
 <ul>
 <li>AX 可以分为 AH 和 AL</li>
 <li>BX 可以分为 BH 和 BL</li>
 <li>CX 可以分为 CH 和 CL</li>
 <li>DX 可以分为 DH 和 DL</li>
 </ul>
+<h3 id="字在寄存器中的存储"><a href="#字在寄存器中的存储" class="headerlink" title="字在寄存器中的存储"></a>字在寄存器中的存储</h3><p>对于 8086CPU，它可以一次性处理以下两种数据：</p>
+<ul>
+<li>字节（byte），8 bits；</li>
+<li>字（word），16 bits。</li>
+</ul>
+<p>一个字由两个字节组成，分别称为高位字节和低位字节，字可以正好存在一个通用寄存器中。</p>
 <h3 id="指令示例"><a href="#指令示例" class="headerlink" title="指令示例"></a>指令示例</h3><table>
 <thead>
 <tr>
@@ -740,7 +746,7 @@
 <li>寄存器最大宽度为 16 位；</li>
 <li>寄存器与运算器之间的通路为 16 位。</li>
 </ul>
-<p>8086CPU 有 20 根地址总线，内存单元物理地址需要用 20bit 存储，但它是 16 位 CPU，因此需要两个寄存器来保存一个地址。</p>
+<p>8086CPU 有 20 根地址总线，内存单元物理地址需要用 20 bits 存储，但它是 16 位 CPU，因此需要两个寄存器来保存一个地址。</p>
 <p>第一个寄存器提供段地址，第二个寄存器提供偏移地址，最终通过物理地址=段地址*16+偏移地址来计算出实际的物理地址，如：</p>
 <ul>
 <li><p>段地址 1000H，偏移地址 124AH，得出物理地址 1124AH；</p>
@@ -760,7 +766,7 @@
 JMP 3:0B16</code></pre>
 <p>执行后 CS 和 IP 的值会被修改为指定的值。</p>
 <h3 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h3><p>通过段的抽象，可以将指令都放在指定的一些内存连续的段中，被称为代码段，这种方式能够让指令聚集在连续的内存单元中，方便管理和隔离。</p>
-<h2 id="DEBUG-程序"><a href="#DEBUG-程序" class="headerlink" title="DEBUG 程序"></a>DEBUG 程序</h2><p>可以通过 DOSBox 来模拟 DOS 环境，在其下进行实验。</p>
+<h2 id="DEBUG-程序实验"><a href="#DEBUG-程序实验" class="headerlink" title="DEBUG 程序实验"></a>DEBUG 程序实验</h2><p>可以通过 DOSBox 来模拟 DOS 环境，在其下进行实验。</p>
 <h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
 <li>下载安装<a target="_blank" rel="noopener" href="https://www.dosbox.com/download.php?main=1">DOSBox</a>；</li>
 <li>下载<a target="_blank" rel="noopener" href="https://upyun.secriy.com/downloads/DEBUG.zip">DEBUG.zip</a> 解压到固定目录，如 DOSBox 安装目录下；</li>
@@ -835,7 +841,7 @@ add ax,cx     ; 01c8</code></pre>
 <p>从上面的显示来看，显存中的数据已经被改变了，请注意右上角的几个字符。</p>
 <p>我们再改变一下输入的数据：</p>
 <p><img src="/2021/08/15/Assembly-Language/image-20210818110326953.png" class="lazyload" data-srcset="/2021/08/15/Assembly-Language/image-20210818110326953.png" srcset="data:image/png;base64,666" alt="image-20210818110326953"></p>
-<p>我们输入的数据总共有 8bytes，观察显示出的符号可以发现总共有四个，实际上输入的数据每两个一组，分别对应着一个符号的内容和颜色。</p>
+<p>我们输入的数据总共有 8 bytes，观察显示出的符号可以发现总共有四个，实际上输入的数据每两个一组，分别对应着一个符号的内容和颜色。</p>
 <p>这都取决于 DOS 中的设置，比如在 DOS 中色值-颜色对应如下：</p>
 <table>
 <thead>
@@ -893,7 +899,86 @@ add ax,cx     ; 01c8</code></pre>
 </tbody></table>
 <p>颜色由两个十六进制值表示，前者为前景色，后者为背景色，因此 07 就代表黑底白字。</p>
 <p>那么前面的 1、2、3、4 就代表了四个符号，这来自<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Code_page_437">Code Page 437 字符集</a>。</p>
-<h2 id="寄存器（内存访问）"><a href="#寄存器（内存访问）" class="headerlink" title="寄存器（内存访问）"></a>寄存器（内存访问）</h2>
+<h2 id="寄存器（内存访问）"><a href="#寄存器（内存访问）" class="headerlink" title="寄存器（内存访问）"></a>寄存器（内存访问）</h2><h3 id="内存中字的存储"><a href="#内存中字的存储" class="headerlink" title="内存中字的存储"></a>内存中字的存储</h3><p>CPU 中一个字（16 bits）存在一个寄存器中，但内存的最小单元为字节，一个字需要存在两个内存单元中，低位字节放在低地址单元，高位字节放在高地址单元。由此引入<strong>字单元</strong>的概念，即存放一个字型数据（16 bits）的内存单元。字单元占用$n$、$n+1$内存单元则被称为$n$地址字单元，如一个字占用 4、5 两个内存单元，则被称为 4 地址字单元。</p>
+<h3 id="DS-和-addresss"><a href="#DS-和-addresss" class="headerlink" title="DS 和 [addresss]"></a>DS 和 [addresss]</h3><p>8086CPU 中，有一个 DS 寄存器，用于存放待访问<strong>数据</strong>的段地址。如读取<code>10000H</code>内存单元的内容，可以使用如下程序：</p>
+<pre><code class="assembly">mov bx, 1000H
+mov ds, bx
+mov al, [0]</code></pre>
+<p>其中，往 DS 写入了<code>1000H</code>，因此 DS 的内容为<code>1000H</code>，这是段地址。最后一句操作的<code>[...]</code>用于指定偏移地址，使用这种语法，CPU 会自动读 DS 内容（段地址），附加偏移地址（”[]”内数字）按照前文中的计算方式生成物理地址，最后读取物理地址指向的内存数据写入目标寄存器，即该语法最终可以直接读内存数据。</p>
+<p>8086CPU 不支持直接送数据到段寄存器，因此无法使用<code>mov ds, 1000H</code>这种写法，这属于 8086CPU 的硬件设计问题。</p>
+<p>DS 与 CS 的区别在于 CS 用于存储待执行<strong>指令</strong>的内存段地址，而 DS 存放的是待取<strong>数据</strong>的段地址，数据是不应被当作指令执行的。</p>
+<h3 id="字的传送"><a href="#字的传送" class="headerlink" title="字的传送"></a>字的传送</h3><p>上一节中的指令<code>mov al, [0]</code>只是将一个字节的数据写入 AL 寄存器，这是因为 AL 寄存器大小为 8 bits。而 8086CPU 有 16 根数据线，一次性可以传送 16 bits 的数据，即一个字。使用同样的语法即可做到传送 16 bits 数据，如<code>mov ax, [0]</code>，因为 AX 是 16-bit 寄存器，可以直接读 16 bits 的数据存入。</p>
+<p>示例：</p>
+<p>内存内容：</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Data</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x10000</td>
+<td>23H</td>
+</tr>
+<tr>
+<td>0x10001</td>
+<td>11H</td>
+</tr>
+<tr>
+<td>0x10002</td>
+<td>22H</td>
+</tr>
+<tr>
+<td>0x10003</td>
+<td>66H</td>
+</tr>
+</tbody></table>
+<p>程序：</p>
+<pre><code class="assembly">mov ax, 1000H
+mov ds, ax
+; ds = 1000H
+mov ax, [0]
+; ax = 1123H
+mov bx, [2]
+; bx = 6622H
+mov cx, [1]
+; cx = 2211H
+add bx, [1]
+; bx = 8833H
+sub bx, cx
+; cx = 6622H</code></pre>
+<p>这里的<code>sub</code>指令是减法指令，前值减去后值，结果存在左侧表示的寄存器中。</p>
+<h3 id="mov、add、sub"><a href="#mov、add、sub" class="headerlink" title="mov、add、sub"></a>mov、add、sub</h3><p>目前已知<code>mov</code>指令有以下几种操作：</p>
+<ol>
+<li><p> mov 寄存器，数据</p>
+</li>
+<li><p> mov 寄存器，寄存器</p>
+</li>
+<li><p> mov 寄存器，内存单元</p>
+</li>
+<li><p> mov 内存单元，寄存器</p>
+</li>
+<li><p> mov 段寄存器，寄存器</p>
+</li>
+</ol>
+<p>从第五条可以知道，CPU 中存在段寄存器与通用寄存器之间的通路，因此可以推测也存在反向通路，即段寄存器 -&gt; 寄存器。</p>
+<p>经过验证，得到<code>mov ax, ds</code>合法。</p>
+<p>从第四条可以知道，CPU 中存在寄存器到内存单元的通路，而刚刚得出段寄存器可以传送数据到寄存器的结论，由此判断段寄存器可以传送数据到内存单元，如<code>mov [0], cs</code>。</p>
+<p>经过验证，指令合法。</p>
+<p>根据第三、第五条可以推测存在内存单元 -&gt; 段寄存器的操作，如<code>mov ds, [0]</code>。</p>
+<p>经过验证，指令合法。</p>
+<p>经过实验，<code>add</code>和<code>sub</code>指令无法操作段寄存器，类似<code>add ds, ax</code>的指令不合法。</p>
+<h3 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h3><p>同之前提到过的代码段一样，将需要操作的数据放在同一段内存单元中可以方便程序的执行和内存的管理，这就是数据段。要访问数据段中的数据，可以先用 DS 段寄存器存放数据段的地址，根据需要寻址具体单元。</p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种 LIFO（Last in first out）的数据结构，但在这里不去讨论它的数据结构层面内容，具体可以参考其他资料。这里只提一点：在程序化的角度，应当有指示栈顶位置的标记。</p>
+<p>现在的 CPU 中都有栈的设计，如 8086CPU 就提供了以栈形式操作内存空间的指令。也就是说通过这些指令，可以将部分内存空间当作栈结构使用。</p>
+<h4 id="PUSH-amp-POP"><a href="#PUSH-amp-POP" class="headerlink" title="PUSH &amp; POP"></a>PUSH &amp; POP</h4><p>PUSH 即入栈，对应指令如<code>push ax</code>，表示将 AX 中的内容送入栈中。</p>
+<p>POP 即出栈，对应指令如<code>pop ax</code>，表示将栈中的数据送入 AX 寄存器。</p>
+<p>PUSH 和 POP 操作的数据传送单位都是字。</p>
+<p>可以发现，上述两条指令并没有指定栈的位置在哪，那么如何确定栈空间？根据前面学习的套路，栈很显然也是由某些寄存器指定的，在 8086CPU 中则是段寄存器 SS 和寄存器 SP。同<code>CS:IP</code>的表示形式相同，<strong>栈顶地址</strong>由<code>SS:SP</code>指定，SS 和 SP 分别指定段地址和偏移，注意这里是栈顶地址。</p>
+<p>执行<code>mov ax, 0123H</code>后再执行<code>push ax</code>即把数据<code>0123H</code>送入栈，栈顶指针（<code>SS:SP</code>）往低地址方向移动，而数据也按照低地址存放低位字节，高地址存放高位字节的规则将一个字存入两个内存单元。下图中，<code>SS:SP</code>的值为<code>1000EH</code>，即指向<code>23H</code>。其中，SS=<code>1000H</code>， SP=<code>000EH</code>。</p>
+<p><img src="/2021/08/15/Assembly-Language/image-20210824225724838.png" class="lazyload" data-srcset="/2021/08/15/Assembly-Language/image-20210824225724838.png" srcset="data:image/png;base64,666" alt="image-20210824225724838"></p>
+
   
   
     
@@ -922,10 +1007,10 @@ add ax,cx     ; 01c8</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-18T13:12:40+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-24T23:06:23+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年8月18日</p>
+    <p>更新于：2021年8月24日</p>
   </a>
 </div>
 
@@ -1116,7 +1201,7 @@ Given an integer array nums, return all the triplets [nums[i], nu...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80"><span class="toc-text">机器语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-text">汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83"><span class="toc-text">存储单元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU-%E8%AF%BB%E5%86%99%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">CPU 读写存储器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E6%80%BB%E7%BA%BF"><span class="toc-text">三类总线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF"><span class="toc-text">地址总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF"><span class="toc-text">数据总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%80%BB%E7%BA%BF"><span class="toc-text">控制总线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-text">内存地址空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">通用寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%A4%BA%E4%BE%8B"><span class="toc-text">指令示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">段寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CS-%E5%92%8C-IP"><span class="toc-text">CS 和 IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-text">代码段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DEBUG-%E7%A8%8B%E5%BA%8F"><span class="toc-text">DEBUG 程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DEBUG-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">DEBUG 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#R"><span class="toc-text">R</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#D"><span class="toc-text">D</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E"><span class="toc-text">E</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#U"><span class="toc-text">U</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T"><span class="toc-text">T</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A"><span class="toc-text">A</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%98%BE%E5%AD%98%E5%86%85%E5%AE%B9"><span class="toc-text">修改显存内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%EF%BC%89"><span class="toc-text">寄存器（内存访问）</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80"><span class="toc-text">机器语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-text">汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83"><span class="toc-text">存储单元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU-%E8%AF%BB%E5%86%99%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">CPU 读写存储器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E6%80%BB%E7%BA%BF"><span class="toc-text">三类总线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF"><span class="toc-text">地址总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF"><span class="toc-text">数据总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%80%BB%E7%BA%BF"><span class="toc-text">控制总线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-text">内存地址空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">通用寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%9C%A8%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">字在寄存器中的存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%A4%BA%E4%BE%8B"><span class="toc-text">指令示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">段寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CS-%E5%92%8C-IP"><span class="toc-text">CS 和 IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-text">代码段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DEBUG-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E9%AA%8C"><span class="toc-text">DEBUG 程序实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DEBUG-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">DEBUG 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#R"><span class="toc-text">R</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#D"><span class="toc-text">D</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E"><span class="toc-text">E</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#U"><span class="toc-text">U</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T"><span class="toc-text">T</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A"><span class="toc-text">A</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%98%BE%E5%AD%98%E5%86%85%E5%AE%B9"><span class="toc-text">修改显存内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%EF%BC%89"><span class="toc-text">寄存器（内存访问）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E5%AD%97%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">内存中字的存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DS-%E5%92%8C-addresss"><span class="toc-text">DS 和 [addresss]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%9A%84%E4%BC%A0%E9%80%81"><span class="toc-text">字的传送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mov%E3%80%81add%E3%80%81sub"><span class="toc-text">mov、add、sub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="toc-text">数据段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PUSH-amp-POP"><span class="toc-text">PUSH &amp; POP</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 

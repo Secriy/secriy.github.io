@@ -675,17 +675,16 @@
 <blockquote>
 <p>难度 3 分</p>
 </blockquote>
-<pre><code class="go">func duplicate( numbers []int ) int &#123;
-    for i := 0; i &lt; len(numbers); i++ &#123;
-        if numbers[i] != i &#123;
-            if numbers[i] == numbers[numbers[i]] &#123;
-                return numbers[i]
+<pre><code class="go">func findRepeatNumber(nums []int) int &#123;
+    for i := 0; i &lt; len(nums); i++ &#123;
+        for nums[i] != i &#123;
+            if nums[i] == nums[nums[i]] &#123;
+                return nums[i]
             &#125;
-            numbers[numbers[i]], numbers[i] = numbers[i], numbers[numbers[i]]
-            i--
+            nums[i], nums[nums[i]] = nums[nums[i]], nums[i]
         &#125;
     &#125;
-    return -1;
+    return -1
 &#125;</code></pre>
 </li>
 </ul>
@@ -1680,10 +1679,10 @@ func max(a, b int) int &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-17T11:01:23+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-24T23:06:20+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年8月17日</p>
+    <p>更新于：2021年8月24日</p>
   </a>
 </div>
 
