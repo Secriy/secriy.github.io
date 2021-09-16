@@ -711,8 +711,8 @@ vgdisplay # 查看已创建卷组</code></pre>
 </li>
 <li><p>创建逻辑卷</p>
 <pre><code class="shell">lvcreate -L 225G vgp -n lvroot # 分配225G空间给root分区
-lvcreate -l +100%FREE -n lvswap # 分配剩余空间给swap分区
-lvcreate -l +100%FREE -n lvhome # 分配全部空间给home分区</code></pre>
+lvcreate -l +100%FREE vgp -n lvswap # 分配剩余空间给swap分区
+lvcreate -l +100%FREE vgq -n lvhome # 分配全部空间给home分区</code></pre>
 </li>
 <li><p>挂载分区</p>
 <p><strong>boot 所在分区我个人使用的大小是 200M，千万不能太小，不然无法使用 LVM 方式！</strong></p>
@@ -1114,10 +1114,10 @@ LC_ALL=</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-10T17:25:35+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-09-16T15:53:22+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年7月10日</p>
+    <p>更新于：2021年9月16日</p>
   </a>
 </div>
 
