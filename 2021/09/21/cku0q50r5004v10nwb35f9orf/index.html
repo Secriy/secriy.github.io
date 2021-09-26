@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>The Basics of InnoDB - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="Database,MySQL">
+  
+
+  
+    <meta name="description" content="本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资料大多是摘录自官方文档的原文。由此打算对照“一手资料”看一遍，梳理总结。本文翻译可能引起歧义的地方都会注明英文原文。">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+
+<script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) document.write('\x3Cscript id="_iealwn_js" data-outver="11" src="https://support.dmeng.net/ie-alert-warning/latest.js">\x3C/script>'); </script>
+
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        The Basics of InnoDB
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年9月21日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="The Basics of InnoDB" data-path="/2021/09/21/cku0q50r5004v10nwb35f9orf/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/2021/09/21/cku0q50r5004v10nwb35f9orf/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/2021/09/21/cku0q50r5004v10nwb35f9orf/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资料大多是摘录自官方文档的原文。由此打算对照“一手资料”看一遍，梳理总结。本文翻译可能引起歧义的地方都会注明英文原文。</p></div>
+
+<span id="more"></span>
+
+<h2 id="InnoDB-介绍"><a href="#InnoDB-介绍" class="headerlink" title="InnoDB 介绍"></a>InnoDB 介绍</h2><blockquote>
+<p><code>InnoDB</code> is a general-purpose storage engine that balances high reliability and high performance. In MySQL 5.7, <code>InnoDB</code> is the default MySQL storage engine. Unless you have configured a different default storage engine, issuing a <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/create-table.html"><code>CREATE TABLE</code></a> statement without an <code>ENGINE</code> clause creates an <code>InnoDB</code> table.</p>
+<p>InnoDB 是一个平衡了高可靠性和高性能的通用存储引擎。在 MySQL 5.7 中，InnoDB 是默认的 MySQL 存储引擎。</p>
+</blockquote>
+<p>查看当前使用的数据库版本支持哪些存储引擎：</p>
+<pre><code class="mysql">SHOW ENGINES;
+
+SELECT * FROM INFORMATION_SCHEMA.ENGINES;</code></pre>
+<h3 id="InnoDB-的主要优势"><a href="#InnoDB-的主要优势" class="headerlink" title="InnoDB 的主要优势"></a>InnoDB 的主要优势</h3><ul>
+<li>其 DML 操作遵循 ACID 模型，提供带有提交（commit）、回滚（rollback）、崩溃恢复（crash-recovery）能力的事务（transaction）机制。</li>
+<li>支持行级锁（row-level locking）以及 Oracle 风格的一致读取，提高了多用户并发性和性能。</li>
+<li>InnoDB 基于主键（primary key）在磁盘上排列数据来优化查询。每个 InnDB 表都有一个被称作<strong>聚集索引（clustered index）</strong>的主键索引去组织数据，它能够最小化主键查找的 I/O 开销。</li>
+<li>InnoDB 支持外键约束，使用外键时会检查插入、更新和删除，以确保它们不会导致相关表之间的不一致。</li>
+</ul>
+<h3 id="InnoDB-最佳实践"><a href="#InnoDB-最佳实践" class="headerlink" title="InnoDB 最佳实践"></a>InnoDB 最佳实践</h3><p>本节介绍使用 InnoDB 表时的最佳实践。从官方提供的最佳实践能够看出一部分 InnoDB 的优势、它能够解决的问题以及它存在的问题。</p>
+<ul>
+<li>使用最常查询的一列或多列为每个表指定主键，如果没有明显的主键，则为其指定自动递增值。</li>
+<li>使用联接来从多个带有相同 ID 值的表中查询数据。为了提高联接的性能，在联接的列上定义外键，并在每个表中对这些列定义相同的数据类型。添加外键可确保引用的列被索引，从而提高性能。外键还会将删除和更新操作传递到所有其他受影响的表中，如果父表中不存在相应的 ID，则会阻止在子表中插入数据。</li>
+<li>关闭自动提交。每秒提交数百次会降低性能（受存储设备的写入速度限制）。</li>
+<li>使用<code>START TRANSACTION</code>和<code>COMMIT</code>语句将相关 DML 操作集合括起来，将它们分组到事务中。虽然不应该 commit 太频繁，但保留大量的未提交语句（<code>INSERT</code>，<code>UPDATE</code>，<code>DELETE</code>），让其执行数个小时也是不合适的。</li>
+<li>不要使用<code>LOCK TABLES</code>语句。InnoDB 不需要牺牲可靠性和性能就可以处理多个会话并同时对同一个表进行读写。要获得对多个行的独占写入权限，请使用<code>SELECT ... FOR UPDATE</code>语法，这样仅会锁定要更新的行。</li>
+<li>启用<code>innodb_file_per_table</code>变量或使用常规表空间，从而将表的数据和索引放入单独的文件中，而不是去使用系统表空间。默认情况下，<code>innodb_file_per_table</code>变量处于启用状态。</li>
+<li>评估你的数据和访问模式是否受益于 InnoDB 表或页面的压缩功能。你可以在不牺牲读/写功能的情况下压缩 InnoDB 表。</li>
+<li>使用<code>--sql_mode=NO_ENGINE_SUBSTITUTION</code>选项运行服务器，以防止使用不希望使用的存储引擎创建表。</li>
+</ul>
+<h2 id="ACID-模型"><a href="#ACID-模型" class="headerlink" title="ACID 模型"></a>ACID 模型</h2><blockquote>
+<p>The <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_acid">ACID</a> model is a set of database design principles that emphasize aspects of reliability that are important for business data and mission-critical applications. MySQL includes components such as the <code>InnoDB</code> storage engine that adhere closely to the ACID model so that data is not corrupted and results are not distorted by exceptional conditions such as software crashes and hardware malfunctions. When you rely on ACID-compliant features, you do not need to reinvent the wheel of consistency checking and crash recovery mechanisms. In cases where you have additional software safeguards, ultra-reliable hardware, or an application that can tolerate a small amount of data loss or inconsistency, you can adjust MySQL settings to trade some of the ACID reliability for greater performance or throughput.</p>
+<p>ACID 模型是一组数据库设计原则，强调对业务数据和任务关键型应用程序非常重要的可靠性方面。MySQL 包含 InnoDB 存储引擎等组件，这些组件与 ACID 模型紧密相连，因此数据不会被破坏，结果不会因为软件的崩溃和硬件的故障等异常情况而不正确。当你依赖与 ACID 兼容的功能时，无需重新发明一致性检查和崩溃恢复机制。如果你已经有了额外的软件保护措施、超可靠的硬件或是应用程序能够容忍少量数据丢失以及数据不一致，你可以调整 MySQL 设置，以牺牲一些 ACID 可靠性来获得更高的性能或吞吐量。</p>
+</blockquote>
+<p>简而言之，InnoDB 存储引擎实现了 ACID 模型来保证数据和操作的可靠性，让用户不需要进行多余的操作就能够保证可靠。并且，当用户使用了其他方式来保证可靠性时，在存储引擎层面上可以不完全遵守 ACID 来提高性能和吞吐量。</p>
+<ul>
+<li><strong>A</strong>: atomicity（原子性）</li>
+<li><strong>C</strong>: consistency（一致性）</li>
+<li><strong>I</strong>: isolation（隔离性）</li>
+<li><strong>D</strong>: durability（持久性）</li>
+</ul>
+<h3 id="Atomicity"><a href="#Atomicity" class="headerlink" title="Atomicity"></a>Atomicity</h3><p>ACID 模型的原子性方面主要涉及到 InnoDB 的事务机制，相关 MySQL 功能包括：</p>
+<ul>
+<li><code>autocommit</code>设置。</li>
+<li><code>COMMIT</code>语句。</li>
+<li><code>ROLLBACK</code>语句。</li>
+</ul>
+<p>一致性体现在事务是可以提交或回滚的原子（atomic）工作单元。当事务对数据库进行多次更改时，提交（commit）事务时所有更改都会成功，或者回滚（rollback）事务时所有更改都会撤消。</p>
+<h3 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h3><p>ACID 模型的一致性方面主要涉及 InnoDB 防止数据崩溃的内部处理。相关 MySQL 功能包括：</p>
+<ul>
+<li>InnoDB 的<strong>双重写缓冲（doublewrite buffer）</strong>。</li>
+<li>InnoDB 的<strong>崩溃恢复（crash recovery）</strong>机制。</li>
+</ul>
+<p>在每次提交或回滚之后，以及在事务进行期间，数据库始终保持一致状态。如果跨多个表更新相关数据，查询将看到所有旧值或所有新值，而不是新旧值的混合。</p>
+<p>也就是说一个事务对多个表进行了更新，另外一个新的查询不可能查询到一部分表是更新了而另一些表却没有这次更新。</p>
+<h3 id="Isolation"><a href="#Isolation" class="headerlink" title="Isolation"></a>Isolation</h3><p>ACID 模型的隔离性方面主要涉及到 InnoDB 的事务机制，特别是应用于每个事务的隔离级别。相关 MySQL 功能包括：</p>
+<ul>
+<li><code>autocommit</code>设置。</li>
+<li>事务的<strong>隔离级别</strong>和<code>SET Transaction</code>语句。</li>
+<li>InnoDB 锁的底层细节。</li>
+</ul>
+<p>多个事务在进行过程中相互保护（隔离），它们之间不能相互干扰，也不能看到彼此未提交的数据。这种隔离是通过锁（locking）机制实现的。有经验的用户可以调整隔离级别，在确保事务不会相互干扰的情况下，以较少的保护换取更高的性能和并发性。</p>
+<h3 id="Durability"><a href="#Durability" class="headerlink" title="Durability"></a>Durability</h3><p>ACID 模型的持久性方面涉及 MySQL 软件功能与特定硬件配置的交互。与 MySQL 相关的功能包括：</p>
+<ul>
+<li>InnoDB 的<strong>双重写缓冲（doublewrite buffer）</strong>。</li>
+<li><code>innodb_flush_log_at_trx_commit</code>变量。</li>
+<li><code>sync_binlog</code>变量。</li>
+<li><code>innodb_file_per_table</code>变量。</li>
+<li>存储设备（如磁盘驱动器、SSD 或 RAID 阵列）中的写入缓冲区。</li>
+<li>存储设备中的电池供电缓存。</li>
+<li>用于运行 MySQL 的操作系统，特别是它对<code>fsync()</code>系统调用的支持。</li>
+<li>不间断电源（UPS），用于保护运行 MySQL 服务器和存储 MySQL 数据的所有计算机服务器和存储设备的电源。</li>
+<li>备份策略，例如备份的频率和类型，以及备份保留期。</li>
+<li>对于分布式或托管数据应用程序，MySQL 服务器硬件所在的数据中心的特定特征以及数据中心之间的网络连接。</li>
+</ul>
+<p>持久性体现在事务的结果是持久的————一旦提交操作成功，该事务所做的更改就不会受到电源故障、系统崩溃、竞争条件或其他潜在危险的影响。持久性通常涉及到写入磁盘存储，具有一定数量的冗余，以防止写入操作期间出现电源故障或软件崩溃。（在 InnoDB 中，doublewrite 缓冲区有助于提高持久性。）</p>
+<h2 id="Multi-Versioning"><a href="#Multi-Versioning" class="headerlink" title="Multi-Versioning"></a>Multi-Versioning</h2><blockquote>
+<p><code>InnoDB</code> is a multi-version storage engine. It keeps information about old versions of changed rows to support transactional features such as concurrency and rollback. This information is stored in the system tablespace or undo tablespaces in a data structure called a rollback segment. <code>InnoDB</code> uses the information in the rollback segment to perform the undo operations needed in a transaction rollback. It also uses the information to build earlier versions of a row for a consistent read.</p>
+<p>InnoDB 是一个多版本存储引擎。它保留有关已更改行的旧版本信息，以支持事务性功能，如并发（concurrency）和回滚（rollback）。此信息存储在系统表空间或撤消（undo）表空间称为回滚段（rollback segment）的数据结构中。InnoDB 使用回滚段中的信息执行事务回滚所需的撤消操作。它还使用这些信息构建行的早期版本，以实现一致的读取。</p>
+</blockquote>
+<p>InnoDB 在内部向数据库中存储的每一行添加三个字段：</p>
+<ul>
+<li><p>6 字节的<code>DB_TRX_ID</code>字段表示插入或更新行的最后一个事务的事务标识符。此外，删除在内部被视为更新，行中的特殊位设置标记为已删除。</p>
+</li>
+<li><p>7 字节的<code>DB_ROLL_PTR</code>字段，称为滚动指针。滚动指针指向写入回滚段的撤消日志（undo log）记录。如果行已更新，则撤消日志记录包含更新前重建行内容所需的信息。</p>
+</li>
+<li><p>6 字节的<code>DB_ROW_ID</code>字段包含一个随着插入新行而单调增加的行 ID。如果 InnoDB 自动生成聚集索引，则该索引包含行 ID 值。否则，<code>DB_ROW_ID</code>列不会出现在任何索引中。</p>
+<blockquote>
+<p>当用户没有<strong>显式指定主键</strong>且表中不存在<strong>非空唯一索引</strong>时，InnoDB 会自动生成聚集索引，使用的主键是<code>DB_ROW_ID</code>。</p>
+</blockquote>
+</li>
+</ul>
+<p>回滚段中的 undo log 分为 <strong>insert undo log</strong> 和 <strong>update undo log</strong>。insert undo log 仅在事务回滚中需要，并且可以在事务提交后立即丢弃。update undo log 也用于一致性读取，但只有在当前不存在 InnoDB 已为其分配快照的事务时，才能丢弃 update undo log。在一致性读取中，快照可能需要更新撤消日志中的信息来构建数据库行的早期版本。</p>
+<p>建议定期提交事务，包括仅发出一致读取的事务。否则，InnoDB 无法丢弃 update undo log 中的数据，回滚段可能会变得太大，填满它所在的表空间。</p>
+<p>回滚段中 undo log 记录的物理大小通常小于相应的插入或更新行。可以使用此信息计算回滚段所需的空间。</p>
+<p>在 InnoDB 多版本控制方案中，使用 SQL 语句删除某一行时，该行不会立即从数据库中物理删除。InnoDB 仅在丢弃<strong>为了删除操作而写入</strong>的 update undo log 记录时，才从物理上删除相应的行及其索引记录。此删除操作称为清除（purge），速度相当快，通常与执行删除的 SQL 语句的时间顺序相同。</p>
+<p>如果以大约相同的速率在表中小批量插入和删除行，则清除线程可能会开始落后，并且由于这些“死（dead）”行的存在，表可能会变得越来越大，使所有内容都绑定在磁盘上并且速度非常慢。在这种情况下，通过调整<code>innodb_max_purge_lag</code>系统变量来限制新行操作，并为清除线程分配更多资源。</p>
+<h3 id="MVCC-和二级索引"><a href="#MVCC-和二级索引" class="headerlink" title="MVCC 和二级索引"></a>MVCC 和二级索引</h3><p>InnoDB 多版本并发控制（MVCC）处理二级索引的方式与处理聚集索引的方式不同。聚集索引中的记录会就地更新，其隐藏的系统列指向撤消日志项，从中可以重构早期版本的记录。与聚集索引记录不同，二级索引记录不包含隐藏的系统列，也不进行就地更新。</p>
+<p>更新二级索引列时，旧的二级索引记录将被标记为删除，新记录将被插入，删除标记的记录最终将被清除。当二级索引记录被标记为删除，或者二级索引页被较新的事务更新时，InnoDB 会在聚集索引中查找数据库记录。在聚集索引中检查记录的<code>DB_TRX_ID</code>，如果在读取事务启动后修改了记录，则从 undo log 中检索记录的正确版本。</p>
+<p>如果二级索引记录被标记为删除，或者二级索引页由较新的事务更新，则不使用覆盖索引（covering index）技术。InnoDB 不会从索引结构返回值，而是在聚集索引中查找记录。</p>
+<p>但是，如果启用了索引条件下推（ICP）优化，并且只能使用索引中的字段来评估<code>WHERE</code>条件的一部分，MySQL 服务器仍然会将<code>WHERE</code>条件的这一部分下推到存储引擎，在那里使用索引对其进行评估。如果没有找到匹配的记录，则避免进行聚集索引查找。如果找到匹配的记录，即使在标记为删除的记录中，InnoDB 也会在聚集索引中查找该记录。</p>
+<h2 id="InnoDB-架构"><a href="#InnoDB-架构" class="headerlink" title="InnoDB 架构"></a>InnoDB 架构</h2><p>InnoDB 的架构可以参考下图，取自<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/innodb-architecture.html">InnoDB Architecture</a>。</p>
+<p><img src="/2021/09/21/cku0q50r5004v10nwb35f9orf/innodb-architecture.png" class="lazyload" data-srcset="/2021/09/21/cku0q50r5004v10nwb35f9orf/innodb-architecture.png" srcset="data:image/png;base64,666" alt="InnoDB architecture diagram showing in-memory and on-disk structures."></p>
+<p>可以看到其分为<strong>In-Memory Structures</strong>和<strong>On-Disk Structures</strong>，也就是内存上结构和磁盘上结构。</p>
+<p>内存中的部分，可以看到有以下几个关键结构：</p>
+<ul>
+<li>Adaptive Hash Index（可适应性哈希索引）</li>
+<li>Buffer Pool（缓冲池）</li>
+<li>Change Buffer（改动缓冲）</li>
+<li>Log Buffer（日志缓冲）</li>
+</ul>
+<p>磁盘上的部分，有以下几个关键结构：</p>
+<ul>
+<li>System Tablespace（系统表空间）<ul>
+<li>InnoDB Data Dictionary（InnoDB 数据字典）</li>
+<li>Doublewrite Buffer（双写缓冲）</li>
+<li>Change Buffer（改动缓冲）</li>
+<li>Undo Logs（撤销日志，undo-log）</li>
+</ul>
+</li>
+<li>Undo Tablespaces（撤销表空间）</li>
+<li>Redo Log（重做日志）</li>
+<li>General Tablespaces（通用表空间）</li>
+<li>Temporary Tablespaces（临时表空间）</li>
+</ul>
+<p>内存上模块和磁盘上模块之间是由操作系统缓冲连接，含义就是内存中的内容通过操作系统缓冲区写入磁盘来进行持久化。图中的<strong>O_DIRECT</strong>是<code>open</code>函数的一个 flag，指的是进行无缓冲的 I/O 操作，会绕过缓冲区高速缓存。</p>
+<p>InnoDB 默认会将<code>innodb_file_per_table</code>设置为<code>ON</code>，让每个表使用单独的 .frm 文件。</p>
+<h2 id="InnoDB-磁盘上结构"><a href="#InnoDB-磁盘上结构" class="headerlink" title="InnoDB 磁盘上结构"></a>InnoDB 磁盘上结构</h2><h3 id="表（Tables）"><a href="#表（Tables）" class="headerlink" title="表（Tables）"></a>表（Tables）</h3><p>InnoDB 会将表的数据放在数据目录中的 .frm 文件中，并且，它还会将新表的一些信息存入系统表空间中自己的内部数据字典里。当某一个表被删除时，InnoDB 同样要删除其系统表空间中和被删除表有关的记录。</p>
+<h4 id="行格式"><a href="#行格式" class="headerlink" title="行格式"></a>行格式</h4><p>行格式（Row Formats）决定了单行数据在磁盘中是以什么形式存储的，</p>
+<p>InnoDB 有四种行格式，特性各不相同：</p>
+<ul>
+<li>REDUNDANT</li>
+<li>COMPACT</li>
+<li>DYNAMIC</li>
+<li>COMPRESSED</li>
+</ul>
+<p>变量<code>innodb_default_row_format</code>定义了默认使用的格式，而在建表（CREATE）或修改表（ALTER）时，也可以使用<code>ROW_FORMAT</code>选项自定义。</p>
+<h4 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h4><p>建议为每一个表都手动定义主键，并包含以下特征：</p>
+<ul>
+<li>最重要的查询所用列</li>
+<li>不可能为空的列</li>
+<li>不会重复的列</li>
+<li>插入后其值很少修改的列</li>
+</ul>
+<h3 id="索引（Indexes）"><a href="#索引（Indexes）" class="headerlink" title="索引（Indexes）"></a>索引（Indexes）</h3><h4 id="聚集索引和二级索引"><a href="#聚集索引和二级索引" class="headerlink" title="聚集索引和二级索引"></a>聚集索引和二级索引</h4><p>每个 InnoDB 表都有一个被称为聚集索引的特殊索引，用于存储行数据（这个索引的每个项存储了整个数据行，而非部分列的值）。通常，聚集索引与主键是一个东西。为了在查询、插入和其他数据库操作中获得最佳性能，了解 InnoDB 如何使用聚集索引优化常见的查找和 DML 操作非常重要。</p>
+<ul>
+<li>在表上定义主键时，InnoDB 把它用作聚集索引。如果没有符合条件（逻辑唯一、非空）的列作为主键，可以添加一个自增的列用作主键，并且插入新行时自增列会自动设置其值。</li>
+<li>如果不为表定义主键，InnoDB 会使用第一个唯一索引（所有键定义为<code>NOT NULL</code>）作为聚集索引。</li>
+<li>如果表没有主键或合适的唯一索引，InnoDB 将在包含行 ID 值的合成列上生成一个名为<code>GEN_CLUST_INDEX</code>的隐藏聚集索引。这些行按 InnoDB 分配的行 ID 排序。行 ID 是一个 6 字节的字段，随着新行的插入而单调增加。因此，按行 ID 排序的行实际上是按插入顺序排列的。</li>
+</ul>
+<p>通过聚集索引访问行非常快，因为索引搜索直接指向包含行数据的页面。如果表很大，则与使用不同于索引记录的页面存储行数据的存储组织相比，聚集索引体系结构通常可以明显减少磁盘 I/O 操作的开销。</p>
+<p>聚集索引以外的索引都称为二级索引。在 InnoDB 中，二级索引中的每条记录都包含该行的主键列，以及为二级索引指定的列。InnoDB 使用此主键值搜索聚集索引中的行。也就是说，使用二级索引查询需要进行两次查询过程，这个操作被称为<strong>回表</strong>。</p>
+<p>如果主键较长，则二级索引将占用更多的空间，因此主键较短是有利的。</p>
+<h2 id="InnoDB-锁机制"><a href="#InnoDB-锁机制" class="headerlink" title="InnoDB 锁机制"></a>InnoDB 锁机制</h2><p>InnoDB 中有以下几种锁：</p>
+<ul>
+<li>共享锁（Shared Locks）</li>
+<li>排他锁（Exclusive Locks）</li>
+<li>意向锁（Intent Locks）</li>
+<li>记录锁（Record Locks）</li>
+<li>间隙锁（Gap Locks）</li>
+<li>Next-Key Locks*</li>
+<li>插入意向锁（Insert Intention Locks）*</li>
+<li>自增锁（AUTO-INC Locks）*</li>
+<li>空间索引的谓词锁（Predicate Locks for Spatial Indexes）*</li>
+</ul>
+<h3 id="共享锁和排他锁"><a href="#共享锁和排他锁" class="headerlink" title="共享锁和排他锁"></a>共享锁和排他锁</h3><p>InnoDB 实现了两个标准的行级锁：共享锁（S 锁）和排他锁（X 锁）：</p>
+<ul>
+<li>S 锁允许持有锁的事务读取行。</li>
+<li>X 锁允许持有锁的事务更新或删除行。</li>
+</ul>
+<p>如果事务 T1 在行 r 上持有共享（S）锁，那么来自某个不同事务 T2 的请求在行 r 上的锁将按如下方式处理：</p>
+<ul>
+<li>T2 对 S 锁的请求可以立即被批准。结果，T1 和 T2 都在 r 上保持 S 锁。</li>
+<li>T2 对 X 锁的请求不能立即被批准。</li>
+</ul>
+<p>如果事务 T1 在行 r 上持有排他（X）锁，则无法立即授予某个不同事务 T2 请求的 r 上任何一种类型的锁。事务 T2 必须等待事务 T1 释放对行 r 的锁。</p>
+<h2 id="InnoDB-事务"><a href="#InnoDB-事务" class="headerlink" title="InnoDB 事务"></a>InnoDB 事务</h2><p>InnoDB 事务模型旨在将多版本数据库的最佳特性与传统的两阶段锁定相结合。InnoDB 在行级别执行锁定，并在默认情况下以 Oracle 样式以非锁定一致读取的方式运行查询。InnoDB 中的锁信息有效地存储在空间中，因此不需要锁升级。通常，允许多个用户锁定 InnoDB 表中的每一行或任意行的子集，而不会导致 InnoDB 内存耗尽。</p>
+<h3 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h3><p>InnoDB 事务有四个隔离级别：</p>
+<ul>
+<li>读未提交（READ UNCOMMITTED）</li>
+<li>读已提交（READ COMMITTED）</li>
+<li>可重复读（REPEATABLE READ）</li>
+<li>串行（SERIALIZABLE）</li>
+</ul>
+<p>其中，可重复读是 InnoDB 默认的隔离级别。</p>
+<p>下面的列表描述了 MySQL 如何支持不同的事务级别。列表从最常用的级别到最不常用的级别。</p>
+<h4 id="REPEATABLE-READ"><a href="#REPEATABLE-READ" class="headerlink" title="REPEATABLE READ"></a>REPEATABLE READ</h4><h4 id="READ-COMMITTED"><a href="#READ-COMMITTED" class="headerlink" title="READ COMMITTED"></a>READ COMMITTED</h4><h4 id="READ-UNCOMMITTED"><a href="#READ-UNCOMMITTED" class="headerlink" title="READ UNCOMMITTED"></a>READ UNCOMMITTED</h4><h4 id="SERIALIZABLE"><a href="#SERIALIZABLE" class="headerlink" title="SERIALIZABLE"></a>SERIALIZABLE</h4><p>此级别类似于<strong>REPEATABLE READ</strong>，但如果<code>autocommit</code>被禁用（设置为<code>disabled</code>），InnoDB 隐式地将所有普通 SELECT 语句转换为<code>SELECT ... LOCK IN SHARE MODE</code>。如果启用了自动提交，则选择是其自己的事务。因此，已知它是只读的，如果作为一致（非锁定）读取执行，并且不需要为其他事务阻塞，则可以序列化它。（若要在其他事务已修改选定行时强制阻止普通选择，请禁用自动提交。）</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+        <div class='references'>
+          <section class='header'>
+            
+              <i class="fas fa-quote-left fa-fw" aria-hidden="true"></i>
+            
+            <span>参考资料</span>
+          </section>
+          <section class='body'>
+            <ul>
+              
+                <li>
+                  <a href="https://dev.mysql.com/doc/refman/5.7/en/" rel="external nofollow noopener noreferrer" target="_blank">
+                  MySQL 5.7 Reference Manual
+                  </a>
+                </li>
+              
+            </ul>
+          </section>
+        </div>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/09/21/cku0q50r5004v10nwb35f9orf/>https://blog.secriy.com/2021/09/21/cku0q50r5004v10nwb35f9orf/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-09-24T13:31:08+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年9月24日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Database/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Database</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/MySQL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>MySQL</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/09/21/cku0q50r5004v10nwb35f9orf/&title=The Basics of InnoDB - Secriy's Blog&summary=本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资料大多是摘录自官方文档的原文。由此打算对照“一手资料”看一遍，梳理总结。本文翻译可能引起歧义的地方都会注明英文原文。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/09/21/cku0q50r5004v10nwb35f9orf/&title=The Basics of InnoDB - Secriy's Blog&summary=本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资料大多是摘录自官方文档的原文。由此打算对照“一手资料”看一遍，梳理总结。本文翻译可能引起歧义的地方都会注明英文原文。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/09/21/cku0q50r5004v10nwb35f9orf/&title=The Basics of InnoDB - Secriy's Blog&summary=本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资料大多是摘录自官方文档的原文。由此打算对照“一手资料”看一遍，梳理总结。本文翻译可能引起歧义的地方都会注明英文原文。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/09/18/cku0q50r5004t10nw4lkw8cyt/'>
+          <p class='title'>Learning Rust<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>本文根据The Rust Programming Language翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB-%E4%BB%8B%E7%BB%8D"><span class="toc-text">InnoDB 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB-%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BC%98%E5%8A%BF"><span class="toc-text">InnoDB 的主要优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">InnoDB 最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACID-%E6%A8%A1%E5%9E%8B"><span class="toc-text">ACID 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Atomicity"><span class="toc-text">Atomicity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Consistency"><span class="toc-text">Consistency</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation"><span class="toc-text">Isolation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Durability"><span class="toc-text">Durability</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Versioning"><span class="toc-text">Multi-Versioning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC-%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="toc-text">MVCC 和二级索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB-%E6%9E%B6%E6%9E%84"><span class="toc-text">InnoDB 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB-%E7%A3%81%E7%9B%98%E4%B8%8A%E7%BB%93%E6%9E%84"><span class="toc-text">InnoDB 磁盘上结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%EF%BC%88Tables%EF%BC%89"><span class="toc-text">表（Tables）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="toc-text">行格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E9%94%AE"><span class="toc-text">主键</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%EF%BC%88Indexes%EF%BC%89"><span class="toc-text">索引（Indexes）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="toc-text">聚集索引和二级索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB-%E9%94%81%E6%9C%BA%E5%88%B6"><span class="toc-text">InnoDB 锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E6%8E%92%E4%BB%96%E9%94%81"><span class="toc-text">共享锁和排他锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB-%E4%BA%8B%E5%8A%A1"><span class="toc-text">InnoDB 事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">事务的隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#REPEATABLE-READ"><span class="toc-text">REPEATABLE READ</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#READ-COMMITTED"><span class="toc-text">READ COMMITTED</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#READ-UNCOMMITTED"><span class="toc-text">READ UNCOMMITTED</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SERIALIZABLE"><span class="toc-text">SERIALIZABLE</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="The Basics of InnoDB";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/********************脚本懒加载函数********************************/
+function loadScript(src, cb) {
+var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+var script = document.createElement('script');
+script.setAttribute('type','text/javascript');
+if (cb) script.onload = cb;
+script.setAttribute('src', src);
+HEAD.appendChild(script);
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    setTimeout(function() {
+      loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+    }, 1);
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+    setTimeout(function() {
+	
+	  loadScript('https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/issues.min.js');
+	
+    }, 1);
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+  
+    <script>
+      window.FPConfig = {
+        delay: 0,
+        ignoreKeywords: [],
+        maxRPS: 5,
+        hoverDelay: 25
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.jsdelivr.net/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.LoadMetingJS=0
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return
+    clearInterval(checkAPlayer)
+	if (!window.volantis.LoadMetingJS&&!window.MetingJSElement){
+	  window.LoadMetingJS=1
+      loadScript("https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js")
+	  }
+  }, 2500)
+
+</script>
+
+
+
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/valine.min.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  pjax_comment=pjax_valine;
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/app.min.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/search/hexo.min.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/comment_typing.js"></script>
+
+
+
+
+  
+    
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+document.addEventListener("pjax:success", bindToggleButton);
+
+</script>
+
+
+
+
+
+<!-- baidu Analytics -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  setTimeout(function() {
+    loadScript("https://hm.baidu.com/hm.js?5213c4b7580d2b4b637d22dcbe0965e5")
+  }, 5000);
+})();
+</script>
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      
+      $("#wrapper .toggle-mode-btn").unbind('click');
+      
+	  
+      window.ShowLoading();
+	  
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+       
+       _hmt.push(['_trackPageview', document.location.pathname]);
+       
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+          if (typeof $.fancybox == "undefined") {
+            SCload_fancybox();
+          } else {
+            pjax_fancybox();
+          }
+        
+        
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+        
+        
+          pjax_scrollrebeal();
+        
+        if (typeof IssuesAPI == "undefined") {
+          loadIssuesJS();
+        }
+        
+          pjax_initCopyCode();
+        
+		
+          try{pjax_comment();} catch (e) {}
+        
+      } catch (e) {
+        console.log(e);
+      }
+	  
+      window.HideLoading();
+	  
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  
+      window.HideLoading();
+	  
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

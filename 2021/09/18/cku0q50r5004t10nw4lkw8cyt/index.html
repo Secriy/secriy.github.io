@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Learning Rust - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="Programming,Rust">
+  
+
+  
+    <meta name="description" content="本文根据The Rust Programming Language翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分进行了介绍。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官...">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+
+<script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) document.write('\x3Cscript id="_iealwn_js" data-outver="11" src="https://support.dmeng.net/ie-alert-warning/latest.js">\x3C/script>'); </script>
+
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Learning Rust
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年9月18日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Learning Rust" data-path="/2021/09/18/cku0q50r5004t10nw4lkw8cyt/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/2021/09/18/cku0q50r5004t10nw4lkw8cyt/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/2021/09/18/cku0q50r5004t10nw4lkw8cyt/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>本文根据<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/">The Rust Programming Language</a>翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分进行了介绍。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。</p></div>
+
+<span id="more"></span>
+
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="变量和可变性"><a href="#变量和可变性" class="headerlink" title="变量和可变性"></a>变量和可变性</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>Rust 中变量有可变变量（<em>mutable variable</em>）和不可变变量（<em>immutable variable</em>）的区分，看如下的代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+    println!(&quot;&#123;&#125;&quot;, x);
+    x = 6;
+    println!(&quot;&#123;&#125;&quot;, x);
+&#125;</code></pre>
+<p>使用 <code>cargo run</code>运行：</p>
+<pre><code class="shell">cargo run
+   Compiling hello-rust v0.1.0 (H:\Coding\Rust\hello-rust)
+error[E0384]: cannot assign twice to immutable variable `x`
+ --&gt; src\main.rs:4:5
+  |
+2 |     let x = 5;
+  |         -
+  |         |
+  |         first assignment to `x`
+  |         help: consider making this binding mutable: `mut x`
+3 |     println!(&quot;&#123;&#125;&quot;, x); // 5
+4 |     x = 6;
+  |     ^^^^^ cannot assign twice to immutable variable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0384`.
+error: could not compile `hello-rust`
+
+To learn more, run the command again with --verbose.</code></pre>
+<p>上面的错误表明，变量<code>x</code>无法二次赋值，因为它是一个 <em>immutable variable</em>。另外报错还说明，Rust 在编译期间就已经对程序可能出现的某些问题作了判断，如果不通过检查则编译失败。</p>
+<pre><code class="rust">fn main() &#123;
+    let mut x = 5;
+    println!(&quot;&#123;&#125;&quot;, x);    // 5
+    x = 6;
+    println!(&quot;&#123;&#125;&quot;, x);    // 6
+&#125;</code></pre>
+<p>通过<code>let mut x = 5</code>的方式将<code>x</code>初始化为可变变量。</p>
+<h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>常量的声明使用如下形式的语句：</p>
+<pre><code class="rust">// const [NAME]: [DATA_TYPE] = [DATA];
+const PI: f32 = 3.14159;</code></pre>
+<h4 id="差别"><a href="#差别" class="headerlink" title="差别"></a>差别</h4><p>常量和变量有什么差别？</p>
+<ol>
+<li> 常量无法使用<code>mut</code>修饰，它始终是不可变的；</li>
+<li> 常量使用<code>const</code>声明，变量使用<code>let</code>；</li>
+<li> 常量必须始终注明其数据类型；</li>
+<li> 常量可以再任何范围声明，如全局常量、局部常量；</li>
+<li> 常量是通过常量表达式确定值的，在编译器其值就会被确定，而变量的值可以在运行时赋予。</li>
+</ol>
+<h4 id="Shadowing"><a href="#Shadowing" class="headerlink" title="Shadowing"></a>Shadowing</h4><p>Rust 支持使用<code>let</code>关键字进行同名变量的重复初始化：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+
+    let x = x + 1;
+
+    let x = x * 2;
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x);    // The value of x is: 12
+&#125;</code></pre>
+<p>甚至可以赋值给一个不同类型的同名变量：</p>
+<pre><code class="rust">fn main() &#123;
+    let string = &quot;abc&quot;;
+
+    let string = string.len();
+
+    println!(&quot;The length of string is: &#123;&#125;&quot;, string)    // The length of string is: 3
+&#125;</code></pre>
+<p>第一个<code>string</code>和第二个<code>string</code>并非同一个变量，它们只是同名，不同于<code>mut</code>变量，其两个同名变量之间是没有关联的。按 Rust 官方的说法，第一个变量被第二个变量遮蔽（<em>shadowed</em>）了，因此这个概念在 Rust 中叫做<strong>Shadowing</strong>。</p>
+<p>如果对<code>mut</code>变量赋新值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut string = &quot;abc&quot;;
+
+    string = string.len();
+
+    println!(&quot;The length of string is: &#123;&#125;&quot;, string)
+&#125;</code></pre>
+<p>上面的代码在编译时就无法通过，因为其类型不匹配。</p>
+<p>看下面一段代码，对<code>mut</code>变量进行了重新赋值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut string = &quot;abc&quot;;
+
+    string = &quot;xyz&quot;;
+
+    println!(&quot;The string is: &#123;&#125;&quot;, string)    // The string is: xyz
+&#125;</code></pre>
+<p>这段代码能够通过编译，但是编译期间会输出<code>warning</code>，即警告信息。这是因为<code>&quot;abc&quot;</code>字符串并没有使用就被<code>&quot;xyz&quot;</code>覆盖了，所以出现警告，但这并不影响程序的执行。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>数据类型是静态类型相当重要的部分，Rust 作为一种静态类型语言，其每一个值都有指定的类型，所有变量的类型在编译期间就已经确定了。</p>
+<p>Rust 中数据类型分为两大类：标量类型（scalar）以及复合类型（compound）。</p>
+<h4 id="标量类型"><a href="#标量类型" class="headerlink" title="标量类型"></a>标量类型</h4><p>标量类型是简单类型，代表了单个值。Rust 中有四种标量类型：</p>
+<ul>
+<li>整数</li>
+<li>浮点数</li>
+<li>布尔值</li>
+<li>字符</li>
+</ul>
+<h5 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h5><p>Rust 中的整数类型如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">长度（Length）</th>
+<th align="center">有符号（Signed）</th>
+<th align="center">无符号（Unsigned）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8-bit</td>
+<td align="center">i8</td>
+<td align="center">u8</td>
+</tr>
+<tr>
+<td align="center">16-bit</td>
+<td align="center">i16</td>
+<td align="center">u16</td>
+</tr>
+<tr>
+<td align="center">32-bit</td>
+<td align="center">i32</td>
+<td align="center">u32</td>
+</tr>
+<tr>
+<td align="center">64-bit</td>
+<td align="center">i64</td>
+<td align="center">u64</td>
+</tr>
+<tr>
+<td align="center">128-bit</td>
+<td align="center">i128</td>
+<td align="center">u128</td>
+</tr>
+<tr>
+<td align="center">arch</td>
+<td align="center">isize</td>
+<td align="center">usize</td>
+</tr>
+</tbody></table>
+<p><code>arch</code> 即 architecture，表示 CPU 架构的位数，如 64-bit 机器上就是 64 bits，32-bit 机器上就是 32 bits，这在其他编程语言里也很常见，如 C 中的<code>int</code>类型。</p>
+<p>整数类型的字面量表示如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">字面量（Number literals）</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">十六进制（Hex）</td>
+<td align="center">0xff</td>
+</tr>
+<tr>
+<td align="center">十进制（Decimal）</td>
+<td align="center">98_222</td>
+</tr>
+<tr>
+<td align="center">八进制（Octal）</td>
+<td align="center">0o77</td>
+</tr>
+<tr>
+<td align="center">二进制（Binary）</td>
+<td align="center">0b1111_0000</td>
+</tr>
+<tr>
+<td align="center">字节（Byte，仅支持<code>u8</code>）</td>
+<td align="center">b’A’</td>
+</tr>
+</tbody></table>
+<p>Rust 默认使用<code>i32</code>初始化整数。</p>
+<h5 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h5><p>Rust 中有<code>f32</code>和<code>f64</code>两种浮点数类型，分别占用 32 bits 和 64 bits 的大小。Rust 使用<code>f64</code>作为浮点数的默认类型，这是因为在现代 CPU 中，64 位浮点数的运算速度和 32 位基本相同，但 64 位浮点数精度更高。</p>
+<p>示例：</p>
+<pre><code class="rust">let x = 1.0;        // f64
+let y: f32 = 3.0;    // f32</code></pre>
+<p>按照 IEEE-754 标准，<code>f32</code>为单精度浮点数，<code>f64</code>为双精度浮点数。</p>
+<h5 id="数值运算"><a href="#数值运算" class="headerlink" title="数值运算"></a>数值运算</h5><p>示例：</p>
+<pre><code class="rust">fn main() &#123;
+    // 加法 addition
+    let sum = 5 + 10;
+
+    // 减法 subtraction
+    let difference = 95.5 - 4.3;
+
+    // 乘法 multiplication
+    let product = 4 * 30;
+
+    // 除法 division
+    let quotient = 56.7 / 32.2;
+
+    // 取余 remainder
+    let remainder = 43 % 5;
+&#125;</code></pre>
+<h5 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h5><p>布尔值的大小为 1 byte，有<code>true</code>和<code>false</code>这两个可能的值。</p>
+<p>示例：</p>
+<pre><code class="rust">let t = true;
+let f: bool = false; // 显式指定类型</code></pre>
+<h5 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h5><p>Rust 中字符类型（<code>char</code>）使用单引号字面量，用于存储单个字符。Rust 的<code>char</code>类型在编程语言中比较特殊，它的大小为 4 bytes，表示一个 Unicode 标量值。</p>
+<p>示例：</p>
+<pre><code class="rust">let c = &#39;z&#39;;
+let z = &#39;ℤ&#39;;
+let 汉 = &#39;好&#39;;
+let heart_eyed_cat = &#39;😻&#39;;</code></pre>
+<p>可以注意到，Rust 是支持非英文变量名的。</p>
+<h4 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h4><p>复合类型是由多个数据类型组合成的一种数据类型，Rust 有两种原始的复合类型：元组（Tuple）和数组（Array）。</p>
+<h5 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h5><p>Tuple 的大小固定，一旦被声明，其大小就不可修改。</p>
+<p>创建 Tuple：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+&#125;</code></pre>
+<p>上面的代码创建了一个由<code>i32</code>，<code>f64</code>和<code>u8</code>三个类型组成的 Tuple <code>tup</code>，并初始化其值。</p>
+<p>从 Tuple 取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 500
+    println!(&quot;The value of y is: &#123;&#125;&quot;, y); // The value of y is: 6.4
+    println!(&quot;The value of z is: &#123;&#125;&quot;, z); // The value of z is: 1
+&#125;</code></pre>
+<p>类似<code>let (x, y, z) = tup</code>将一个 tuple 赋值给多个变量的用法被称为解构（<em>destructuring</em>），</p>
+<p>还可以直接根据下标取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, tup.0); // The value of x is: 500
+    println!(&quot;The value of y is: &#123;&#125;&quot;, tup.1); // The value of y is: 6.4
+    println!(&quot;The value of z is: &#123;&#125;&quot;, tup.2); // The value of z is: 1
+&#125;</code></pre>
+<h5 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h5><p>Array 和 Tuple 的差别很大，前者只能包含相同数据类型的元素，后者则不然。不过 Rust 中的 Array 和 Tuple 一样是固定长度的，不可改变。</p>
+<p>Array 的初始化：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [1, 2, 3, 4, 5];    // 初始化
+    let b: [i32; 5] = [1, 2, 3, 4, 5];    // [type; length]
+&#125;</code></pre>
+<p>Array 特殊在于其一般分配在内存空间中的栈（stack）上而不是堆（heap）上，这在后文会深入讨论。当需要固定长度的一系列元素时，用 Array 会比较合适。Rust 中还有一种可变的数组，即<strong>vector</strong>，但它是由标准库提供的而不是 Rust 语言本身，一般来说 vector 会更常用一些。</p>
+<p>Array 的声明和取值：</p>
+<p>和其他大多数编程语言相同，Rust 中取数组元素使用下标，如<code>a[0]</code>。</p>
+<pre><code class="rust">fn main() &#123;
+    let a: [isize; 5];    // 声明长度为 5 的空数组
+    println!(&quot;&#123;&#125;&quot;, a[0]);
+&#125;</code></pre>
+<p>上面的代码会直接编译不通过，报<code>use of possibly-uninitialized</code>错误，这是因为 Rust 禁止使用未初始化的变量，改成下面的代码就可以了：</p>
+<pre><code class="rust">fn main() &#123;
+    let a: [isize; 5];
+    a = [3; 5];    // 将一个长度为 5，内容全部为 3 的数组赋给变量 a
+    println!(&quot;&#123;&#125;&quot;, a[0]); // 3
+&#125;</code></pre>
+<p><code>a = [3; 5]</code>等同于<code>a = [3, 3, 3, 3, 3]</code>。</p>
+<p>我们注意到一件事情：Array 变量默认是 <em>mutable</em> 的，不需要使用<code>mut</code>修饰就可以对其重新赋值。</p>
+<p>如果我们访问数组时越界会怎么样？在某些编程语言中越界并不会造成程序本身停止或异常，但会给内存上的数据造成破坏。在 Rust 中，编译器会自动检查数组访问的下标是否越界，如果越界则无法编译通过。当下标的值在程序运行时才会确定（如接收用户输入的下标值）时，越界会导致程序 <strong>panic</strong>，并随之中止。</p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>在大多数编程语言中，函数都是相当重要的存在，Rust 也不例外，函数的使用无处不在，比如前文中大量使用的<code>main</code>函数。</p>
+<h4 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h4><p>Rust 使用<code>fn</code>关键字声明函数，并使用 snake case 命名风格，所有的函数名使用小写字母并使用<code>_</code>分隔。Rust 并不在乎函数的定义位置，无论其在代码中是位于<code>main</code>函数之前还是之后。</p>
+<pre><code class="rust">fn sample_func() &#123;
+    println!(&quot;Sample function.&quot;);
+&#125;
+
+fn hello_world() &#123;
+    println!(&quot;Hello world.&quot;);
+&#125;</code></pre>
+<p>调用函数也很简单，例如<code>sample_func()</code>：</p>
+<pre><code class="rust">fn main() &#123;
+    hello_world();    // Hello world.
+&#125;
+
+fn hello_world() &#123;
+    println!(&quot;Hello world.&quot;);
+&#125;</code></pre>
+<h4 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h4><p>函数参数用法：</p>
+<pre><code class="rust">fn main() &#123;
+    another_function(5);
+&#125;
+
+fn another_function(x: i32) &#123;
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x);    // The value of x is: 5
+&#125;</code></pre>
+<p>多个参数：</p>
+<pre><code class="rust">fn main() &#123;
+    another_function(5, 6);
+&#125;
+
+fn another_function(x: i32, y: i32) &#123;
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x);    // The value of x is: 5
+    println!(&quot;The value of y is: &#123;&#125;&quot;, y);    // The value of y is: 6
+&#125;</code></pre>
+<p>函数的每个参数都必须指明其类型。</p>
+<h4 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h4><p>函数可以向调用它们的代码返回值。我们不命名返回值，但在箭头（-&gt;）后面声明它们的类型。在 Rust 中，函数的返回值与函数体块中最终表达式的值同义。通过使用 return 关键字并指定值，可以提前从函数返回，但大多数函数隐式返回最后一个表达式。下面是一个返回值的函数示例：</p>
+<p>Rust 中函数返回值是无名的，只需要指定其类型：</p>
+<pre><code class="rust">fn five() -&gt; i32 &#123;
+    5
+&#125;
+
+fn plus_one(x: i32) -&gt; i32 &#123;
+    x + 1
+&#125;
+
+fn main() &#123;
+    let mut x = five();
+    x = plus_one(x);
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x);    // The value of x is: 6
+&#125;</code></pre>
+<p>注意，作为函数返回值的语句，其后是没有<code>;</code>的，如上面的<code>5</code>和<code>x + 1</code>，加上分号就变成了普通语句，而不是返回值。</p>
+<p><code>plus_one</code>函数还可以改成如下的形式：</p>
+<pre><code class="rust">fn plus_one(mut x: i32) -&gt; i32 &#123;
+    x = x + 1;
+    x
+&#125;</code></pre>
+<p>这和原来的<code>plus_one</code>函数是等价的，只不过使用了<code>mut</code>修饰符让<code>x</code>可变。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注释很简单，例如单行注释：</p>
+<pre><code class="rust">// This is a comment.</code></pre>
+<p>多行注释：</p>
+<pre><code class="rust">// Multiple lines
+// comments.</code></pre>
+<pre><code class="rust">fn main() &#123;
+    println!(&quot;Hello World!&quot;); // Hello World!
+&#125;</code></pre>
+<p>Rust 中还有一种文档注释，但暂时用不到，在之后会介绍。</p>
+<h3 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h3><p>控制流是很基本的概念，Rust 同样包含了多种基本的控制流。</p>
+<h4 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h4><p>Rust 中<code>if</code>语句不需要使用括号：</p>
+<pre><code class="rust">fn main() &#123;
+    let number = 3;
+
+    if number &lt; 5 &#123;
+        println!(&quot;number &lt; 5&quot;);    // number &lt; 5
+    &#125; else &#123;
+        println!(&quot;number &gt;= 5&quot;);
+    &#125;
+&#125;</code></pre>
+<p>在 Rust 中，<code>if</code>表达式只能用布尔值作为条件，即只能判断布尔变量以及条件表达式。</p>
+<p>还可以使用<code>else if</code>表达式来增加分支，只有一个分支会被执行，一旦某个分支为<code>true</code>，就不会判断下一个分支：</p>
+<pre><code class="rust">fn main() &#123;
+    let number = 6;
+
+    if number % 4 == 0 &#123;
+        println!(&quot;number is divisible by 4&quot;);
+    &#125; else if number % 3 == 0 &#123;
+        println!(&quot;number is divisible by 3&quot;);    // number is divisible by 3
+    &#125; else if number % 2 == 0 &#123;
+        println!(&quot;number is divisible by 2&quot;);
+    &#125; else &#123;
+        println!(&quot;number is not divisible by 4, 3, or 2&quot;);
+    &#125;
+&#125;</code></pre>
+<p>使用<code>if</code>语句，可以实现下面的条件表达式，类似于某些语言中的三元运算符：</p>
+<pre><code class="rust">fn main() &#123;
+    let condition = true;
+    let number = if condition &#123; 5 &#125; else &#123; 6 &#125;;
+
+    println!(&quot;The value of number is: &#123;&#125;&quot;, number);    // 5
+&#125;</code></pre>
+<p>其中，根据前面有关函数返回值的学习，我们知道<code>&#123;&#125;</code>中没有分号结尾的作为返回值，由此我们可以写出下面的语句，同样是正确的：</p>
+<pre><code class="rust">fn main() &#123;
+    let condition = true;
+    let number = if condition &#123;let x = 2; x+2&#125; else &#123;let x = 1; x+1&#125;;
+
+    println!(&quot;The value of number is: &#123;&#125;&quot;, number);    // 4
+&#125;</code></pre>
+<p>然而<code>if</code>和<code>else</code>语句块的值不能为不同类型，这是无法编译通过的，这是因为 Rust 需要在编译期确定所有变量的类型，如果<code>if</code>和<code>else</code>能够得到不同类型的结果，那么也就无法知道变量<code>number</code>的类型。不过，这并不代表这样的实现是不可能的，如果编译器必须跟踪任何变量的多个假设类型，那么编译器将更加复杂，对代码的保证也会更少。</p>
+<h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><p>Rust 有三种循环语句，<code>loop</code>、<code>while</code>和<code>for</code>。</p>
+<h5 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h5><p>简而言之，<code>loop</code>语句就是无限循环，它没有条件语句，也就不能在循环上让其退出。但是<code>loop</code>可以通过循环体内的语句退出：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0;    // 统计循环次数
+    loop &#123;
+        if count == 5 &#123;break;&#125;    // 当 count 等于 5 则退出循环
+        println!(&quot;hello&quot;);
+        count += 1;    // 次数加一
+    &#125;
+&#125;</code></pre>
+<p>毋庸置疑，上面的代码会输出五行<code>hello</code>。</p>
+<p>关于<code>loop</code>语句还有一点比较特别的是，它可以返回值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0;
+    let result = loop &#123;
+        if count == 5 &#123;break count + 1;&#125;
+        println!(&quot;hello&quot;);
+        count += 1;
+    &#125;;
+    println!(&quot;The value of result is: &#123;&#125;&quot;, result);    // The value of result is: 6
+&#125;</code></pre>
+<p>可以看到，<code>break</code>关键字后面跟返回值，就能赋值给<code>result</code>，当执行到<code>break</code>语句后<code>loop</code>立即返回了<code>count + 1</code>。</p>
+<p>结合前面的内容，可以知道下面的代码也是正确的：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0;
+    let result = loop &#123;
+        if count == 5 &#123;break &#123;let x = 12; count + x&#125;;&#125;
+        println!(&quot;hello&quot;);
+        count += 1;
+    &#125;;
+    println!(&quot;The value of result is: &#123;&#125;&quot;, result);    // The value of result is: 17
+&#125;</code></pre>
+<p><code>&#123;let x = 12; count + x&#125;</code>的值为<code>count + x</code>即 17，通过<code>break</code>返回给<code>result</code>。</p>
+<h5 id="While"><a href="#While" class="headerlink" title="While"></a>While</h5><p>循环语句中写循环条件可以让循环处理更简单，Rust 提供了<code>while</code>循环支持指定循环条件：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut number = 3;
+
+    while number != 0 &#123;
+        println!(&quot;&#123;&#125;!&quot;, number);
+
+        number -= 1;
+    &#125;
+
+    println!(&quot;LIFTOFF!!!&quot;);    // LIFTOFF!!!
+&#125;</code></pre>
+<p>这和其他编程语言没什么大的区别，不再赘述。</p>
+<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><p><code>for</code>循环用于迭代元素集合，如数组（Array），这使用其他两种循环也可以做到：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [10, 20, 30, 40, 50];
+    let mut index = 0;
+
+    while index &lt; 5 &#123;
+        println!(&quot;the value is: &#123;&#125;&quot;, a[index]);
+
+        index += 1;
+    &#125;
+&#125;
+
+// 10
+// 20
+// 30
+// 40
+// 50</code></pre>
+<p>但使用<code>for</code>循环可以将上面的语句简化为下面的：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a.iter() &#123;
+        println!(&quot;the value is: &#123;&#125;&quot;, element);
+    &#125;
+&#125;
+
+// 10
+// 20
+// 30
+// 40
+// 50</code></pre>
+<p>这样的代码会更安全，因为不需要指定数组下标之类，不存在越界的问题。</p>
+<p>下面的语句可以用于生成一个数字范围，类似 Python 中的写法：</p>
+<pre><code class="rust">fn main() &#123;
+    for number in 1..4 &#123;
+        println!(&quot;&#123;&#125;!&quot;, number);
+    &#125;
+    println!(&quot;LIFTOFF!!!&quot;);
+&#125;
+
+// 1!
+// 2!
+// 3!
+// LIFTOFF!!!</code></pre>
+<p><code>1..4</code>很明显，是用来生成范围$[1,4)$的三个数字，接着使用<code>for</code>循环遍历这三个数字并输出。</p>
+<p>我们可以写出如下的代码来指定下标从数组中取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let arr = [10, 20, 30, 40, 50];
+    for number in 3..5 &#123;
+        println!(&quot;&#123;&#125;&quot;, arr[number]);
+    &#125;
+&#125;
+
+// 40
+// 50</code></pre>
+<h5 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h5><p>用目前学习的内容写一个计算斐波那契数列的函数：</p>
+<pre><code class="rust">fn fib(mut n: i32) &#123;
+    let mut pre = 1;
+    let mut post = 1;
+
+    while n &gt; 2 &#123;
+        let tmp = post;
+        post += pre;
+        pre = tmp;
+        n-=1;
+    &#125;
+
+    println!(&quot;&#123;&#125;&quot;, post);
+&#125;
+
+fn main() &#123;
+    fib(1);        // 1
+    fib(2);        // 1
+    fib(3);        // 2
+    fib(10);    // 55
+&#125;</code></pre>
+<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（Ownership）是 Rust 最独特的特性，它使 Rust 能够在不需要垃圾收集器的情况下保证内存安全。因此，了解所有权在 Rust 中的作用非常重要。在本章中，我们将讨论所有权以及几个相关特性：借用（borrowing）、切片（slices）以及 Rust 如何在内存中布局数据。</p>
+<h3 id="什么是所有权"><a href="#什么是所有权" class="headerlink" title="什么是所有权"></a>什么是所有权</h3><p>所有程序在运行的时候都必须管理它们使用计算机内存的方式。有些编程语言使用垃圾回收机制来不断地寻找不再使用的内存，还有些编程语言中，开发者必须手动分配和释放内存。Rust 则另辟蹊径：内存通过一个所有权系统来管理，它具有一组编译器在编译时检查的规则。当程序运行时，所有权的任何功能都不会影响程序的效率。</p>
+<p>Ownership 对大多数学习 Rust 的人来说是一个全新的概念，因此需要花一些时间来学习和适应。</p>
+<blockquote>
+<p>栈（Stack）和堆（Heap）</p>
+<p>在许多编程语言中，开发者不必经常考虑栈和堆。但是在像 Rust 这样的系统级编程语言中，值（value）是在栈上还是在堆上对<strong>语言的行为</strong>以及<strong>为什么必须做出某些决定</strong>有很大的影响。下面作出简要说明。</p>
+<p>栈和堆都是可供程序在运行时使用的内存的一部分，但它们的结构不同。类似于数据结构中栈的概念，内存中的栈空间同样满足 LIFO 的规则，不再赘述。栈上存储的所有数据的大小必须在编译期已知且固定，如果编译期无法确定一个数据的大小或者其大小可能发生改变，那它将被分配到堆上。堆的组织性较差，当数据放在堆上时，需要请求一定量的空间，然后由内存分配器在堆上找到一个足够大的空间，将其标记为正在使用，接着返回一个指针，即该地址的位置。这个过程被称为分配到堆（<em>allocating on the heap</em>），有时简称为分配（<em>allocating</em>）。将值放到栈上不视为分配。由于指针是已知的固定大小，所以可以将指针存储在栈上，但当需要实际数据时，必须跟随指针的指向地址。</p>
+<p>显然，在栈上分配内存更快，因为只需要从栈顶入栈就行了，而堆中由于空闲空间并不一定连续，需要花时间寻找满足的堆空间，并记录变化。</p>
+<p>访问堆中的数据同样比访问栈上的数据慢，因为必须跟随指针才能到达那里。现代处理器在内存中的跳跃越少，则速度越快。继续类推，考虑一家餐馆的服务员从许多表格中获取订单的例子。在转到下一张桌子之前，在一张桌子上拿到所有订单是最有效的。从表 A 获取订单，然后从表 B 获取订单，然后再从 A 获取订单，然后再从 B 获取订单将是一个慢得多的过程。同样，如果处理器处理的数据与其他数据（如栈上的数据）相近，而不是距离较远（如堆上的数据），则处理器可以更好地完成其工作。在堆上分配大量空间也需要时间。</p>
+<p>当代码调用函数时，传递到函数中的值（这里指的是函数参数，可能包括指向堆上数据的指针）和函数的局部变量被压入栈中。当函数结束时，这些值会从栈中弹出。</p>
+<p>跟踪代码的哪些部分正在使用堆上的哪些数据，最小化堆上的重复数据量，清理堆上未使用的数据以避免耗尽空间，这些都是所有权所要解决的问题。一旦了解了所有权，就不需要经常考虑栈和堆，但是知道管理堆数据是所有权存在的原因有助于解释它为什么以这种方式工作。</p>
+</blockquote>
+<h4 id="Ownership-规则"><a href="#Ownership-规则" class="headerlink" title="Ownership 规则"></a>Ownership 规则</h4><p>首先牢记以下规则：</p>
+<ul>
+<li>Rust 中的每个值（value）都有一个称为其所有者（<em>owner</em>）的变量。</li>
+<li>一次只能有一个所有者。</li>
+<li>当所有者超出作用域范围（即程序不能访问它）时，该值将被删除。</li>
+</ul>
+<h5 id="变量作用域范围"><a href="#变量作用域范围" class="headerlink" title="变量作用域范围"></a>变量作用域范围</h5>
+  
+  
+    
+    <div class='footer'>
+      
+        <div class='references'>
+          <section class='header'>
+            
+              <i class="fas fa-quote-left fa-fw" aria-hidden="true"></i>
+            
+            <span>参考资料</span>
+          </section>
+          <section class='body'>
+            <ul>
+              
+                <li>
+                  <a href="https://doc.rust-lang.org/book/" rel="external nofollow noopener noreferrer" target="_blank">
+                  The Rust Programming Language
+                  </a>
+                </li>
+              
+            </ul>
+          </section>
+        </div>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/2021/09/18/cku0q50r5004t10nw4lkw8cyt/>https://blog.secriy.com/2021/09/18/cku0q50r5004t10nw4lkw8cyt/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-09-26T12:30:24+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年9月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Programming/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Programming</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Rust/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Rust</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/2021/09/18/cku0q50r5004t10nw4lkw8cyt/&title=Learning Rust - Secriy's Blog&summary=本文根据The Rust Programming Language翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分进行了介绍。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/2021/09/18/cku0q50r5004t10nw4lkw8cyt/&title=Learning Rust - Secriy's Blog&summary=本文根据The Rust Programming Language翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分进行了介绍。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/2021/09/18/cku0q50r5004t10nw4lkw8cyt/&title=Learning Rust - Secriy's Blog&summary=本文根据The Rust Programming Language翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论的部分进行了介绍。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2021/09/21/cku0q50r5004v10nwb35f9orf/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>The Basics of InnoDB</p>
+          <p class='content'>本文是 MySQL InnoDB 存储引擎的相关基础知识总结，是对 MySQL 5.7 官方文档进行的翻译和简化。由于最近准备面试，看了很多相关的书籍和面经总结，感觉它们大同小异，后来发现这些资...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/08/16/cku0q50qi001s10nw60bv7n0z/'>
+          <p class='title'>Multicast DNS<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>玩 Wireshark 的时候无意中发现了一个叫 mDNS 的协议，有些好奇就打算深入了解一下。
+
+
+
+简介multicast DNS (mDNS) 协议，即多播 DNS 协议，顾名思义和 DN...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E5%8F%AF%E5%8F%98%E6%80%A7"><span class="toc-text">变量和可变性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E5%88%AB"><span class="toc-text">差别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shadowing"><span class="toc-text">Shadowing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="toc-text">标量类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-text">整数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E8%BF%90%E7%AE%97"><span class="toc-text">数值运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="toc-text">字符类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">复合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Tuple"><span class="toc-text">Tuple</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-text">命名规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-text">函数参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">函数返回值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-text">条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-text">循环</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#loop"><span class="toc-text">loop</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#While"><span class="toc-text">While</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#for"><span class="toc-text">for</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-text">练习</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">什么是所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ownership-%E8%A7%84%E5%88%99"><span class="toc-text">Ownership 规则</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%8C%83%E5%9B%B4"><span class="toc-text">变量作用域范围</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Learning Rust";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/********************脚本懒加载函数********************************/
+function loadScript(src, cb) {
+var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+var script = document.createElement('script');
+script.setAttribute('type','text/javascript');
+if (cb) script.onload = cb;
+script.setAttribute('src', src);
+HEAD.appendChild(script);
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    setTimeout(function() {
+      loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+    }, 1);
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+    setTimeout(function() {
+	
+	  loadScript('https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/issues.min.js');
+	
+    }, 1);
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+  
+    <script>
+      window.FPConfig = {
+        delay: 0,
+        ignoreKeywords: [],
+        maxRPS: 5,
+        hoverDelay: 25
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.jsdelivr.net/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.LoadMetingJS=0
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return
+    clearInterval(checkAPlayer)
+	if (!window.volantis.LoadMetingJS&&!window.MetingJSElement){
+	  window.LoadMetingJS=1
+      loadScript("https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js")
+	  }
+  }, 2500)
+
+</script>
+
+
+
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/valine.min.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  pjax_comment=pjax_valine;
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/app.min.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('https://cdn.jsdelivr.net/npm/hexo-theme-volantis@4.3.0/source/js/search/hexo.min.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/comment_typing.js"></script>
+
+
+
+
+  
+    
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+document.addEventListener("pjax:success", bindToggleButton);
+
+</script>
+
+
+
+
+
+<!-- baidu Analytics -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  setTimeout(function() {
+    loadScript("https://hm.baidu.com/hm.js?5213c4b7580d2b4b637d22dcbe0965e5")
+  }, 5000);
+})();
+</script>
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      
+      $("#wrapper .toggle-mode-btn").unbind('click');
+      
+	  
+      window.ShowLoading();
+	  
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+       
+       _hmt.push(['_trackPageview', document.location.pathname]);
+       
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+          if (typeof $.fancybox == "undefined") {
+            SCload_fancybox();
+          } else {
+            pjax_fancybox();
+          }
+        
+        
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+        
+        
+          pjax_scrollrebeal();
+        
+        if (typeof IssuesAPI == "undefined") {
+          loadIssuesJS();
+        }
+        
+          pjax_initCopyCode();
+        
+		
+          try{pjax_comment();} catch (e) {}
+        
+      } catch (e) {
+        console.log(e);
+      }
+	  
+      window.HideLoading();
+	  
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  
+      window.HideLoading();
+	  
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
