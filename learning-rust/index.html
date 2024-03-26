@@ -733,6 +733,7 @@ To learn more, run the command again with --verbose.
 &#125;
 </code></pre>
 <p>通过 <code>let mut x = 5</code> 的方式将 <code>x</code> 初始化为可变变量。</p>
+<p>Rust 特殊的一点在于，变量默认为 <em>immutable</em>，通过添加 <code>mut</code> 来使用 <em>mutable variable</em>，这与其他大多编程语言正相反，可以看出 Rust 强制开发者考虑安全性的设计理念。</p>
 <h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>常量的声明使用如下形式的语句：</p>
 <pre><code class="rust">// const [NAME]: [DATA_TYPE] = [DATA];
 const PI: f32 = 3.14159;
@@ -766,7 +767,7 @@ const PI: f32 = 3.14159;
 &#125;
 </code></pre>
 <p>第一个 <code>string</code> 和第二个 <code>string</code> 并非同一个变量，它们只是同名，不同于 <code>mut</code> 变量，其两个同名变量之间是没有关联的。按 Rust 官方的说法，第一个变量被第二个变量遮蔽（<em>shadowed</em>）了，因此这个概念在 Rust 中叫做 <em>Shadowing</em>。</p>
-<p>如果对 <code>mut</code> 变量赋新值：</p>
+<p>如果对 <code>mut</code> 变量赋不同类型的新值：</p>
 <pre><code class="rust">fn main() &#123;
     let mut string = &quot;abc&quot;;
 
@@ -944,7 +945,7 @@ let heart_eyed_cat = &#39;😻&#39;;
 <p>数组的声明和取值：</p>
 <p>和其他大多数编程语言相同，Rust 中取数组元素使用下标，如 <code>a[0]</code>。</p>
 <pre><code class="rust">fn main() &#123;
- let a: [isize; 5]; // 声明长度为 5 的空数组
+    let a: [isize; 5]; // 声明长度为 5 的空数组
     println!(&quot;&#123;&#125;&quot;, a[0]);
 &#125;
 </code></pre>
@@ -1004,7 +1005,7 @@ fn another_function(x: i32, y: i32) &#123;
 &#125;
 
 fn plus_one(x: i32) -&gt; i32 &#123;
-    return x + 1;
+    return x + 1; // 可去掉 return，使用 `x + 1` 代替
 &#125;
 
 fn main() &#123;
@@ -1014,7 +1015,7 @@ fn main() &#123;
     println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 6
 &#125;
 </code></pre>
-<p>注意，作为函数返回值的表达式，其后是没有 <code>;</code> 的，如上面的 <code>5</code> 和 <code>x + 1</code>，加上分号就变成了普通表达式，而不是返回值。</p>
+<p>注意，作为函数返回值的表达式，其后是没有 <code>;</code> 的，如上面的 <code>5</code>，加上分号就变成了普通表达式，而不是返回值。如果把 <code>plus_one()</code> 的 <code>return x + 1;</code> 语句改为 <code>x + 1;</code> 编译会报错，因为这个函数不再返回任何值，但它明确定义了会返回 <code>i32</code> 数值。</p>
 <p><code>plus_one</code> 函数还可以改成如下的形式：</p>
 <pre><code class="rust">fn plus_one(mut x: i32) -&gt; i32 &#123;
     x = x + 1;
@@ -1982,7 +1983,7 @@ let origin = Point(0, 0, 0);
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T11:22:57+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年3月26日</p>
