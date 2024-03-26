@@ -1,0 +1,3854 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Learning Go - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="Go,PL">
+  
+
+  
+    <meta name="description" content="本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行了梳理。">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Learning Go
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/note/">学习笔记</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年4月17日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Learning Go" data-path="/learning-go/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/learning-go/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/learning-go/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>本文是 Golang 的基础学习笔记，大多是对 <a target="_blank" rel="noopener" href="https://tour.golang.org/"><em>A Tour of Go</em></a> 的翻译总结，并参考了 <a target="_blank" rel="noopener" href="http://www.gopl.io/"><em>The Go Programming Language</em></a> 的部分内容自行实现了相关代码并对知识点进行了梳理。</p></div>
+
+<span id="more"></span>
+
+<blockquote>
+<p>写作环境：<code>go version go1.17 windows/amd64</code></p>
+</blockquote>
+<h2 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h2><p>Golang 提供了完整的操作命令，用于管理和操作项目。配置好 Golang 环境后，可以直接输入 <code>go</code> 命令查看 Golang 提供的所有命令：</p>
+<table>
+<thead>
+<tr>
+<th align="center">command</th>
+<th align="left">info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bug</td>
+<td align="left">start a bug report</td>
+</tr>
+<tr>
+<td align="center">build</td>
+<td align="left">compile packages and dependencies</td>
+</tr>
+<tr>
+<td align="center">clean</td>
+<td align="left">remove object files and cached files</td>
+</tr>
+<tr>
+<td align="center">doc</td>
+<td align="left">show documentation for package or symbol</td>
+</tr>
+<tr>
+<td align="center">env</td>
+<td align="left">print Go environment information</td>
+</tr>
+<tr>
+<td align="center">fix</td>
+<td align="left">update packages to use new APIs</td>
+</tr>
+<tr>
+<td align="center">fmt</td>
+<td align="left">gofmt (reformat) package sources</td>
+</tr>
+<tr>
+<td align="center">generate</td>
+<td align="left">generate Go files by processing source</td>
+</tr>
+<tr>
+<td align="center">get</td>
+<td align="left">add dependencies to current module and install them</td>
+</tr>
+<tr>
+<td align="center">install</td>
+<td align="left">compile and install packages and dependencies</td>
+</tr>
+<tr>
+<td align="center">list</td>
+<td align="left">list packages or modules</td>
+</tr>
+<tr>
+<td align="center">mod</td>
+<td align="left">module maintenance</td>
+</tr>
+<tr>
+<td align="center">run</td>
+<td align="left">compile and run Go program</td>
+</tr>
+<tr>
+<td align="center">test</td>
+<td align="left">test packages</td>
+</tr>
+<tr>
+<td align="center">tool</td>
+<td align="left">run specified go tool</td>
+</tr>
+<tr>
+<td align="center">version</td>
+<td align="left">print Go version</td>
+</tr>
+<tr>
+<td align="center">vet</td>
+<td align="left">report likely mistakes in packages</td>
+</tr>
+</tbody></table>
+<p>使用 <code>go help &lt;command&gt;</code> 查询某个命令的详细信息：</p>
+<pre><code class="shell">go help build
+</code></pre>
+<pre><code>usage: go build [-o output] [build flags] [packages]
+...
+</code></pre>
+<h3 id="命令详解"><a href="#命令详解" class="headerlink" title="命令详解"></a>命令详解</h3><blockquote>
+<p>只对常用命令的简单用法进行介绍，详细使用方法需要参照命令行提示信息。</p>
+</blockquote>
+<h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>该命令用于编译包和依赖，如果是使用了 Go Modules 的项目，编译时会自动根据 <em>go.mod</em> 文件获取依赖包，再进行编译。</p>
+<h5 id="普通编译"><a href="#普通编译" class="headerlink" title="普通编译"></a>普通编译</h5><p>编译整个目录：</p>
+<pre><code class="shell">go build
+</code></pre>
+<p>指定输出的文件名：</p>
+<pre><code class="shell">go build -o hello.exe
+</code></pre>
+<p>指定入口编译：</p>
+<pre><code class="shell">go build main.go
+</code></pre>
+<h5 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h5><p>Golang 支持在很多环境下编译运行，使用<code>go tool dist list</code>命令可以查看 Golang 支持的平台：</p>
+<pre><code class="shell">go tool dist list
+</code></pre>
+<pre><code>aix/ppc64
+android/386
+android/amd64
+android/arm
+android/arm64
+darwin/amd64
+...
+</code></pre>
+<p>很多时候需要跨系统环境编译，比如在 Windows 下开发可能需要编译 Linux 可以使用的可执行版本，这时候就需要交叉编译：</p>
+<ol>
+<li><p>Windows 下编译</p>
+<p>Windows 下需要使用批处理命令，新建一个<em>build.bat</em>文件，填入编译命令执行即可。</p>
+<pre><code class="shell"># MacOS
+SET CGO_ENABLED=0
+SET GOOS=darwin
+SET GOARCH=amd64
+go build main.go
+
+# Linux
+SET CGO_ENABLED=0
+SET GOOS=linux
+SET GOARCH=amd64
+go build main.go
+</code></pre>
+</li>
+<li><p>Linux 下编译</p>
+<pre><code class="shell"># MacOS
+CGO_ENABLED=0 GOOS=darwin  GOARCH=amd64  go build main.go
+
+# Windows
+CGO_ENABLED=0 GOOS=windows  GOARCH=amd64  go build main.go
+</code></pre>
+</li>
+<li><p>MacOS 下编译</p>
+<pre><code class="shell"># Linux
+CGO_ENABLED=0  GOOS=linux  GOARCH=amd64  go build main.go
+
+# Windows
+CGO_ENABLED=0 GOOS=windows  GOARCH=amd64  go  build  main.go
+</code></pre>
+</li>
+</ol>
+<h6 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h6><ul>
+<li>CGO_ENABLED：该参数默认为 1，即默认开启 CGO，允许在 Golang 中调用 C 代码，开启之后编译时部分包会使用 C 的实现，因而存在外部依赖（动态链接）。当该参数设置为 0，即禁用 CGO 后，编译时就不会使用 C 实现，从而编译出纯静态的可执行文件</li>
+<li>GOOS：即目标平台</li>
+<li>GOARCH：即目标平台的体系架构</li>
+</ul>
+<h4 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h4><p>从包源码目录中移除对象文件，例如编译生成的二进制文件以及由其他工具生成的各种文件和目录。</p>
+<h4 id="doc"><a href="#doc" class="headerlink" title="doc"></a>doc</h4><p>利用格式化的注释生成文档。</p>
+<h4 id="env"><a href="#env" class="headerlink" title="env"></a>env</h4><p>查询 <code>golang</code> 的环境变量配置。</p>
+<h4 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h4><p>将包中使用的 API 更新为新版本用法，与 <code>go tool fix</code> 等同。</p>
+<h4 id="fmt"><a href="#fmt" class="headerlink" title="fmt"></a>fmt</h4><p>格式化源码风格，是对<strong>gofmt</strong>工具进行的封装，与 <code>gofmt -l -w</code> 等同。</p>
+<h4 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h4><p>根据代码中的格式化注释来在执行编译过程。</p>
+<p>注释格式如下：</p>
+<pre><code class="go">//go:generate command argument...
+</code></pre>
+<p>使用<code>go generate</code>命令时会自动执行上述注释中的代码。</p>
+<h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><p>该命令用于动态获取远程代码包及其所有依赖包，并进行编译安装。默认会将其下载到 GOPATH 下的 src 目录。</p>
+<h4 id="install"><a href="#install" class="headerlink" title="install"></a>install</h4><p>该命令与<code>go build</code>类似，区别是<code>go install</code>会将编译后的可执行文件放到指定的目录（即<strong>$GOBIN</strong>文件夹），当<strong>$GOBIN</strong>环境变量未设置时执行<code>go install</code>会报错。</p>
+<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>该命令用于列出包名和模块名。</p>
+<h4 id="mod"><a href="#mod" class="headerlink" title="mod"></a>mod</h4><p>该命令用于管理 Golang 的包，自 Go1.11 开始启用，实现 Modules 管理。将环境变量 <strong>$GO111MODULE</strong> 设置为 on 或 auto 打开（未来会删除，默认启用 Go Modules）。</p>
+<h5 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h5><ul>
+<li><p><code>go mod init [package name]</code>：初始化 Go Modules 项目</p>
+</li>
+<li><p><code>go mod download [modules name]</code>：下载指定的模块</p>
+</li>
+<li><p><code>go mod tidy</code>：自动添加缺失的模块并移除未使用的模块</p>
+</li>
+</ul>
+<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><p>编译并运行 Golang 程序。</p>
+<p>用法：</p>
+<pre><code class="shell">go run [build flags] [-exec xprog] package [arguments...]
+</code></pre>
+<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>进行单元测试和性能测试。</p>
+<h4 id="tool"><a href="#tool" class="headerlink" title="tool"></a>tool</h4><p>运行 Golang 提供的工具。</p>
+<h4 id="version"><a href="#version" class="headerlink" title="version"></a>version</h4><p>查询 Golang 版本。</p>
+<h4 id="vet"><a href="#vet" class="headerlink" title="vet"></a>vet</h4><p>用于报告包中可能存在的错误，分析当前包中的代码是否正确，等同于<code>go tool vet</code>。</p>
+<h2 id="语言基础"><a href="#语言基础" class="headerlink" title="语言基础"></a>语言基础</h2><h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>Go 语言中的函数名、变量名、常量名、类型名、语句标号和包名等所有的命名，都遵循一个简单的命名规则：一个名字必须以一个字母（Unicode 字母）或下划线开头，后面可以跟任意数量的字母、数字或下划线。大写字母和小写字母是不同的：heapSort 和 Heapsort 是两个不同的名字。</p>
+<p>Go 的全部关键字如下：</p>
+<pre><code class="go">break      default       func     interface   select
+case       defer         go       map         struct
+chan       else          goto     package     switch
+const      fallthrough   if       range       type
+continue   for           import   return      var
+</code></pre>
+<p>以上所有关键字都不能用来命名。</p>
+<p>Go 的内建常量、内建类型、内建函数如下：</p>
+<pre><code class="go">// 内建常量:
+true false iota nil
+
+// 内建类型:
+int int8 int16 int32 int64
+uint uint8 uint16 uint32 uint64 uintptr
+float32 float64 complex128 complex64
+bool byte rune string error
+
+// 内建函数:
+make len cap new append copy close delete
+complex real imag
+panic recover
+</code></pre>
+<p>上面的这些内建常量、类型和函数名可以被用来命名其他东西，但是在某些时候会出现冲突（同一作用域下）。</p>
+<p>Go 的命名习惯为驼峰式命名。例如 <code>quickSort</code>、<code>SetName</code> 等。</p>
+<h3 id="包"><a href="#包" class="headerlink" title="包"></a>包</h3><p>每一个 Go 程序都是由包（package）组成的，程序从<code>main</code>包开始运行。</p>
+<p>根据惯例，包名通常是导入路径的最后一段，例如<code>math/rand</code>包中的每个 go 文件都是以<code>rand</code>为包名。</p>
+<p>每个 go 文件的开头都必须指定所属的包，例如<code>package main</code>，指定其属于<code>main</code>包：</p>
+<pre><code class="go">package main
+</code></pre>
+<p>在包声明之后，需要导入当前 go 程序所使用的其他包：</p>
+<pre><code class="go">import &quot;fmt&quot; // 导入fmt包
+</code></pre>
+<p>当引入了多个包时，需要全部导入：</p>
+<pre><code class="go">import &quot;fmt&quot;
+import &quot;sync&quot;
+</code></pre>
+<p>通常会将这些包分组导入：</p>
+<pre><code class="go">import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
+</code></pre>
+<p>可以给导入的包一个别名，操作包变量及包函数时可以使用别名：</p>
+<pre><code class="go">import f &quot;fmt&quot;
+
+func main() &#123;
+    f.Println(&quot;Hello World&quot;)
+&#125;
+</code></pre>
+<p>使用<code>.</code>导入包可以省略包名调用包内实体：</p>
+<pre><code class="go">import . &quot;math&quot;
+
+func main() &#123;
+    x := Sqrt(6) // 原为 math.Sqrt()
+    fmt.Println(x)
+&#125;
+</code></pre>
+<p>当导入包却不使用时，可以用<code>_</code>作为包的别名（当只需要调用包的<code>init</code>函数和包级变量时会这么做，后面会讲到）：</p>
+<pre><code class="go">import _ &quot;fmt&quot;
+</code></pre>
+<p>如果常规导入包却没有显式使用，编译器会报错，无法通过编译。</p>
+<p>Golang 区分大小写，并使用大小写区分导出变量（常量、函数、接口等）和私有变量（常量、函数、接口等），类似于 Java 中的 public 和 private。首字母大写的数据类型可以被其他包访问和调用（Public），而首字母小写只能在包内使用（Private）。</p>
+<pre><code class="go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;math&quot;
+)
+
+func main() &#123;
+    fmt.Println(math.pi) // 导出名首字母大写，因此这段代码会报错，将pi改为Pi即可
+&#125;
+</code></pre>
+<h3 id="程序入口"><a href="#程序入口" class="headerlink" title="程序入口"></a>程序入口</h3><p>Golang 程序中 <code>main</code> 包的 <code>main</code> 函数作为其入口，在执行 <code>main</code> 函数之前会先执行 <code>init</code> 函数：</p>
+<pre><code class="go">package main
+
+var a int
+
+func init() &#123;
+    a = 23
+&#125;
+
+func main() &#123;
+    fmt.Println(a) // 23
+&#125;
+</code></pre>
+<p>因此在实际编程时常常在 <code>init</code> 函数内进行一些初始化操作，例如读取配置文件等。</p>
+<h3 id="基础数据类型"><a href="#基础数据类型" class="headerlink" title="基础数据类型"></a>基础数据类型</h3><p>Golang 中包含多种数据类型，并提供了确定的类型长度，方便在不同系统环境下的移植：</p>
+<pre><code>bool // 布尔值
+
+string // 字符串
+
+int  int8  int16  int32  int64            // 有符号整数
+uint uint8 uint16 uint32 uint64 uintptr // 无符号整数
+
+byte // uint8 的别名
+
+rune // int32 的别名，代表一个 Unicode 码点
+
+float32 float64 // 浮点数
+
+complex64 complex128 // 复数
+</code></pre>
+<p>其中，<code>int</code>、<code>uint</code>、<code>uintptr</code> 类型的大小会随位宽的不同而不同，比如在 32 位环境下，它们都占 32bit，而在 64 位环境下它们会占 64bit。</p>
+<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><p>Golang 支持自定义类型，使用 <code>type</code> 关键字指定，并要求指定其底层类型：</p>
+<pre><code class="go">type MyTypeA int
+type MyTypeB string
+</code></pre>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量（Varrible）是编程语言中最基本的量，基本的变量操作有”声明“、”定义“、”初始化“和”赋值“四种。</p>
+<ul>
+<li><strong>声明（declare）</strong>：告诉编译器/解析器这个变量的存在，但不分配内存空间</li>
+<li><strong>定义（defined）</strong>：为变量分配内存空间，在某些语言（如 C）中声明就包含了定义的过程</li>
+<li><strong>初始化（initialize）</strong>：定义变量后，系统并不知道要为该变量分配多少内存空间，通常是使用默认的大小，初始化过程就对变量进行了内存空间的确定</li>
+<li><strong>赋值（assign）</strong>：在变量分配内存空间后，对变量的值进行修改</li>
+</ul>
+<h4 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h4><p>在 Golang 中，变量的声明就包含了定义和初始化的过程，需要指定变量类型：</p>
+<pre><code class="go">var a int
+fmt.Println(a) // 0
+
+var b, c int // 同时声明多个同类型变量
+fmt.Println(b) // 0
+fmt.Println(c) // 0
+
+var d bool
+fmt.Println(d) // false
+</code></pre>
+<p>变量声明时会根据类型自动初始化，默认是二进制的零值，因此<code>int</code>类型的初始值是<code>0</code>，<code>bool</code>类型的初始值是<code>false</code>，<code>string</code>类型的初始值是<code>&quot;&quot;</code>。</p>
+<p>存在声明但未使用的变量会导致编译错误：</p>
+<pre><code class="go">package main
+
+func main() &#123;
+    var a int
+&#125;
+</code></pre>
+<pre><code>xxx\main.go:4:6: a declared but not used
+</code></pre>
+<h4 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h4><p>使用<code>=</code>来对变量进行赋值：</p>
+<pre><code class="go">var a int
+a = 12
+</code></pre>
+<p>使用元组赋值可以对多个变量进行赋值：</p>
+<pre><code class="go">var a, b int
+a, b = 1, 2
+
+// a = 1
+// b = 2
+</code></pre>
+<p>利用元组赋值可以进行变量值的交换：</p>
+<pre><code class="go">var a, b int
+a, b = 1, 2
+a, b = b, a
+
+// a = 2
+// b = 1
+</code></pre>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>可以在变量声明时手动初始化：</p>
+<pre><code class="go">var a int = 10
+fmt.Println(a) // 10
+</code></pre>
+<p>对多个变量初始化：</p>
+<pre><code class="go">var a, b int = 1, 2
+fmt.Println(a) // 1
+fmt.Println(b) // 2
+</code></pre>
+<p>声明存在右值（赋值符号右边的值）时，可以省略变量的类型：</p>
+<pre><code class="go">var a = 10
+var b, c = 20, 30
+fmt.Println(a) // 10
+fmt.Println(b) // 20
+fmt.Println(c) // 30
+</code></pre>
+<p>和 import 一样，可以分组声明和初始化变量：</p>
+<pre><code class="go">var (
+    a int = 1 // 1
+    b int       // 0
+    c bool    // false
+)
+</code></pre>
+<h4 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明"></a>短变量声明</h4><p>在函数内部，可以使用<strong>短变量声明</strong>，变量类型由右值自动推导：</p>
+<pre><code class="go">func main() &#123;
+    var a uint = 1
+    b := 3
+    fmt.Println(a) // 1
+    fmt.Println(b) // 3
+    fmt.Println(reflect.TypeOf(a)) // uint
+    fmt.Println(reflect.TypeOf(b)) // int
+&#125;
+</code></pre>
+<h4 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量"></a>匿名变量</h4><p>使用<strong>匿名变量</strong>来忽略某个值：</p>
+<pre><code class="go">func main() &#123;
+    result, _ := add(10, 20) // 忽略add()返回的第二个值
+    fmt.Println(&quot;Result=&quot;, result)
+&#125;
+func add(a int, b int) (int, string) &#123;
+    return a + b, &quot;Golang&quot; // 函数add返回了两个值
+&#125;
+</code></pre>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><h4 id="声明-1"><a href="#声明-1" class="headerlink" title="声明"></a>声明</h4><p>常量（Constant）的声明类似于变量，但使用<code>const</code>关键字，常量只可以是字符、字符串、布尔值和数值型，必须是编译期就确定的值。</p>
+<p>常量是固定的值，在程序的整个运行过程中不会改变，变量一般存储与内存中的堆或栈中，位于数据段；而常量通常放在代码段，直接存储其数值，类型由编译器维护。</p>
+<pre><code class="go">const pi float64 = 3.1415926
+fmt.Println(pi) // 3.1415926
+</code></pre>
+<p>常量可以不指定类型：</p>
+<pre><code class="go">const a = 11
+</code></pre>
+<p>和变量一样，常量也支持分组：</p>
+<pre><code class="go">const (
+    a = 11
+    b = 22
+)
+</code></pre>
+<p>当声明多个常量时，如果不指定值，则下面的常量值和其上一行的变量值相等：</p>
+<pre><code class="go">const (
+    a1 = 100 // 100
+    a2          // 100
+    a3       // 100
+)
+</code></pre>
+<p>和变量不同，常量声明后不是必须要被使用。</p>
+<h4 id="数值型常量"><a href="#数值型常量" class="headerlink" title="数值型常量"></a>数值型常量</h4><p>数值型常量能提供很高精度的值存储。</p>
+<p>一个无类型的常量会根据环境来决定它的类型：</p>
+<pre><code class="go">const (
+    Big = 1 &lt;&lt; 100       // 1267650600228229401496703205376
+    Small = Big &gt;&gt; 99 // 2
+)
+
+func needInt(x int) int &#123;
+    return x*10 + 1
+&#125;
+
+func needFloat(x float64) float64 &#123;
+    return x * 0.1
+&#125;
+
+func main() &#123;
+    fmt.Println(needInt(Small))   // 21
+    fmt.Println(needInt(Big))     // Overflow
+    fmt.Println(needFloat(Small)) // 0.2
+    fmt.Println(needFloat(Big))   // 1.2676506002282295e+29
+&#125;
+</code></pre>
+<p>上面的代码声明了一个大数值常量和一个小数值常量，而<code>fmt.Println(needInt(Big))</code>这一段代码在编译期就出现了报错，这是因为这个数值太大超出了<code>int</code>类型能存储的最大长度。从这点可以看出无类型常量的值是可以达到很高的精度的。</p>
+<h4 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h4><p>iota 可以用作常量的计数器，只能用于常量：</p>
+<pre><code class="go">const (
+    a = iota // 0
+    b          // 1
+    c          // 2
+)
+</code></pre>
+<p>可以使用<code>_</code>跳过某些值：</p>
+<pre><code class="go">const (
+    a = iota // 0
+    _
+    c          // 2
+)
+</code></pre>
+<p>由于未初始化常量值会和上一行的值相等，因此会出现以下情况：</p>
+<pre><code class="go">const (
+    a1 = iota // 0
+    a2 = 100  // 100
+    a3        // 100
+    a4        // 100
+)
+</code></pre>
+<p>可以中间插入<code>iota</code>计数，但并不是重新计数：</p>
+<pre><code class="go">const (
+    a1 = iota // 0
+    a2 = 100  // 100
+    a3 = iota // 2
+    a4        // 3
+)
+</code></pre>
+<p>可以将多个<code>iota</code>定义在同一行：</p>
+<pre><code class="go">const (
+    a1, a2 = iota, iota + 1 // 0, 1
+    b1, b2                    // 1, 2
+    c1, c2                    // 2, 3
+)
+</code></pre>
+<p>一个简单的使用<code>iota</code>的例子，其中<code>&lt;&lt;</code>是二进制左移运算符：</p>
+<pre><code class="go">const (
+    _  = iota
+    KB = 1 &lt;&lt; (10 * iota)
+    MB = 1 &lt;&lt; (10 * iota)
+    GB = 1 &lt;&lt; (10 * iota)
+    TB = 1 &lt;&lt; (10 * iota)
+    PB = 1 &lt;&lt; (10 * iota)
+)
+</code></pre>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>在 Golang 中，所有类型的转换必须是显示转换，否则会编译错误：</p>
+<pre><code class="go">i := 42            // int
+f := float64(i) // float64
+u := uint(f)     // uint
+</code></pre>
+<pre><code class="go">var i = 42
+var f float64 = i
+
+// cannot use i (type int) as type float64 in assignment
+</code></pre>
+<h4 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h4><p>有时候会需要知道某个变量的数据类型，这时候就需要类型推断：</p>
+<pre><code class="go">func main() &#123;
+    v := 42
+    fmt.Printf(&quot;%T\n&quot;, v) // int
+&#125;
+</code></pre>
+<p>通过反射也可以得到变量的类型：</p>
+<pre><code class="go">func main() &#123;
+    v := 42
+    fmt.Println(reflect.TypeOf(v)) // int
+&#125;
+</code></pre>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数（Function）是对一段代码的封装，它需要零个或多个输入参数，并会返回零个或多个值。</p>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+func add(x int, y int) int &#123;
+    return x + y
+&#125;
+
+func main() &#123;
+    fmt.Println(add(42, 13))
+&#125;
+</code></pre>
+<p>其中<code>x</code>和<code>y</code>被称为形式参数（形参），因为它们在函数定义时并没有实际的值，只是提供给函数调用的变量名。<code>42</code>和<code>13</code>被称为实际参数（实参），函数接收的实际数值是实参的值。</p>
+<p>对于相同类型的形参可以进行省略：</p>
+<pre><code class="go">func add(x, y int, c string) string &#123;
+    return string(rune(x+y)) + c
+&#125;
+</code></pre>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>Golang 还支持函数支持多返回值：</p>
+<pre><code class="go">func swap(x, y string) (string, string) &#123;
+    return y, x
+&#125;
+
+func main() &#123;
+    a, b := swap(&quot;hello&quot;, &quot;world&quot;)
+    fmt.Println(a, b) // world hello
+&#125;
+</code></pre>
+<h4 id="命名返回值"><a href="#命名返回值" class="headerlink" title="命名返回值"></a>命名返回值</h4><p>Golang 甚至支持对返回值进行命名：</p>
+<pre><code class="go">func split(sum int) (x, y int) &#123;
+    x = sum * 4 / 9
+    y = sum - x
+    return
+&#125;
+
+func main() &#123;
+    fmt.Println(split(17))
+&#125;
+</code></pre>
+<p>然而这种函数返回的方式（Naked return statements）会使函数丧失一定的可读性，因此在长函数中不建议使用。</p>
+<h2 id="流控制语句"><a href="#流控制语句" class="headerlink" title="流控制语句"></a>流控制语句</h2><h3 id="判断（if）"><a href="#判断（if）" class="headerlink" title="判断（if）"></a>判断（if）</h3><p>最简单的<code>if</code>语句包含一个条件表达式，当表达式的值为<code>true</code>时，才会执行<code>if</code>判断体的代码段：</p>
+<pre><code class="go">if true &#123;
+    fmt.Println(&quot;TRUE&quot;)
+&#125;
+
+// TRUE
+</code></pre>
+<p>和某些语言不同的是，Golang 只允许判断语句的值为布尔值，不能使用其他数值直接判断。</p>
+<p>Golang 支持在<code>if</code>语句中包含短变量声明语句：</p>
+<pre><code class="go">if err := function(); err != nil &#123;  // 函数function返回错误，nil为空值
+    fmt.Println(&quot;ERROR&quot;)
+&#125;
+</code></pre>
+<p><code>if</code>语句通常和<code>else</code>语句一起使用：</p>
+<pre><code class="go">var judge = false
+if judge &#123;
+    fmt.Println(&quot;TRUE&quot;)
+&#125; else &#123;
+    fmt.Println(&quot;FALSE&quot;)
+&#125;
+
+// FALSE
+</code></pre>
+<p>可以使用<code>else if</code>语句进行多次判断，但当一个条件满足时就不会再判断下面的语句：</p>
+<pre><code class="go">var num = 55
+if num &gt; 12 &#123;
+    fmt.Println(&quot;&gt;12&quot;)
+&#125; else if num &gt; 16 &#123;
+    fmt.Println(&quot;&gt;16&quot;)
+&#125; else &#123;
+    fmt.Println(&quot;&lt;=12&quot;)
+&#125;
+
+// &gt;12
+</code></pre>
+<p>其中<code>else if num &gt; 16</code>永远不会执行到，被称作死代码（Dead Code）。</p>
+<h3 id="循环（for）"><a href="#循环（for）" class="headerlink" title="循环（for）"></a>循环（for）</h3><p>Golang 中只提供了<code>for</code>循环语句，很多其他语言都提供了如<code>while</code>、<code>do...while</code>循环语句。</p>
+<p><code>for</code>循环语句除循环体以外有三个组成部分，由<code>,</code>分割：</p>
+<ul>
+<li>初始化语句：在第一次循环前执行</li>
+<li>条件表达式：在每次循环前判断</li>
+<li>回报语句：在每次循环后执行</li>
+</ul>
+<pre><code class="go">for i := 0; i &lt; 10; i++ &#123;
+    fmt.Println(i)
+&#125;
+</code></pre>
+<p>其中，初始化语句和回报语句是可以省略的：</p>
+<pre><code class="go">i := 0
+for i &lt; 10 &#123;
+    fmt.Println(&quot;Hi&quot;)
+    i++
+&#125;
+</code></pre>
+<p>上面这段循环就变成了其他语言中的<code>while</code>，甚至还能省略循环条件：</p>
+<pre><code class="go">for &#123;
+    fmt.Println(&quot;Hi&quot;)
+&#125;
+</code></pre>
+<p>这段循环就变成了无限循环，等同于<code>while(true)</code>。</p>
+<h4 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h4><p>可以使用<code>continue</code>语句跳过本次循环：</p>
+<pre><code class="go">for i := 0; i &lt; 10; i++ &#123;
+    if i &lt;= 5 &#123;
+        continue
+    &#125;
+    fmt.Print(i) // 6789
+&#125;
+</code></pre>
+<h4 id="break"><a href="#break" class="headerlink" title="break"></a>break</h4><p>可以使用<code>break</code>语句结束整个循环：</p>
+<pre><code class="go">for i := 0; i &lt; 10; i++ &#123;
+    if i == 5 &#123;
+        break
+    &#125;
+    fmt.Print(i) // 01234
+&#125;
+</code></pre>
+<h3 id="选择（switch）"><a href="#选择（switch）" class="headerlink" title="选择（switch）"></a>选择（switch）</h3><p><code>Switch</code>语句可以用来替代<code>if-else</code>语句，它会按顺序判断条件表达式的值与每一个<code>case</code>是否匹配，匹配则运行当前<code>case</code>：</p>
+<pre><code class="go">func main() &#123;
+    fmt.Print(&quot;Go runs on &quot;)
+    switch os := runtime.GOOS; os &#123;
+    case &quot;darwin&quot;:
+        fmt.Println(&quot;OS X.&quot;)
+    case &quot;linux&quot;:
+        fmt.Println(&quot;Linux.&quot;)
+    default:
+        fmt.Printf(&quot;%s.\n&quot;, os)
+    &#125;
+&#125;
+
+// Go runs on windows
+</code></pre>
+<p>上面这段代码使用了<code>runtime</code>包来获取当前运行环境的系统类型，和<code>if</code>语句一样，<code>switch</code>语句也支持短变量声明。</p>
+<p>然而<code>switch</code>匹配到一个<code>case</code>后，就不再判断下面的<code>case</code>了，直接会结束整个<code>switch</code>语句，可以使用<code>fallthrough</code>关键字不判断直接执行下一个<code>case</code>：</p>
+<pre><code class="go">switch s := 12; &#123; // 注意省略判断语句但保留短变量声明时必须要带上这里的&quot;;&quot;
+case s &lt;= 10:
+    fmt.Println(&quot;&lt;=10&quot;)
+case s == 12:
+    fmt.Println(&quot;==12&quot;)
+    fallthrough
+default:
+    fmt.Println(&quot;&lt;100&quot;)
+&#125;
+
+// ==12
+// &lt;100
+</code></pre>
+<p><code>fallthrough</code>只会直接执行其后一条<code>case</code>，并不会执行后面所有的语句，并且<code>fallthrough</code>不能存在于最后一条<code>case</code>（或<code>default</code>）中，否则会报错。</p>
+<h3 id="推迟（defer）"><a href="#推迟（defer）" class="headerlink" title="推迟（defer）"></a>推迟（defer）</h3><p><code>defer</code>的详细介绍和注意事项可以参考<a href="https://blog.secriy.com/2021/04/20/cku0q50qf001l10nwees269mt/">Go Learning: defer</a>这篇文章。</p>
+<pre><code class="go">func main() &#123;
+    defer fmt.Println(&quot;world&quot;)
+
+    fmt.Println(&quot;hello&quot;)
+&#125;
+
+// hello
+// world
+</code></pre>
+<h2 id="其他数据类型"><a href="#其他数据类型" class="headerlink" title="其他数据类型"></a>其他数据类型</h2><h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><p>指针（Pointer）是一种特殊的数据类型，它保存的值是一个内存地址，它的零值是<code>nil</code>：</p>
+<pre><code class="go">var p *int // &lt;nil&gt;
+</code></pre>
+<p>使用<code>&amp;</code>操作符来生成一个指向操作数的指针，使用<code>*</code>获得指针所指向的值：</p>
+<pre><code class="go">i := 10
+p := &amp;i
+fmt.Println(p)  // 0xc000016088
+fmt.Println(*p) // 10
+</code></pre>
+<p>可以对指针所指向的值进行修改，但指针变量本身不能进行运算：</p>
+<pre><code class="go">i := 10
+p := &amp;i
+fmt.Println(*p) // 10
+*p = 20
+fmt.Println(*p) // 20
+fmt.Println(i)  // 20
+</code></pre>
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><p>结构体（Struct）是一些字段的集合，可以使用结构体定义变量：</p>
+<pre><code class="go">type Person struct &#123;
+    name string
+    age uint8
+&#125;
+
+func main() &#123;
+    ps := Person &#123;&quot;Tom&quot;, 12&#125;
+    fmt.Println(ps) // &#123;Tom 12&#125;
+&#125;
+</code></pre>
+<p>使用<code>.</code>操作符来操作结构体的字段：</p>
+<pre><code class="go">type Person struct &#123;
+    name string
+    age uint8
+&#125;
+
+func main() &#123;
+    ps := Person &#123;&quot;Tom&quot;, 12&#125;
+    ps.age = 100
+    fmt.Println(ps) // &#123;Tom 100&#125;
+&#125;
+</code></pre>
+<p>结构体名首字母大写时为可导出，否则不可导出。</p>
+<h4 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h4><pre><code class="go">type Person struct &#123;
+    name string
+    age uint8
+&#125;
+
+func main() &#123;
+    ps := Person &#123;&quot;Tom&quot;, 12&#125;
+    p := &amp;ps
+    p.name = &quot;Jack&quot; // 等同于(*p).name = &quot;Jack&quot;
+    fmt.Println(ps)
+&#125;
+</code></pre>
+<h4 id="结构体字面量"><a href="#结构体字面量" class="headerlink" title="结构体字面量"></a>结构体字面量</h4><pre><code class="go">type Person struct &#123;
+    name string
+    age  int
+&#125;
+
+var (
+    p1 = Person&#123;&quot;Jack&quot;, 12&#125;
+    p2 = Person&#123;name: &quot;Tom&quot;&#125;
+    p3 = Person&#123;&#125;
+    p  = &amp;Person&#123;&quot;Cecelia&quot;, 16&#125;
+)
+
+func main() &#123;
+    fmt.Println(p1, p2, p3) // &#123;Jack 12&#125; &#123;Tom 0&#125; &#123; 0&#125;
+    fmt.Println(p) // &amp;&#123;Cecelia 16&#125;
+&#125;
+</code></pre>
+<p>结构体字面量就是结构体的字面值，即指定结构体的值定义。未手动初始化的字段将会以其数据结构的零值初始化。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>数组（Array）是编程语言的一种基本的数据类型，是一定数量同类型数据的列表：</p>
+<pre><code class="go">var arr1 [3]int
+fmt.Println(arr1) // [0 0 0]
+var arr2 [2]string
+fmt.Println(arr2) // [ ]
+arr3 := [6]int&#123;1, 2, 3, 4, 5&#125;
+fmt.Println(arr3) // [1 2 3 4 5]
+</code></pre>
+<p>数组在内存中占用连续的空间，其大小必须在编译期就确定，因此不允许使用未指定长度的数组，但使用<code>[...]</code>可以让其在编译期根据内容自动推导长度：</p>
+<pre><code class="go">var arr4  = [...]int&#123;1, 2, 3&#125;
+fmt.Println(arr4) // [1 2 3]
+</code></pre>
+<p>可以使用数组下标对数组取值：</p>
+<pre><code class="go">var arr4  = [...]int&#123;1, 2, 3&#125;
+fmt.Println(arr4[1]) // 2
+</code></pre>
+<p>数组的长度实际上也是数组类型的一部分，因此不同长度的数组是完全不同的。</p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p>切片（Slice）是一种可变大小的数据列表类型，它可以灵活的操作其内容，但它底层仍然是一个固定大小的数组。切片在实际使用中比数组更加常见。</p>
+<p>切片的声明不需要指定其长度，如果指定了长度那就是数组：</p>
+<pre><code class="go">var slice1 []int
+fmt.Println(slice1) // []
+var slice2 = []int&#123;1, 2, 3&#125;
+fmt.Println(slice2) // [1 2 3]
+
+var arr1 = [...]int&#123;1, 2, 3&#125;
+
+fmt.Println(reflect.TypeOf(slice2)) // []int
+fmt.Println(reflect.TypeOf(arr1)) // [3]int
+</code></pre>
+<p>切片提供了截取的方法，方便从中获取指定位置的值：</p>
+<pre><code class="go">slice := []int&#123;1, 2, 3, 4, 5, 6&#125;
+var s []int = slice[1:4]
+fmt.Println(s) // [2 3 4]
+</code></pre>
+<p>截取的范围从左边的数值开始直到右边的数值（不包括），比如<code>[1:3]</code>，就代表切片中下标从 1 到 2 的两个数。可以省略<code>:</code>左右的下标值，即默认为最小（最大）下标：</p>
+<pre><code class="go">slice := []int&#123;1, 2, 3, 4, 5, 6&#125;
+var s1 []int = slice[:4]
+fmt.Println(s1) // [1 2 3 4]
+var s2 []int = slice[2:]
+fmt.Println(s1) // [3 4 5 6]
+var s3 []int = slice[:]
+fmt.Println(s3) // [1 2 3 4 5 6]
+</code></pre>
+<p>同样的，对数组也可以进行截取，但获得的是一个切片：</p>
+<pre><code class="go">arr := [...]int&#123;1, 2, 3, 4, 5, 6&#125;
+var s = arr[1:4]
+fmt.Println(s) // [2 3 4]
+fmt.Println(reflect.TypeOf(s)) // []int
+</code></pre>
+<h4 id="对数组的引用"><a href="#对数组的引用" class="headerlink" title="对数组的引用"></a>对数组的引用</h4><pre><code class="go">names := [4]string&#123;&quot;Angle&quot;, &quot;Bob&quot;, &quot;Cecelia&quot;, &quot;Dog&quot;&#125;
+fmt.Println(names) // [Angle Bob Cecelia Dog]
+a := names[0:2] // [Angle Bob]
+b := names[1:3] // [Bob Cecelia]
+fmt.Println(a, b) // [Angle Bob] [Bob Cecelia]
+
+b[0] = &quot;???&quot;
+
+fmt.Println(a, b) // [Angle ???] [??? Cecelia]
+fmt.Println(names) // [Angle ??? Cecelia Dog]
+</code></pre>
+<p>从上面这段代码可以看到，<code>a</code>和<code>b</code>都各自截取了<code>names</code>的一部分切片，当改变其中一个的内容时，另一个有共同元素的切片也会被改变，并且其底层引用的数组也发生了改变。这就说明了切片实际上是对数组的引用，它的底层仍然是数组，并且直接指向了原数组所在的存储空间。当以上代码中<code>names</code>为切片类型时其输出相同。</p>
+<p>在 Golang 中，一个切片不存储任何数据，它只是描述了底层数组的一部分。也就是说，声明并初始化一个切片，它实际上操作的是一个数组，是对数组元素的全部截取。</p>
+<h4 id="切片字面量"><a href="#切片字面量" class="headerlink" title="切片字面量"></a>切片字面量</h4><p>一个切片的字面量就像没有长度的数组字面量，以下是数组字面量：</p>
+<pre><code class="go">[3]bool&#123;true, true, false&#125;
+</code></pre>
+<p>切片字面量会创建一个相同的底层数组，然后创建一个引用它的切片：</p>
+<pre><code class="go">[]bool&#123;true, true, false&#125;
+</code></pre>
+<p>可以定义一个结构体切片：</p>
+<pre><code class="go">s := []struct &#123;
+    name string
+    age int
+&#125;&#123;
+    &#123;&quot;Dog&quot;, 12&#125;,
+    &#123;&quot;Pig&quot;, 13&#125;,
+    &#123;&quot;Cat&quot;, 15&#125;,
+&#125;
+fmt.Println(s) // [&#123;Dog 12&#125; &#123;Pig 13&#125; &#123;Cat 15&#125;]
+</code></pre>
+<h4 id="切片的长度和容量"><a href="#切片的长度和容量" class="headerlink" title="切片的长度和容量"></a>切片的长度和容量</h4><p>切片包含两个属性：<strong>长度（length）</strong>和<strong>容量（capacity）</strong>：</p>
+<ul>
+<li><p>切片的长度表示的是切片中实际包含的元素个数</p>
+</li>
+<li><p>切片的容量表示的是切片底层数组的元素个数，从该切片中第一个元素开始计算</p>
+</li>
+</ul>
+<p>创建一个<code>printSlice</code>函数用于输出指定切片的 length 和 capacity 以及切片的内容：</p>
+<pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    s := []int&#123;2, 3, 5, 7, 11, 13&#125;
+    s1 := s[:0]
+    s2 := s[:4]
+    s3 := s[2:]
+    printSlice(s) // len=6 cap=6 [2 3 5 7 11 13]
+    printSlice(s1) // len=0 cap=6 []
+    printSlice(s2) // len=4 cap=6 [2 3 5 7]
+    printSlice(s3) // len=4 cap=4 [5 7 11 13]
+&#125;
+
+func printSlice(s []int) &#123;
+    fmt.Printf(&quot;len=%d cap=%d %v\n&quot;, len(s), cap(s), s)
+&#125;
+</code></pre>
+<p>上述代码的四个切片底层共用一个数组，他们各自包含了起始元素的地址、切片长度和切片容量：</p>
+<p><img src="/learning-go/slice.png" class="lazyload" data-srcset="/learning-go/slice.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="slice"></p>
+<ul>
+<li>切片<code>s</code>从数组的首位开始，长度和容量均等于数组的大小</li>
+<li>切片<code>s1</code>从数组的首位开始，长度为 0，但从首位开始计算数组的长度为 6，即切片的容量为 6</li>
+<li>切片<code>s2</code>从数组的首位开始，长度为 4，容量同上为 6</li>
+<li>切片<code>s3</code>从数组的第 2 位开始，长度为 4，从第二位计算数组的长度为 4，即切片容量为 4</li>
+</ul>
+<p>切片的容量主要用于判断底层数组有没有足够的空间给切片延伸长度，当切片扩容但容量不足时，它会开辟新的内存空间将底层数组扩容：</p>
+<pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    s := []int&#123;2, 3, 5, 7&#125;
+    printSlice(s) // len=4 cap=4 [2 3 5 7]
+    s = append(s, 1, 2, 2, 3) // 往切片里新增4个元素，填满底层数组
+    printSlice(s) // len=8 cap=8 [2 3 5 7 1 2 2 3]
+    s = append(s, 1) // 往切片里新增1个元素
+    printSlice(s) // len=9 cap=16 [2 3 5 7 1 2 2 3 1]
+&#125;
+
+func printSlice(s []int) &#123;
+    fmt.Printf(&quot;len=%d cap=%d %v\n&quot;, len(s), cap(s), s)
+&#125;
+</code></pre>
+<p>可以看到当切片扩容后长度大于其容量（底层数组大小）时，底层数组的大小会直接翻倍，也就是说，新数组的大小是原数组的两倍。数组在内存中是连续存储的，因此当连续的空间不足时，数组就无法在当前位置直接扩容。这时候，程序会寻找一个满足新数组大小的连续内存空间，将原数组全部拷贝过去来实现底层数组的扩容。</p>
+<h4 id="空切片"><a href="#空切片" class="headerlink" title="空切片"></a>空切片</h4><p>切片作为一种数据类型同样具有零值，它的零值是<code>nil</code>，其<em>length</em>和<em>capacity</em>的值均为 0：</p>
+<pre><code class="go">var s []int
+fmt.Println(s, len(s), cap(s)) // [] 0 0
+if s == nil &#123;
+    fmt.Println(&quot;nil&quot;) // nil
+&#125;
+</code></pre>
+<h4 id="创建切片"><a href="#创建切片" class="headerlink" title="创建切片"></a>创建切片</h4><p>Golang 提供了内建的<code>make</code>方法，可以用来创建一个切片：</p>
+<pre><code class="go">s1 := make([]int, 5) // make([]Type, Len)
+fmt.Println(s1, len(s1), cap(s1)) // [0 0 0 0 0] 5 5
+s2 := make([]int, 5, 5) // make([]Type, Len, Cap)
+fmt.Println(s2, len(s2), cap(s2)) // [0 0 0 0 0] 5 5
+</code></pre>
+<h4 id="切片的切片"><a href="#切片的切片" class="headerlink" title="切片的切片"></a>切片的切片</h4><p>切片的元素可以是任意数据类型，其中就包括切片：</p>
+<pre><code class="go">sliSli := [][]string&#123;
+    []string&#123;&quot;+&quot;, &quot;-&quot;, &quot;=&quot;&#125;,
+    []string&#123;&quot;-&quot;, &quot;+&quot;, &quot;=&quot;&#125;,
+    []string&#123;&quot;=&quot;, &quot;+&quot;, &quot;_&quot;&#125;,
+&#125;
+sliSli[0][0] = &quot;?&quot;
+for i := 0; i &lt; len(sliSli); i++ &#123;
+    fmt.Println(sliSli[i])
+&#125;
+
+// [? - =]
+// [- + =]
+// [= + _]
+</code></pre>
+<p>上述<code>sliSli</code>切片初始化语句还可以省略：</p>
+<pre><code class="go">sliSli := [][]string&#123;
+    &#123;&quot;+&quot;, &quot;-&quot;, &quot;=&quot;&#125;,
+    &#123;&quot;-&quot;, &quot;+&quot;, &quot;=&quot;&#125;,
+    &#123;&quot;=&quot;, &quot;+&quot;, &quot;_&quot;&#125;,
+&#125;
+</code></pre>
+<h4 id="切片的元素添加"><a href="#切片的元素添加" class="headerlink" title="切片的元素添加"></a>切片的元素添加</h4><p>很多时候都需要对切片元素进行添加，Golang 提供了内建的<code>append</code>函数来实现对切片的元素添加，在前面的<strong>“切片的长度和容量”</strong>一节中就曾使用过：</p>
+<pre><code class="go">var s []int
+fmt.Println(s) // []
+s = append(s, 0)
+fmt.Println(s) // [0]
+s = append(s, 1, 2 ,3)
+fmt.Println(s) // [0 1 2 3]
+</code></pre>
+<p>append 的第一个参数是原切片，其后一个或多个参数是需要添加的新元素，函数返回一个新的切片，他包含了原切片的所有元素和新元素。</p>
+<p>当切片的底层数组大小不足时会分配一个更大的数组，返回的切片会指向这个新分配的数组。</p>
+<h4 id="遍历切片"><a href="#遍历切片" class="headerlink" title="遍历切片"></a>遍历切片</h4><p>内建函数<code>range</code>用于在<code>for</code>循环中遍历<code>slice</code>和<code>map</code>：</p>
+<pre><code class="go">slice := []int&#123;1, 2, 3 ,4, 5&#125;
+for i, v := range slice &#123;
+    fmt.Printf(&quot;Index:%d Value:%d\n&quot;, i, v)
+&#125;
+
+// Index:0 Value:1
+// Index:1 Value:2
+// Index:2 Value:3
+// Index:3 Value:4
+// Index:4 Value:5
+</code></pre>
+<p>对切片迭代时会返回两个值：当前元素的下标以及当前元素的值的拷贝。</p>
+<p>由于 Golang 中元素声明后必须被使用，因此可以使用<code>_</code>忽略<code>range</code>返回的值：</p>
+<pre><code class="go">slice := []int&#123;1, 2, 3 ,4, 5&#125;
+for _, v := range slice &#123;
+    fmt.Printf(&quot;Value:%d\n&quot;, v)
+&#125;
+
+// Value:1
+// Value:2
+// Value:3
+// Value:4
+// Value:5
+</code></pre>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>map 是一种将键（Key）映射到值（Value）的数据类型：</p>
+<pre><code class="go">var m map[string]int // declare
+m = map[string]int&#123;
+    &quot;a&quot;: 1,
+    &quot;b&quot;: 2,
+&#125;
+fmt.Println(m)
+</code></pre>
+<p>map 的零值是<code>nil</code>，值为<code>nil</code>的 map 不可以添加 key：</p>
+<pre><code class="go">var m map[string]int
+m[&quot;a&quot;] = 1
+fmt.Println(m)
+
+// panic: assignment to entry in nil map
+</code></pre>
+<h4 id="创建-Map"><a href="#创建-Map" class="headerlink" title="创建 Map"></a>创建 Map</h4><p>Golang 提供了内建的<code>make</code>方法，可以用来创建一个 map：</p>
+<pre><code class="go">m := make(map[string]int)
+m[&quot;A&quot;] = 1
+m[&quot;B&quot;] = 2
+fmt.Println(m) // map[A:1 B:2]
+</code></pre>
+<p>使用<code>make</code>创建的 map 为空，但它的值不是<code>nil</code>：</p>
+<pre><code class="go">var m1 map[string]int
+var m2 = make(map[string]int)
+fmt.Println(m1 == nil) // true
+fmt.Println(m2 == nil) // false
+</code></pre>
+<h4 id="Map-字面量"><a href="#Map-字面量" class="headerlink" title="Map 字面量"></a>Map 字面量</h4><p>map 字面量类似于 struct 字面量，但必须要指定 Key：</p>
+<pre><code class="go">type age int
+var m = map[string]age&#123;
+    &quot;Dog&quot;: 12,
+    &quot;Pig&quot;: 1,
+    &quot;Cat&quot;: 13,
+&#125;
+fmt.Println(m) // map[Cat:13 Dog:12 Pig:1]
+</code></pre>
+<p>可以省略结构体类型名：</p>
+<pre><code class="go">type Person struct &#123;
+    gender string
+    age    int
+&#125;
+
+var m1 = map[string]Person&#123;
+    &quot;Tom&quot;:    &#123;&quot;MAN&quot;, 12&#125;,
+    &quot;Autumn&quot;: &#123;&quot;WOMAN&quot;, 13&#125;,
+&#125;
+var m2 = map[string]struct &#123;
+    gender string
+    age    int
+&#125;&#123;
+    &quot;Tom&quot;:    &#123;&quot;MAN&quot;, 12&#125;,
+    &quot;Autumn&quot;: &#123;&quot;WOMAN&quot;, 13&#125;,
+&#125;
+fmt.Println(m1)
+fmt.Println(m2)
+</code></pre>
+<h4 id="Map-操作"><a href="#Map-操作" class="headerlink" title="Map 操作"></a>Map 操作</h4><p>插入一个键值对：</p>
+<pre><code class="go">m[key] = value
+</code></pre>
+<p>获取一个键值对的值：</p>
+<pre><code class="go">v := m[key]
+</code></pre>
+<p>删除一个键值对：</p>
+<pre><code class="go">delete(m, key)
+</code></pre>
+<p>查询 map 中是否存在某个键值对：</p>
+<pre><code class="go">type age uint8
+m := make(map[string]age)
+m[&quot;Jerry&quot;] = 12
+if value, ok := m[&quot;Tom&quot;]; ok &#123;
+    fmt.Println(value)
+&#125; else &#123;
+    fmt.Println(&quot;NOTEXIST &quot; + strconv.Itoa(int(value)))
+&#125;
+
+if value, ok := m[&quot;Jerry&quot;]; ok &#123;
+    fmt.Println(value)
+&#125; else &#123;
+    fmt.Println(&quot;NOTEXIST &quot; + strconv.Itoa(int(value)))
+&#125;
+
+// NOTEXIST 0
+// 12
+</code></pre>
+<p>当键值对不存在时，map 返回值数据类型的零值。</p>
+<h4 id="遍历-map"><a href="#遍历-map" class="headerlink" title="遍历 map"></a>遍历 map</h4><p>使用内建函数<code>range</code>对 Map 进行遍历：</p>
+<pre><code class="go">num := map[string]int&#123;
+    &quot;a&quot;: 1,
+    &quot;b&quot;: 2,
+    &quot;c&quot;: 3,
+&#125;
+
+for k, v := range num &#123;
+    fmt.Printf(&quot;Index:%q Value:%d\n&quot;, k, v)
+&#125;
+
+// Index:&quot;b&quot; Value:2
+// Index:&quot;c&quot; Value:3
+// Index:&quot;a&quot; Value:1
+</code></pre>
+<p>多次执行可以发现，其遍历的结果并非有序，这其实是有意为之，强制要求程序不会依赖 Map 底层具体的哈希函数实现。</p>
+<h3 id="函数值"><a href="#函数值" class="headerlink" title="函数值"></a>函数值</h3><p>函数值（Function Values）同样是一种数据类型，和其他类型一样可以被使用：</p>
+<pre><code class="go">func main() &#123;
+    sum := calc(func(a, b int) int &#123;
+        return a + b
+    &#125;)
+
+    fmt.Println(sum) // 3
+&#125;
+
+func calc(fn func(a, b int) int) int &#123;
+    result := fn(1, 2)
+
+    return result
+&#125;
+</code></pre>
+<p>上面的 main 函数调用了<code>calc()</code>，传入了一个用于计算和的匿名函数给，<code>calc()</code>又给传入的函数两个参数计算其和，最终由<code>calc()</code>返回。</p>
+<h3 id="函数闭包"><a href="#函数闭包" class="headerlink" title="函数闭包"></a>函数闭包</h3><p>闭包（Closure）指的是一个函数值，它从其外部引用变量，该函数可以访问外部变量并可以对外部变量进行赋值：</p>
+<pre><code class="go">func adder() func(int) int &#123;
+    sum := 0
+    return func(x int) int &#123;
+        sum += x
+        return sum
+    &#125;
+&#125;
+
+func main() &#123;
+    pos, neg := adder(), adder()
+    for i := 0; i &lt; 3; i++ &#123;
+        fmt.Println(
+            pos(i),
+            neg(-2*i),
+        )
+    &#125;
+&#125;
+</code></pre>
+<p>其中，<code>adder()</code>返回的就是一个闭包，上面的 main 函数内的代码基本等同于下面的代码：</p>
+<pre><code class="go">func main() &#123;
+    for i := 0; i &lt; 3; i++ &#123;
+        fmt.Println(
+            adder()(i),
+            adder()(-2*i),
+        )
+    &#125;
+&#125;
+</code></pre>
+<h2 id="方法和接口"><a href="#方法和接口" class="headerlink" title="方法和接口"></a>方法和接口</h2><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>Golang 并没有一般面对对象语言中类的概念，不过支持对某一个类型定义方法。</p>
+<p>方法（Method）指的是一个指定接收者（Receiver）的函数，也就是说方法属于于特定的类型。注意，方法只能作用于同一个包下面的类型。</p>
+<p>下面是方法的用法：</p>
+<pre><code class="go">type Person struct &#123;
+    name string
+    age  uint8
+&#125;
+
+type Door bool
+
+func (p Person) getName() string &#123;
+    return p.name
+&#125;
+
+func (d Door) getDoorStatus() bool &#123;
+    return bool(d)
+&#125;
+
+func main() &#123;
+    p1 := Person&#123;&quot;Tom&quot;, 12&#125;
+    p2 := Person&#123;&quot;Jerry&quot;, 11&#125;
+    var d1 Door = false
+    fmt.Println(p1.getName())
+    fmt.Println(p2.getName())
+    fmt.Println(d1.getDoorStatus())
+&#125;
+</code></pre>
+<p>方法和普通的函数唯一的区别就是方法默认指定了第一个参数并把它放到了函数名前面，上面的<code>getName</code>方法就等同于下面的<code>getName</code>函数：</p>
+<pre><code class="go">func getName(p Person) string &#123;
+    return p.name
+&#125;
+
+func main() &#123;
+    p1 := Person&#123;&quot;Tom&quot;, 12&#125;
+    fmt.Println(getName(p1))
+&#125;
+</code></pre>
+<h4 id="指针接收者"><a href="#指针接收者" class="headerlink" title="指针接收者"></a>指针接收者</h4><p>不使用指针接收者的情况下，传入的只是变量的拷贝，并不会对变量本身进行修改，使用指针接收者能够传递变量指针直接修改变量值：</p>
+<pre><code class="go">type person struct &#123;
+    name string
+    age  int
+&#125;
+
+func (p person) SetName(name string) &#123;
+    p.name = name
+&#125;
+
+func (p *person) SetRealName(name string) &#123;
+    p.name = name
+&#125;
+
+func main() &#123;
+    p := person&#123;&quot;Jack&quot;, 12&#125;
+    p.SetName(&quot;Tom&quot;)
+    fmt.Println(p) // &#123;Jack 12&#125;
+    p.SetRealName(&quot;Tom&quot;)
+    fmt.Println(p) // &#123;Tom 12&#125;
+&#125;
+</code></pre>
+<p>上述的代码等同于：</p>
+<pre><code class="go">type person struct &#123;
+    name string
+    age  int
+&#125;
+
+func SetName(p person, name string) &#123;
+    p.name = name
+&#125;
+
+func SetRealName(p *person, name string) &#123;
+    p.name = name
+&#125;
+
+func main() &#123;
+    p := person&#123;&quot;Jack&quot;, 12&#125;
+    SetName(p, &quot;Tom&quot;)
+    fmt.Println(p) // &#123;Jack 12&#125;
+    SetRealName(&amp;p, &quot;Tom&quot;)
+    fmt.Println(p) // &#123;Tom 12&#125;
+&#125;
+</code></pre>
+<p>可以注意到使用指针接收者的情况下，上述代码调用方法时使用的是<code>p.SetRealName</code>而非<code>(&amp;p).SetRealName</code>，而在等价的函数中，必须传入变量<code>p</code>的地址。这是 Golang 提供的便利用法，在调用为指针接收者的方法时，会自动将<code>p.SetRealName</code>解释为<code>(&amp;p).SetRealName</code>，因此二者是等价的。</p>
+<p>函数和方法还有以下差别：</p>
+<pre><code class="go">func (p person) setName(name string) &#123;
+    p.name = name
+&#125;
+func setName(p person, name string) &#123;
+    p.name = name
+&#125;
+
+func main() &#123;
+    p := person&#123;&quot;Jack&quot;, 12&#125;
+    p.setName(&quot;Tom&quot;)
+    fmt.Println(p) // &#123;Jack 12&#125;
+    (&amp;p1).setName(&quot;Tom&quot;)
+    fmt.Println(p) // &#123;Jack 12&#125;
+    setName(p, &quot;Tom&quot;)
+    fmt.Println(p) // &#123;Jack 12&#125;
+       setName(p, &quot;Tom&quot;) // Compile error
+    fmt.Println(p)
+&#125;
+</code></pre>
+<p>可以注意到对于非指针接收者方法，仍然可以使用<code>(&amp;p)</code>传入，然而对于不接受指针参数的函数使用指针，则不能通过编译。</p>
+<p>使用指针接收者的目的主要有两个：</p>
+<ol>
+<li>使该方法可以修改其接收者指向的值</li>
+<li>避免在每个方法上复制被操作变量的值</li>
+</ol>
+<p>第二点在大型项目中尤为重要，当某一个类型有大量的方法时，不使用指针接收者会导致调用每个方法都需要复制一份该类型的变量值。</p>
+<h4 id="嵌入结构体"><a href="#嵌入结构体" class="headerlink" title="嵌入结构体"></a>嵌入结构体</h4><p>通过嵌入匿名结构体的方式能够继承这些匿名结构体的方法，从而实现 OOP 的继承特性：</p>
+<pre><code class="go">type Person struct &#123;
+    Name string
+    Age  int
+&#125;
+
+type Student struct &#123;
+    Person
+    Class string
+&#125;
+
+func (p *Person) SetName(name string) &#123;
+    p.Name = name
+&#125;
+
+func (s *Student) SetClass(class string) &#123;
+    s.Class = class
+&#125;
+
+func main() &#123;
+    s := &amp;Student&#123;&#125;
+    s.SetName(&quot;John&quot;)
+    s.SetClass(&quot;class-1&quot;)
+    fmt.Println(s)    // &amp;&#123;&#123;John 0&#125; class-1&#125;
+&#125;
+</code></pre>
+<h4 id="方法值-amp-方法表达式"><a href="#方法值-amp-方法表达式" class="headerlink" title="方法值&amp;方法表达式"></a>方法值&amp;方法表达式</h4><p>方法和函数一样能够作为值传递给变量或作为参数传递给函数/方法：</p>
+<pre><code class="go">func main() &#123;
+    p := &amp;Person&#123;&#125;
+    setName := p.SetName
+    setName(&quot;John&quot;)
+    fmt.Println(p)    // &amp;&#123;John 0&#125;
+&#125;
+</code></pre>
+<p>使用类型而不是该类型的实例作为接收者，同样能够调用，比如使用<code>*T</code>：</p>
+<pre><code class="go">func main() &#123;
+    p := &amp;Person&#123;&#125;
+    (*Person).SetName(p, &quot;John&quot;)
+    fmt.Println(p)    // &amp;&#123;John 0&#125;
+&#125;
+</code></pre>
+<p>这被称为方法表达式。可以看到原本只能接收一个参数的<code>SetName</code>函数现在还可以接收一个其接收者类型的变量，也就是说当使用方法表达式时，接收者作为第一个参数传给方法，它现在和普通函数的用法相同了。</p>
+<p>同样的，使用<code>T</code>：</p>
+<pre><code class="go">func (p Person) SetName(name string) &#123;
+    p.Name = name
+&#125;
+
+func main() &#123;
+    p := Person&#123;&#125;
+    Person.SetName(p, &quot;John&quot;)
+    fmt.Println(p)    // &#123; 0&#125;
+&#125;
+</code></pre>
+<p>使用非指针接收者的时候<code>SetName</code>修改的是<code>p</code>的拷贝，因此并没有修改<code>p</code>的字段值。</p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>接口（Interface）定义为一组方法的签名。</p>
+<p>接口类型的值可以包含实现那些方法的任何值。</p>
+<pre><code class="go">// Sender 接口
+type Sender interface &#123;
+    Send()
+    From()
+&#125;
+
+type message struct &#123;
+    msg  string
+    from string
+&#125;
+
+type mail struct &#123;
+    msg  string
+    from string
+    to   string
+&#125;
+
+func (m *message) Send() &#123;
+    fmt.Println(&quot;已发送&quot;, m.msg)
+&#125;
+
+func (m *message) From() &#123;
+    fmt.Println(&quot;发送者&quot;, m.from)
+&#125;
+
+func main() &#123;
+    var s Sender
+    s = &amp;message&#123;
+        msg:  &quot;你好&quot;,
+        from: &quot;Tom&quot;,
+    &#125;
+    s.Send() // 已发送 你好
+    s.From() // 发送者 Tom
+&#125;
+</code></pre>
+<p>上述代码中定义了一个接口<code>Sender</code>，两个结构体<code>message</code>和<code>mail</code>，其中<code>message</code>有两个方法<code>Send</code>和<code>From，因此</code>message<code>实现了</code>Sender`接口。</p>
+<p>接口可以接收实现它的类型的值，因此可以将<code>&amp;message&#123;&#125;</code>赋值给接口变量<code>s</code>，这个变量可以操作其定义的所有方法。当有其他类型实现这个接口时也是同样的操作。</p>
+<h4 id="隐式实现"><a href="#隐式实现" class="headerlink" title="隐式实现"></a>隐式实现</h4><p>Golang 中接口的实现是隐式的，而不是某些语言中显式的实现（如 Java 中的<code>inplements</code>关键字），隐式实现能让定义的接口与其实现取消关联：</p>
+<pre><code class="go">type I interface &#123;
+    M()
+&#125;
+
+type T struct &#123;
+    S string
+&#125;
+
+func (t T) M() &#123;
+    fmt.Println(t.S)
+&#125;
+
+func main() &#123;
+    var i I = T&#123;&quot;hello&quot;&#125;
+    i.M()
+&#125;
+</code></pre>
+<p>可以看到上述代码中因为<code>T</code>有一个方法<code>M</code>而自动隐式实现了接口<code>I</code>，这其中并未有显式的声明。</p>
+<h4 id="接口的值"><a href="#接口的值" class="headerlink" title="接口的值"></a>接口的值</h4><p>接口的值（interface values）可以看作一个值和该值具体类型的二元组，即<code>(value, type)</code>，我们在关于接口的第一段代码中加入一行：</p>
+<pre><code class="go">func main() &#123;
+    var s Sender
+    s = &amp;message&#123;
+        msg:  &quot;你好&quot;,
+        from: &quot;Tom&quot;,
+    &#125;
+    s.Send()
+    s.From()
+    // 加入下面一行
+    fmt.Printf(&quot;%v %T&quot;, s, s) // &amp;&#123;你好 Tom&#125; *main.message
+&#125;
+</code></pre>
+<p>可以看到输出了这个接口值的类型。也就是说，调用这个接口底下的方法就是调用其值的同名方法，即：</p>
+<pre><code class="go">var s Sender
+var m = message&#123;
+    msg:  &quot;你好&quot;,
+    from: &quot;Tom&quot;,
+&#125;
+s = &amp;m
+// 下面两句代码的输出相同
+s.Send() // 已发送  你好
+m.Send() // 已发送  你好
+</code></pre>
+<h4 id="内部值为-nil-的接口"><a href="#内部值为-nil-的接口" class="headerlink" title="内部值为 nil 的接口"></a>内部值为 nil 的接口</h4><p>当赋给接口变量的是一个为 nil 的具体类型的值时，接口的方法会调用为接收者是 nil 的方法：</p>
+<pre><code class="go">type Sender interface &#123;
+    Send()
+&#125;
+
+type message struct &#123;
+    msg  string
+&#125;
+
+func (m *message) Send() &#123;
+    if m == nil &#123;
+        fmt.Println(&quot;NIL&quot;)
+        return
+    &#125;
+&#125;
+
+func main() &#123;
+    var s Sender
+    var m *message // nil
+    s = m
+    s.Send() // NIL
+    fmt.Printf(&quot;%v %T&quot;, s, s) // &lt;nil&gt; *main.message
+&#125;
+</code></pre>
+<p>在 Golang 中这样使用并不会报错。要注意的是，接口变量包含的值为 nil，但接口本身是非 nil 的值，比如其中还包含值类型。</p>
+<h4 id="值为-nil-的接口"><a href="#值为-nil-的接口" class="headerlink" title="值为 nil 的接口"></a>值为 nil 的接口</h4><p>前面一节说的是接口内存储的类型值为 nil 的情况，而这一节就说的是接口本身为 nil 的情况：</p>
+<pre><code class="go">func main() &#123;
+    var s Sender
+    s.Send()
+&#125;
+
+// panic: runtime error: invalid memory address or nil pointer dereference
+</code></pre>
+<p>上面的代码会报错，这是因为为 nil 的接口没有包含任何类型，也就没有办法去调用这些类型的方法。</p>
+<h4 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h4><p>空接口是一个很常用的东西，不包含任何方法签名的接口叫做空接口：</p>
+<pre><code class="go">type i interface&#123;&#125;
+</code></pre>
+<p>空接口可以包含任何类型，因此它常用于处理未知类型的变量，我们可以从<code>fmt.Println</code>函数了解它的用法：</p>
+<pre><code class="go">// Println formats using the default formats for its operands and writes to standard output.
+// Spaces are always added between operands and a newline is appended.
+// It returns the number of bytes written and any write error encountered.
+func Println(a ...interface&#123;&#125;) (n int, err error) &#123;
+    return Fprintln(os.Stdout, a...)
+&#125;
+</code></pre>
+<p>可以看到标准库中的<code>fmt.Println</code>函数接收多个类型为<code>interface&#123;&#125;</code>的值，然后我们往下寻找程序代码中具体处理<code>interface&#123;&#125;</code>类型变量的代码：</p>
+<pre><code class="go">// Some types can be done without reflection.
+switch f := arg.(type) &#123;
+case bool:
+    p.fmtBool(f, verb)
+case float32:
+    p.fmtFloat(float64(f), 32, verb)
+case float64:
+    p.fmtFloat(f, 64, verb)
+case complex64:
+    p.fmtComplex(complex128(f), 64, verb)
+case complex128:
+    p.fmtComplex(f, 128, verb)
+case int:
+    p.fmtInteger(uint64(f), signed, verb)
+case int8:
+    p.fmtInteger(uint64(f), signed, verb)
+case int16:
+    p.fmtInteger(uint64(f), signed, verb)
+case int32:
+    p.fmtInteger(uint64(f), signed, verb)
+case int64:
+    p.fmtInteger(uint64(f), signed, verb)
+case uint:
+    p.fmtInteger(uint64(f), unsigned, verb)
+case uint8:
+    p.fmtInteger(uint64(f), unsigned, verb)
+case uint16:
+    p.fmtInteger(uint64(f), unsigned, verb)
+case uint32:
+    p.fmtInteger(uint64(f), unsigned, verb)
+case uint64:
+    p.fmtInteger(f, unsigned, verb)
+case uintptr:
+    p.fmtInteger(uint64(f), unsigned, verb)
+case string:
+    p.fmtString(f, verb)
+case []byte:
+    p.fmtBytes(f, verb, &quot;[]byte&quot;)
+case reflect.Value:
+    // Handle extractable values with special methods
+    // since printValue does not handle them at depth 0.
+    if f.IsValid() &amp;&amp; f.CanInterface() &#123;
+        p.arg = f.Interface()
+        if p.handleMethods(verb) &#123;
+            return
+        &#125;
+    &#125;
+    p.printValue(f, verb, 0)
+default:
+    // If the type is not simple, it might have methods.
+    if !p.handleMethods(verb) &#123;
+        // Need to use reflection, since the type had no
+        // interface methods that could be used for formatting.
+        p.printValue(reflect.ValueOf(f), verb, 0)
+    &#125;
+&#125;
+</code></pre>
+<p>可以看到上述代码使用了复杂的<code>switch</code>语句来枚举每一种类型的情况，从而最终实现对不同类型的输出（这其中使用了类型断言，后面会讲到）。这样的写法是由于 Golang 中没有泛型导致的（在将来的版本更新中或许会加入）。</p>
+<h4 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h4><p>类型断言（Type Assertions）用于获取接口内部值和值类型，当类型匹配时则无错误：</p>
+<pre><code class="go">func main() &#123;
+    var i interface&#123;&#125;
+    i = 12 // int
+    t := i.(int) // int 匹配 int
+    fmt.Println(t) // 12
+&#125;
+</code></pre>
+<p>当类型不匹配时程序直接报错：</p>
+<pre><code class="go">var i interface&#123;&#125;
+i = 12 // int
+t := i.(string) // string 不匹配 int
+fmt.Println(t)
+
+// panic: interface conversion: interface &#123;&#125; is int, not string
+</code></pre>
+<p>类型断言只能应用于接口变量，不能用于其他类型变量：</p>
+<pre><code class="go">var i int
+i = 12 // int
+t := i.(int)
+fmt.Println(t)
+
+// invalid type assertion: i.(int) (non-interface type int on left)
+</code></pre>
+<p>可以使用两个左值来进行类型判断，即便断言失败也不会引发<code>panic</code>：</p>
+<pre><code class="go">t, ok := v.(T) // T 指代类型
+</code></pre>
+<p>当类型匹配时<code>ok</code>为<code>true</code>，否则为<code>false</code>，可以实现下面的代码：</p>
+<pre><code class="go">func main() &#123;
+    var iSlice = []interface&#123;&#125;&#123;
+        &quot;string&quot;,
+        12,
+        nil,
+        int64(12),
+    &#125;
+    for _, v := range iSlice &#123;
+        if t, ok := v.(string); ok &#123;
+            fmt.Printf(&quot;true: %v %T\n&quot;, t, t)
+        &#125;else&#123;
+            fmt.Printf(&quot;false: %v %T\n&quot;, t, t)
+        &#125;
+    &#125;
+&#125;
+
+// true: string string
+// false:  string
+// false:  string
+// false:  string
+</code></pre>
+<p>可以看到，当断言失败的时候，左值<code>t</code>的类型变为了断言类型<code>T</code>，其值变为了该类型的零值。</p>
+<h4 id="类型-Switch"><a href="#类型-Switch" class="headerlink" title="类型 Switch"></a>类型 Switch</h4><p>在前面的空接口小节中有提到，<code>fmt.Println()</code>最终实现不同类型的处理使用的是类型断言，并且采用了<code>switch</code>语句进行区分，具体参考前面的代码。</p>
+<h4 id="Stringers"><a href="#Stringers" class="headerlink" title="Stringers"></a>Stringers</h4><p><code>fmt</code>包定义了一个<code>Stringer</code>接口，这是一个很特殊的接口：</p>
+<pre><code class="go">type Stringer interface &#123;
+    String() string
+&#125;
+</code></pre>
+<p>这个接口可以将其本身描述为一个字符串，很多包都使用了这个接口来输出值：</p>
+<pre><code class="go">type Person struct &#123;
+    name string
+    age  int
+&#125;
+
+func (p *Person) String() string &#123;
+    return fmt.Sprintln(p.name, p.age)
+&#125;
+
+func main() &#123;
+    var p1 = &amp;Person&#123;&quot;Tom&quot;, 12&#125;
+    var p2 = &amp;Person&#123;&quot;Jack&quot;, 11&#125;
+    fmt.Printf(&quot;%v%v&quot;, p1, p2)
+&#125;
+
+// Tom 12
+// Jack 11
+</code></pre>
+<p>可以看到无需显式调用，<code>String</code>方法就自动被调用了，我们修改一下方法名：</p>
+<pre><code class="go">type Person struct &#123;
+    name string
+    age  int
+&#125;
+
+func (p *Person) Format() string &#123;
+    return fmt.Sprintln(p.name, p.age)
+&#125;
+
+func main() &#123;
+    var p1 = &amp;Person&#123;&quot;Tom&quot;, 12&#125;
+    var p2 = &amp;Person&#123;&quot;Jack&quot;, 11&#125;
+    fmt.Printf(&quot;%v%v&quot;, p1, p2)
+&#125;
+
+// &amp;&#123;Tom 12&#125;&amp;&#123;Jack 11&#125;
+</code></pre>
+<p>上述代码并没有调用<code>Format</code>方法。</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>Golang 的错误处理非常的丑，至少我是这么认为的 ㄟ( ▔, ▔ )ㄏ。</p>
+<p>内建的<code>error</code>接口用于保存错误：</p>
+<pre><code class="go">type error interface &#123;
+    Error() string
+&#125;
+</code></pre>
+<p>参考<code>Stringers</code>，<code>fmt</code>包也会去寻找<code>error</code>接口并调用它的<code>Error</code>方法：</p>
+<pre><code class="go">type MyError struct &#123;
+    When string
+    What string
+&#125;
+
+func (e *MyError) Error() string &#123;
+    return fmt.Sprintf(&quot;At %s, %s&quot;,
+        e.When, e.What)
+&#125;
+
+func run() error &#123;
+    return &amp;MyError&#123;
+        time.Now().Format(&quot;2006-01-02&quot;),
+        &quot;it didn&#39;t work&quot;,
+    &#125;
+&#125;
+
+func main() &#123;
+    if err := run(); err != nil &#123;
+        fmt.Println(err) // At 2021-04-23, it didn&#39;t work
+    &#125;
+&#125;
+</code></pre>
+<p>Golang 中大量使用<code>if err != nil</code>这样的错误处理方式：</p>
+<pre><code class="go">err := handleError() // return error type
+if err != nil &#123;
+    fmt.Println(err) // 输出错误
+&#125;
+fmt.Println(&quot;没有错误&quot;)
+</code></pre>
+<h3 id="Readers"><a href="#Readers" class="headerlink" title="Readers"></a>Readers</h3><p>标准库中的<code>io</code>包定义了一个接口<code>io.Reader</code>，它用于表示数据流的读取端。</p>
+<p>Golang 标准库中有许多对这个接口的实现，包括文件处理、网络连接、压缩器、密码相关等等。</p>
+<p><code>io.Reader</code>接口有一个<code>Read</code>方法：</p>
+<pre><code class="go">func (T) Read(b []byte) (n int, err error)
+</code></pre>
+<p><code>Read</code>方法往传入的字节切片中填入数据，并返回填充的字节数和一个错误值，当它读到字节流的末端时会传回一个<code>io.EOF</code>错误。</p>
+<p>参考示例代码：</p>
+<pre><code class="go">func main() &#123;
+    r := strings.NewReader(&quot;Hello, Reader!&quot;)
+
+    b := make([]byte, 8)
+    for &#123;
+        n, err := r.Read(b)
+        fmt.Printf(&quot;n = %v err = %v b = %v\n&quot;, n, err, b)
+        fmt.Printf(&quot;b[:n] = %q\n&quot;, b[:n])
+        if err == io.EOF &#123;
+            break
+        &#125;
+    &#125;
+&#125;
+
+// n = 8 err = &lt;nil&gt; b = [72 101 108 108 111 44 32 82]
+// b[:n] = &quot;Hello, R&quot;
+// n = 6 err = &lt;nil&gt; b = [101 97 100 101 114 33 32 82]
+// b[:n] = &quot;eader!&quot;
+// n = 0 err = EOF b = [101 97 100 101 114 33 32 82]
+// b[:n] = &quot;&quot;
+</code></pre>
+<p>上面的代码中，<code>strings.NewReader</code>方法生成了一个<code>strings.Reader</code>结构体，其内部字符串值为<code>&quot;Hello, Reader!&quot;</code>，并将其赋值给变量<code>r</code>。另外有一个 8 字节长度的字节切片<code>b</code>。</p>
+<p><code>for</code>循环体中，<code>Read</code>方法读取<code>r</code>的内容将其写到<code>b</code>中，并传回写入的字节长度给<code>n</code>。并且，它每次读取<code>r</code>的值后都会记录读取结束的位置，当下一次调用时就会从上次结束的位置开始读取。</p>
+<p><code>for</code>循环每次循环都会重复以上步骤，但由于<code>b</code>的容量只有 8 字节，因此每次最多只能读入 8 个字节的内容给<code>b</code>。当读到<code>r</code>的数据末尾时，则返回<code>io.EOF</code>错误。</p>
+<p>另外注意上面的代码，字节切片<code>b</code>在<code>Read</code>方法中被修改了值，这就是因为切片类型只是对底层数组的引用，虽然传入<code>Read</code>方法内的切片和<code>b</code>不同，但它们的底层数组相同，因此改其一另一个也会被改变。</p>
+<h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p>并发指的是多个任务在同一时间内一起执行，注意是同一时间内而不是同一时刻。并行是多个任务在同一时刻同时执行，这需要硬件上支持并行，而并发则是让多个任务在极短的时间内快速切换执行，从而达到伪并行的效果。</p>
+<h3 id="Goroutines"><a href="#Goroutines" class="headerlink" title="Goroutines"></a>Goroutines</h3><p>Goroutine 是由 Go runtime 管理的轻量级线程，使用<code>go</code>关键字创建：</p>
+<pre><code class="go">func main() &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        go run(i)
+    &#125;
+&#125;
+
+func run(i int) &#123;
+    fmt.Print(i)
+&#125;
+</code></pre>
+<p>上面的程序没有返回任何信息，这是因为<code>main</code>函数同样也是一个 Goroutine，其中的循环创建了多个新的 Goroutine，但还没等这些 Goroutine 运行<code>main</code>函数就先运行结束了，因此整个程序都结束了。</p>
+<p>为了避免上述情况，最简单的方法是使用<code>time.Sleep</code>函数让<code>main</code>函数等待其他 Goroutine 运行完：</p>
+<pre><code class="go">func main() &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        go run(i)
+    &#125;
+    time.Sleep(2 * time.Second)
+&#125;
+
+func run(i int) &#123;
+    fmt.Print(i)
+&#125;
+
+// 9183467502
+</code></pre>
+<p>输出的结果每次都是不一样的，这是因为这些 Goroutine 并发执行，其顺序完全由调度器决定，并不唯一确定。</p>
+<h3 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h3><p>Channels （中文一般称<strong>通道</strong>）是一种定义了类型的管道，可以往里面发送和接收值。</p>
+<p>发送：</p>
+<pre><code class="go">ch &lt;- value // 将value的值发送到channel ch中
+</code></pre>
+<p>接收：</p>
+<pre><code class="go">value := &lt;- ch // 接收channel ch的值并为value初始化
+</code></pre>
+<p>数据按照箭头的方向流动，只有<code>&lt;-</code>这一个操作符。</p>
+<p>和 Map 以及切片一样，通道必须在使用前被创建：</p>
+<pre><code class="go">ch := make(chan int) // channel of int
+</code></pre>
+<p>默认情况下，Channel 的发送和接收操作在其中一端未就绪时会被阻塞：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan string)
+    go push(ch)
+    fmt.Println(&lt;-ch) // 延迟输出了 abc
+&#125;
+
+func push(ch chan string) &#123;
+    time.Sleep(3 * time.Second)
+    ch &lt;- &quot;abc&quot;
+&#125;
+</code></pre>
+<p>上面的程序中，<code>push</code>函数在三秒后往 Channel 内写入字符串<code>abc</code>，因此在这段时间内 Channel 的接收者一直处于阻塞状态直到 Channel 中有值。同样地，当接收者未就绪时发送者也会阻塞。</p>
+<p>通过这个特性可以很好地对并发执行顺序进行管理，下面的代码就解决了前面并发执行输出结果顺序不定的问题：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int)
+    go add(ch)
+    for i := 0; i &lt; 10; i++ &#123;
+        fmt.Print(&lt;-ch)
+    &#125;
+&#125;
+
+func add(ch chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        ch &lt;- i
+    &#125;
+&#125;
+
+// 0123456789
+</code></pre>
+<h4 id="带缓冲区的-Channel"><a href="#带缓冲区的-Channel" class="headerlink" title="带缓冲区的 Channel"></a>带缓冲区的 Channel</h4><p>Channel 创建时默认是不带缓冲区的，也就是前面说的接收端和发送端必须都就绪的原因，然而可以选择创建带缓冲区的 Channel 在不同场景下解决某些问题：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int, 10)
+    go add(ch)
+    time.Sleep(3 * time.Second)
+    for i := 0; i &lt; 10; i++ &#123;
+        fmt.Print(&lt;-ch)
+    &#125;
+&#125;
+
+func add(ch chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        ch &lt;- i
+    &#125;
+    fmt.Println(&quot;Completed!&quot;)
+&#125;
+
+// Completed!
+// 0123456789
+</code></pre>
+<p>程序的输出中，后一行要晚出现几秒，这时候 Channel 内已经有 10 个元素了。再看一下不带缓冲区的 Channel：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int)
+    go add(ch)
+    time.Sleep(3 * time.Second)
+    for i := 0; i &lt; 10; i++ &#123;
+        fmt.Print(&lt;-ch)
+    &#125;
+&#125;
+
+func add(ch chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        ch &lt;- i
+    &#125;
+    fmt.Println(&quot;Completed!&quot;)
+&#125;
+
+// 0123456789Completed! 或 0123456789
+</code></pre>
+<p>不带缓冲区的 Channel 发送和接收必须同时进行，因此<code>add</code>函数只能等待<code>main</code>函数休眠结束接收数据。而当最后一次循环结束后，<code>main</code>函数立即退出，如果在此之前<code>fmt.Println(&quot;Completed!&quot;)</code>没能执行的话，程序的输出结果就不包含*Completed!*了。</p>
+<p>这里有一个地方要注意，并发执行的程序当缓冲区装满时，接收者会先将其中的元素全部接收，然后再对其进行发送操作，直到全部数据元素操作完毕。</p>
+<p>在顺序执行的单个 Goroutine 中，往满 Channel 里写入元素会直接报错：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int) // 等同于make(chan int, 0)
+    ch &lt;- 1
+    fmt.Println(&lt;-ch)
+&#125;
+
+// fatal error: all goroutines are asleep - deadlock!
+</code></pre>
+<h4 id="Channel-的关闭"><a href="#Channel-的关闭" class="headerlink" title="Channel 的关闭"></a>Channel 的关闭</h4><p>发送者可以使用<code>close</code>函数关闭一个 Channel 来表示这个 Channel 不再有值被传入，接收者也可以知道 Channel 是否关闭：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int, 10)
+    go push(ch)
+    for i := 0; i &lt; 10; i++ &#123;
+        if v, ok := &lt;-ch; ok &#123;
+            fmt.Print(v)
+        &#125;
+    &#125;
+&#125;
+
+func push(ch chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        if i == 5 &#123;
+            close(ch)
+            break
+        &#125;
+        ch &lt;- i
+    &#125;
+&#125;
+
+// 01234
+</code></pre>
+<p>注意，只有发送者可以关闭 Channel，对已被关闭的 Channel 进行发送操作会引发<code>panic</code>，但对关闭的 Channel 进行接收不会，接收已关闭的 Channel 只会得到类型零值：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int)
+    go push(ch)
+    for i := 0; i &lt; 10; i++ &#123;
+        fmt.Print(&lt;-ch)
+    &#125;
+&#125;
+
+func push(ch chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        if i == 5 &#123;
+            close(ch)
+            break
+        &#125;
+        ch &lt;- i
+    &#125;
+&#125;
+
+// 0123400000
+</code></pre>
+<p>Close 操作用于告知接收者无值可传，是非必须的操作，与 I/O 操作中的 Close 释放资源并不相似。</p>
+<h4 id="Channel-的-range-操作"><a href="#Channel-的-range-操作" class="headerlink" title="Channel 的 range 操作"></a>Channel 的 range 操作</h4><p><code>for i := range ch</code>语句能够接收 Channel 中的值直到 Channel 被关闭：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int, 10)
+    go push(ch)
+    for i := range ch &#123;
+        fmt.Print(i)
+    &#125;
+&#125;
+
+// 01234
+</code></pre>
+<h3 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h3><p><code>select</code>语句可以让一个 Goroutine 等待多个通信操作：</p>
+<pre><code class="go">func main() &#123;
+    ch := make(chan int)
+    signal := make(chan int)
+
+    go input(ch, signal)
+
+    for &#123;
+        select &#123;
+        case v := &lt;-ch:
+            fmt.Printf(&quot;%d &quot;, v)
+        case &lt;-signal:
+            fmt.Print(&quot;Done&quot;)
+            return
+        &#125;
+    &#125;
+
+&#125;
+
+func input(ch, sig chan int) &#123;
+    for i := 0; i &lt; 10; i++ &#123;
+        ch &lt;- i
+        if i == 5 &#123;
+            sig &lt;- 0
+            break
+        &#125;
+    &#125;
+&#125;
+
+// 0 1 2 3 4 5 Done
+</code></pre>
+<p>可以设置<code>default</code>关键字用于设置无接收时的输出：</p>
+<pre><code class="go">func main() &#123;
+    tick := time.Tick(100 * time.Millisecond)
+    boom := time.After(500 * time.Millisecond)
+    for &#123;
+        select &#123;
+        case &lt;-tick:
+            fmt.Print(&quot;tick&quot;)
+        case &lt;-boom:
+            fmt.Print(&quot;BOOM!&quot;)
+            return
+        default:
+            fmt.Print(&quot;.&quot;)
+            time.Sleep(50 * time.Millisecond)
+        &#125;
+    &#125;
+&#125;
+
+// ..tick..tick.tick..tick..BOOM!
+</code></pre>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
+<li>变量作用域</li>
+<li>斐波那契闭包</li>
+<li>Readers 练习</li>
+<li>Images</li>
+<li>等价二叉树练习</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
+      
+        <div class='references'>
+          <section class='header'>
+            
+              <i class="fas fa-quote-left fa-fw" aria-hidden="true"></i>
+            
+            <span>参考资料</span>
+          </section>
+          <section class='body'>
+            <ul>
+              
+                <li>
+                  <a href="https://johng.cn/cgo-enabled-affect-go-static-compile/" rel="external nofollow noopener noreferrer" target="_blank">
+                  CGO_ENABLED 环境变量对 Go 静态编译机制的影响
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="https://tour.golang.org/" rel="external nofollow noopener noreferrer" target="_blank">
+                  A Tour of Go
+                  </a>
+                </li>
+              
+            </ul>
+          </section>
+        </div>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/learning-go/>https://blog.secriy.com/learning-go/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年3月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Go/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Go</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PL</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/learning-go/&title=Learning Go - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行了梳理。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/learning-go/&title=Learning Go - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行了梳理。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/learning-go/&title=Learning Go - Secriy's Blog&summary=本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行了梳理。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/go-learning-defer/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Go Learning: defer</p>
+          <p class='content'>本文是 Golang 中 defer 语句的学习和深入理解。
+
+
+
+知识点一、有关 defer 的执行顺序程序执行到 defer 语句时，并不会直接执行 defer 后的语句，而是将其存入该函数...</p>
+        </a>
+      
+      
+        <a class='next' href='/powershell-note/'>
+          <p class='title'>PowerShell 食用笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>PowerShell 的操作。
+
+
+
+PowerShell 脚本PowerShel 脚本实际很强大，平时可以用来执行一系列指令，蛮方便的。
+例如 Hexo 的提交，可以在 Hexo 目录创建一个...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="toc-text">命令行操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-text">命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#build"><span class="toc-text">build</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%BC%96%E8%AF%91"><span class="toc-text">普通编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="toc-text">交叉编译</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clean"><span class="toc-text">clean</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#doc"><span class="toc-text">doc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#env"><span class="toc-text">env</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fix"><span class="toc-text">fix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fmt"><span class="toc-text">fmt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#generate"><span class="toc-text">generate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get"><span class="toc-text">get</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#install"><span class="toc-text">install</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mod"><span class="toc-text">mod</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">常用操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#run"><span class="toc-text">run</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#test"><span class="toc-text">test</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tool"><span class="toc-text">tool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#version"><span class="toc-text">version</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vet"><span class="toc-text">vet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80"><span class="toc-text">语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D"><span class="toc-text">命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%85"><span class="toc-text">包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">基础数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="toc-text">自定义类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-text">短变量声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%8F%98%E9%87%8F"><span class="toc-text">匿名变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E-1"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E5%B8%B8%E9%87%8F"><span class="toc-text">数值型常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iota"><span class="toc-text">iota</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-text">类型推断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">命名返回值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="toc-text">流控制语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%EF%BC%88if%EF%BC%89"><span class="toc-text">判断（if）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%EF%BC%88for%EF%BC%89"><span class="toc-text">循环（for）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#continue"><span class="toc-text">continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break"><span class="toc-text">break</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%EF%BC%88switch%EF%BC%89"><span class="toc-text">选择（switch）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E8%BF%9F%EF%BC%88defer%EF%BC%89"><span class="toc-text">推迟（defer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">其他数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88"><span class="toc-text">结构体指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">结构体字面量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87"><span class="toc-text">切片</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">对数组的引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">切片字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E9%95%BF%E5%BA%A6%E5%92%8C%E5%AE%B9%E9%87%8F"><span class="toc-text">切片的长度和容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E5%88%87%E7%89%87"><span class="toc-text">空切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%87%E7%89%87"><span class="toc-text">创建切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%88%87%E7%89%87"><span class="toc-text">切片的切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%85%83%E7%B4%A0%E6%B7%BB%E5%8A%A0"><span class="toc-text">切片的元素添加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E5%88%87%E7%89%87"><span class="toc-text">遍历切片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Map"><span class="toc-text">创建 Map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Map-%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">Map 字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Map-%E6%93%8D%E4%BD%9C"><span class="toc-text">Map 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%8D%E5%8E%86-map"><span class="toc-text">遍历 map</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%80%BC"><span class="toc-text">函数值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%AD%E5%8C%85"><span class="toc-text">函数闭包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%92%8C%E6%8E%A5%E5%8F%A3"><span class="toc-text">方法和接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-text">指针接收者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">嵌入结构体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%80%BC-amp-%E6%96%B9%E6%B3%95%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">方法值&amp;方法表达式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">隐式实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%80%BC"><span class="toc-text">接口的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">内部值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BC%E4%B8%BA-nil-%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">值为 nil 的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3"><span class="toc-text">空接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="toc-text">类型断言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B-Switch"><span class="toc-text">类型 Switch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stringers"><span class="toc-text">Stringers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Readers"><span class="toc-text">Readers</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91"><span class="toc-text">并发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Goroutines"><span class="toc-text">Goroutines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channels"><span class="toc-text">Channels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84-Channel"><span class="toc-text">带缓冲区的 Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84%E5%85%B3%E9%97%AD"><span class="toc-text">Channel 的关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-%E7%9A%84-range-%E6%93%8D%E4%BD%9C"><span class="toc-text">Channel 的 range 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select"><span class="toc-text">Select</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-text">TODO</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Learning Go";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.secriy.com/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.secriy.com/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.secriy.com/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.secriy.com/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.secriy.com/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.secriy.com/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+  volantis.pjax.push(pjax_scrollrebeal)
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.secriy.com/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.secriy.com/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+</script>
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+  Waves.attach('.flat-btn', ['waves-button']);
+  Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+  Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+  Waves.attach('.flat-box', ['waves-block']);
+  Waves.attach('.float-box', ['waves-block', 'waves-float']);
+  Waves.attach('.waves-image');
+  Waves.init();
+});
+</script>
+
+
+
+
+
+  
+
+<script src="https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+	<script>
+		volantis.pjax.push(window.HideLoading,'HideLoading');
+		volantis.pjax.send(window.ShowLoading,'ShowLoading');
+		volantis.pjax.error(window.HideLoading,'HideLoading');
+	</script>
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

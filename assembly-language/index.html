@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Assembly Language - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="ASM">
+  
+
+  
+    <meta name="description" content="汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Assembly Language
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/note/">学习笔记</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年8月15日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Assembly Language" data-path="/assembly-language/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/assembly-language/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/assembly-language/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。</p></div>
+
+<span id="more"></span>
+
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="机器语言"><a href="#机器语言" class="headerlink" title="机器语言"></a>机器语言</h3><p>机器语言是机器指令的集合，以二进制表示，每一种 CPU 都有自己的机器指令集，机器指令指定 CPU 进行特定的任务。</p>
+<h3 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h3><p>机器指令全部由二进制编写，人类难以编写和调试，因此汇编语言出现了。汇编程序通过编译器生成对应的机器码，由 CPU 进行执行。例如汇编指令 <code>MOV AX, BX</code> 编译生成的机器码为 <code>1000100111011000</code>（8086 CPU）。</p>
+<p>汇编语言由以下三个部分组成：</p>
+<ol>
+<li>汇编指令，如 <code>MOV</code>，是机器指令的助记符，和机器指令一一对应；</li>
+<li>伪指令，没有对应的机器码，编译器对其进行处理，计算机并不执行；</li>
+<li>其他符号，如 <code>+ - * /</code> 等，由编译器识别，没有对应的机器码。</li>
+</ol>
+<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><p>向 CPU 提供的程序指令以及数据都由存储器保存，需要时调入 CPU 执行，这里的存储器即内存。</p>
+<blockquote>
+<p>指令和数据在内存或磁盘上并没有差别，都是一串二进制信息，同样的一串二进制数位如 <code>1000100111011000</code> 可以被看作是指令 <code>MOV AX, BX</code> 也可以被看作是数据 <code>89D8H</code>。CPU 会按照特定机制把信息看作是指令或是数据，比如在不同的 CPU 指令周期把信息认作不同的类型。</p>
+</blockquote>
+<h4 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h4><p>存储器被抽象为线性的若干个单元，从 0 开始编号，如存储器有 128 个存储单元，编号从 0 ~ 127。每个存储单元大小为 8 bits 即 1 byte。</p>
+<h4 id="CPU-读写存储器"><a href="#CPU-读写存储器" class="headerlink" title="CPU 读写存储器"></a>CPU 读写存储器</h4><p>CPU 需要通过以下三种信息来进行存储器上的数据读写：</p>
+<ul>
+<li><p>存储单元的地址（地址信息）。</p>
+</li>
+<li><p>芯片或器件的选择，读或写的命令（控制信息）。</p>
+</li>
+<li><p>读或写的数据（数据信息）。</p>
+</li>
+</ul>
+<p>步骤如下：</p>
+<ol>
+<li>CPU 通过<strong>地址线</strong>将地址信息（如指定存储器 3 号单元）发出。</li>
+<li>CPU 通过<strong>控制线</strong>发出内存读命令，并选中需要用到的存储器。</li>
+<li>存储器将 3 好单元内的数据通过<strong>数据线</strong>送入 CPU。</li>
+</ol>
+<h3 id="三类总线"><a href="#三类总线" class="headerlink" title="三类总线"></a>三类总线</h3><h4 id="地址总线"><a href="#地址总线" class="headerlink" title="地址总线"></a>地址总线</h4><p>一根地址线可以表示 0、1 两个状态，因此可以寻 0、1 两个地址，10 根地址线可以寻址 $2^{10}$ 即 1024 个地址（0 ~ 1023）。</p>
+<p>地址总线的宽度决定了 CPU 的寻址空间大小。</p>
+<h4 id="数据总线"><a href="#数据总线" class="headerlink" title="数据总线"></a>数据总线</h4><p>单根数据线可以一次传送 1 bit 的信息，8 根数据线可以一次传送 8 bits 的数据。8086 CPU 有 16 根地址线，可以一次传送 16 位数据，即 2 bytes。读超过数据总线宽度的数据时需要多次读取。</p>
+<p>数据总线的宽度决定了 CPU 单次能传输的数据量。</p>
+<h4 id="控制总线"><a href="#控制总线" class="headerlink" title="控制总线"></a>控制总线</h4><p>单根控制线提供了对外部部件的某一控制信息，如“读信号输出”控制线负责向外界传递读信号。</p>
+<p>控制总线的宽度决定了 CPU 对其他器件的控制能力。</p>
+<h3 id="内存地址空间"><a href="#内存地址空间" class="headerlink" title="内存地址空间"></a>内存地址空间</h3><p>不同的设备提供了不同的硬件适配器（即接口卡），如网卡的网络适配器、显卡的显示控制器等，计算机要通过给硬件适配器传送命令来完成一系列操作。通常硬件适配器上会有一个存储空间来暂存数据，如显卡的显存用来临时存放将要显示的数据。这些设备的存储器都需要分配地址。</p>
+<p>CPU 将分布在不同硬件上的各类物理存储器看作是一个逻辑存储器的一部分，也就是说在 CPU 眼里这些存储器组成了一个线性的存储器（内存地址空间）。比如让内存条占用内存地址空间的 0 ~ 1023 地址，让显存占用 1024 ~ 1151 地址。想对显存读写的时候 CPU 可以直接指定 1024 ~ 1151 地址区间。</p>
+<p>地址空间的大小取决于 CPU 的寻址能力，即地址总线的宽度。比如 32 位系统环境下，我们知道其可寻址的地址空间大小为 $2^{32}$ 即 4294967296 bytes，但它实际能给我们最常见的内存条分配的地址空间并非这么多，显存、网卡等都要占据一部分地址空间。事实上，32 位 Windows 7/8 系统支持的最大内存只有 3.25GB 左右。</p>
+<p>理论上 64 位系统环境下，可使用的地址空间高达 16777216TB，但由于很多 64 位 CPU 使用 40 位地址线，导致其最终地址空间大小只有 1TB。而操作系统和主板的限制让这个大小实际上远没有那么多。</p>
+<p>在 Windows 操作系统上，可以使用命令 <code>wmic memphysical get maxcapacity</code> 查看设备支持的最大内存条容量（单位：KB）：</p>
+<p><img src="/assembly-language/image-20210818103605210.png" class="lazyload" data-srcset="/assembly-language/image-20210818103605210.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818103605210"></p>
+<p>在我的设备上，最高也就只有 64GB，这受限于主板能够提供的内存条插槽数，如主板支持单根 32GB，那么双插槽就支持 64GB。</p>
+<p>如何直观地了解什么是内存地址空间？显存在哪里？在 Windows 操作系统上，可以打开设备管理器查看：</p>
+<p><img src="/assembly-language/image-20210818104505616.png" class="lazyload" data-srcset="/assembly-language/image-20210818104505616.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818104505616"></p>
+<p>可以看到如 SATA 控制器、显卡、NVMe 控制器、网络适配器等设备都会被分配地址空间资源。因此我们知道，通过同一套内存地址，我们能够访问所有的这些存储器。</p>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p>CPU 从内存中读取指令和数据然后对其进行处理，因此 CPU 内部还需要暂存这些指令和数据，由寄存器完成这项任务。</p>
+<p>CPU 的组成：</p>
+<ul>
+<li>运算器，负责进行运算。</li>
+<li>寄存器，负责存储信息。</li>
+<li>控制器，控制各种器件工作。</li>
+<li>内部总线，负责连接各部件，在其中传送数据。</li>
+</ul>
+<p>8086 CPU 中的寄存器（14 个）：AX、BX、CX、DX、SI、DI、SP、BP、IP、CS、SS、DS、ES、PSW。</p>
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>上述 8086 CPU 的寄存器中，AX、BX、CX、DX 为通用寄存器，用于存放一般性的数据。其存储大小皆为 16 bits。</p>
+<p>8086 CPU 为了兼容为上代 8 位寄存器的 CPU 编写的程序，每个通用寄存器可以分为两个 8-bit 寄存器使用：</p>
+<ul>
+<li>AX 可以分为 AH 和 AL。</li>
+<li>BX 可以分为 BH 和 BL。</li>
+<li>CX 可以分为 CH 和 CL。</li>
+<li>DX 可以分为 DH 和 DL。</li>
+</ul>
+<h3 id="字在寄存器中的存储"><a href="#字在寄存器中的存储" class="headerlink" title="字在寄存器中的存储"></a>字在寄存器中的存储</h3><p>对于 8086 CPU，它可以一次性处理以下两种数据：</p>
+<ul>
+<li>字节（byte），8 bits。</li>
+<li>字（word），16 bits。</li>
+</ul>
+<p>一个字由两个字节组成，分别称为高位字节和低位字节，字可以正好存在一个通用寄存器中。</p>
+<h3 id="指令示例"><a href="#指令示例" class="headerlink" title="指令示例"></a>指令示例</h3><table>
+<thead>
+<tr>
+<th align="center">汇编指令</th>
+<th align="center">操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">MOV AX, 4E20H</td>
+<td align="center">将 4E20H 送入寄存器 AX</td>
+</tr>
+<tr>
+<td align="center">MOV AX, BX</td>
+<td align="center">将寄存器 BX 的内容送入寄存器 AX</td>
+</tr>
+<tr>
+<td align="center">ADD AX, 1406H</td>
+<td align="center">将 AX 的内容加上 1406H</td>
+</tr>
+<tr>
+<td align="center">ADD AX, BX</td>
+<td align="center">将 AX 的内容加上 BX 的内容，存储在 AX 中</td>
+</tr>
+</tbody></table>
+<p>指令的两个数据对象必须位数一致。16 位寄存器只能存 16 位数据，如操作 ADD 指令后超出 16 位，则只保留低 16 位在寄存器中。直接操作 AL 溢出后并不能将溢出值放入 AH 中，和 16 位一样只保留低 8 位。</p>
+<h3 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h3><p>对于 16 位 CPU（如 8086）：</p>
+<ul>
+<li>运算器一次最多处理 16 位数据。</li>
+<li>寄存器最大宽度为 16 位。</li>
+<li>寄存器与运算器之间的通路为 16 位。</li>
+</ul>
+<p>8086 CPU 有 20 根地址总线，内存单元物理地址需要用 20 bits 存储，但它是 16 位 CPU，因此需要两个寄存器来保存一个地址。</p>
+<p>第一个寄存器提供段地址，第二个寄存器提供偏移地址，最终通过 <code>[物理地址] = [段地址] * 16 + [偏移地址]</code> 来计算出实际的物理地址，如：</p>
+<ul>
+<li><p>段地址 <code>1000H</code>，偏移地址 <code>124AH</code>，得出物理地址 <code>1124AH</code>。</p>
+</li>
+<li><p>段地址 <code>1230H</code>，偏移地址 <code>00C8H</code>，得出物理地址 <code>123C8H</code>。</p>
+</li>
+</ul>
+<p>对段地址（16 进制表示）乘以 16 实质是左移一位。<code>1000H</code> 左移一位即 <code>10000H</code>。</p>
+<p>不同的段地址和偏移地址能够得到相同的物理地址。</p>
+<p>段地址实际上是 CPU 对内存的抽象划分，内存本身并没有段的概念，由于偏移地址由 16 位存储，即可以表示 64KB 大小的地址空间，因此一个段的最大容量为 64KB。也就是说给定一个段地址，无法寻址到从它开始 64KB 以外的内存单元。</p>
+<h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><p>8086 CPU 有四个段寄存器：CS、DS、SS、ES。</p>
+<p>这些段寄存器用来存放段地址。</p>
+<h3 id="CS-和-IP"><a href="#CS-和-IP" class="headerlink" title="CS 和 IP"></a>CS 和 IP</h3><p>IP 是一个指令指针寄存器，即用于存放内存物理地址的偏移，通过 CS 和 IP 中的内容就可以生成一个物理地址。</p>
+<p>如 CS（<code>2000H</code>），IP（<code>0000H</code>），由地址加法器计算出物理地址为 <code>20000H</code>，通过地址总线寻址，由数据总线将其中的指令和数据调入 CPU 执行。这期间 IP 中的偏移位会增加，指向下一个内存中的指令地址。8086 CPU 刚启动时 CS 和 IP 的默认值分别为 <code>FFFFH</code> 和 <code>0000H</code>，即初始从 <code>FFFF0H</code> 取指执行。CPU 通过 <code>CS:IP</code> 指定的物理地址来确定一个内存中的信息是否是指令，<code>CS:IP</code> 指向的内存单元内容被 CPU 看作是指令。</p>
+<p>要想修改 CS 和 IP 的内容无法通过 MOV 指令完成，可以通过 JMP 指令（JMP [段地址]:[偏移地址]）来操作：</p>
+<pre><code class="assembly">JMP 2AE3:3
+JMP 3:0B16
+</code></pre>
+<p>执行后 CS 和 IP 的值会被修改为指定的值。</p>
+<h3 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h3><p>通过段的抽象，可以将指令都放在指定的一些内存连续的段中，被称为代码段，这种方式能够让指令聚集在连续的内存单元中，方便管理和隔离。</p>
+<h2 id="DEBUG-程序实验"><a href="#DEBUG-程序实验" class="headerlink" title="DEBUG 程序实验"></a>DEBUG 程序实验</h2><p>可以通过 DOSBox 来模拟 DOS 环境，在其下进行实验。</p>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
+<li>下载安装 <a target="_blank" rel="noopener" href="https://www.dosbox.com/download.php?main=1">DOSBox</a>。</li>
+<li>下载 <a target="_blank" rel="noopener" href="https://upyun.secriy.com/downloads/DEBUG.zip"><em>DEBUG.zip</em></a> 解压到固定目录，如 DOSBox 安装目录下。</li>
+<li>打开 DOSBox，执行 <code>mount x path_to\DOSBox</code>，将 DOSBox 目录挂载到 <code>x</code> 盘符。</li>
+<li>执行 <code>X:</code>，切换到 <code>x</code> 盘符下。</li>
+<li>执行 <code>cd path_to</code> 来切换到 <em>DEBUG.zip</em> 的解压路径，如 <code>cd DEBUG</code>。</li>
+</ol>
+<p><img src="/assembly-language/image-20210815130257882.png" class="lazyload" data-srcset="/assembly-language/image-20210815130257882.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210815130257882"></p>
+<h3 id="DEBUG-常用命令"><a href="#DEBUG-常用命令" class="headerlink" title="DEBUG 常用命令"></a>DEBUG 常用命令</h3><ul>
+<li>R，查看、改变 CPU 寄存器中的内容。</li>
+<li>D，查看内存中的内容。</li>
+<li>E，改写内存中的内容。</li>
+<li>U，将内存中的机器指令翻译成汇编。</li>
+<li>T，执行一条机器指令。</li>
+<li>A，以汇编格式在内存中写入一条机器指令。</li>
+</ul>
+<h4 id="R"><a href="#R" class="headerlink" title="R"></a>R</h4><p><img src="/assembly-language/image-20210818084048619.png" class="lazyload" data-srcset="/assembly-language/image-20210818084048619.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818084048619"></p>
+<p>如上图，R 命令可以查看 13 个寄存器的内容，其中 <code>073F:0100</code> 即为 <code>CS:IP</code> 所指向的内存单元，其内容为 <code>0000</code>，后面的 <code>ADD [BX+SI],AL</code> 则是 <code>0000</code> 对应的汇编指令，当该内存单元内容被填充为全零时，就会被反汇编为该指令，实际无意义。</p>
+<p>R 命令还可以用于修改某一寄存器的内容：</p>
+<p><img src="/assembly-language/image-20210818084426943.png" class="lazyload" data-srcset="/assembly-language/image-20210818084426943.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818084426943"></p>
+<p>同样地，可以用来修改 CS、IP 的内容，让其执向另一个内存单元。</p>
+<h4 id="D"><a href="#D" class="headerlink" title="D"></a>D</h4><p>D 命令可以用于查看 <code>CS:IP</code> 所指向内存单元及其后的一段连续单元（128 个单元）：</p>
+<p><img src="/assembly-language/image-20210818090443993.png" class="lazyload" data-srcset="/assembly-language/image-20210818090443993.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818090443993"></p>
+<p>内容分为三部分：</p>
+<ul>
+<li>CS:IP</li>
+<li>内存单元内容</li>
+<li>内存单元内存对应的 ASCII 码（无对应 ASCII 字符的数值和零值一样显示为<code>.</code>）</li>
+</ul>
+<p>连续执行则会从上次的末尾地址继续：</p>
+<p><img src="/assembly-language/image-20210818091043246.png" class="lazyload" data-srcset="/assembly-language/image-20210818091043246.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818091043246"></p>
+<p>也可以自行指定查看的内存单元以及限定范围：</p>
+<p><code>D [段地址]:[偏移] [结尾偏移地址]</code></p>
+<p><img src="/assembly-language/image-20210818091249917.png" class="lazyload" data-srcset="/assembly-language/image-20210818091249917.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818091249917"></p>
+<p>限定范围的使用如 <code>D 1000:0 9</code> 则显示 <code>1000:0</code> ~ <code>1000：9</code> 的内容。</p>
+<h4 id="E"><a href="#E" class="headerlink" title="E"></a>E</h4><p>E 命令可以用于改写内存中的内容，如将 <code>1000:0</code> 开始的 16 个单元（16 字节）修改为 <code>0</code> ~ <code>F</code>：</p>
+<p><code>E [CS:IP] [DATA]...</code></p>
+<p><img src="/assembly-language/image-20210818092347869.png" class="lazyload" data-srcset="/assembly-language/image-20210818092347869.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818092347869"></p>
+<p>直接输入 <code>E [CS:IP]</code> 会进入交互式修改，输入一个值再输入空格则进入对下一个值的修改：</p>
+<p><img src="/assembly-language/image-20210818093038109.png" class="lazyload" data-srcset="/assembly-language/image-20210818093038109.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818093038109"></p>
+<p>E 命令也可以用于直接输入字符和字符串：</p>
+<p><img src="/assembly-language/image-20210818093529581.png" class="lazyload" data-srcset="/assembly-language/image-20210818093529581.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818093529581"></p>
+<p>能让 CPU 执行的机器码本质上就是二进制数据，因此如要写入汇编程序，直接往内存单元写对应的机器码即可。</p>
+<h4 id="U"><a href="#U" class="headerlink" title="U"></a>U</h4><p>U 命令用于查看一段内存单元对应的汇编指令：</p>
+<p><img src="/assembly-language/image-20210818093839094.png" class="lazyload" data-srcset="/assembly-language/image-20210818093839094.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818093839094"></p>
+<p>同样的可以指定地址来查看：</p>
+<p><img src="/assembly-language/image-20210818093911243.png" class="lazyload" data-srcset="/assembly-language/image-20210818093911243.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818093911243"></p>
+<p>这其中很多数据本身并非汇编指令，但仍会被翻译（指令和数据在存储上并无区别，都是二进制，它们只在解释上有区别）。</p>
+<p>我们可以先往里写如下的程序：</p>
+<pre><code class="assembly">mov ax,0001 ; b80100
+mov cx,0002 ; b90200
+add ax,cx   ; 01c8
+</code></pre>
+<p><img src="/assembly-language/image-20210818094450316.png" class="lazyload" data-srcset="/assembly-language/image-20210818094450316.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818094450316"></p>
+<h4 id="T"><a href="#T" class="headerlink" title="T"></a>T</h4><p>T 命令用于执行 <code>CS:IP</code> 指向的一条或多条指令：</p>
+<p><img src="/assembly-language/image-20210818095144182.png" class="lazyload" data-srcset="/assembly-language/image-20210818095144182.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818095144182"></p>
+<p>以上命令执行的步骤为：</p>
+<ol>
+<li>修改 <code>CS:IP</code> 为 <code>1000:0</code>。</li>
+<li>T 命令执行。</li>
+<li>查看结果。</li>
+</ol>
+<p>可以看到，执行第一次 T 命令后，AX 寄存器的内容被成功修改为 <code>0001</code>，IP 的值 +3 则指向了下一条指令，这是因为指令 <code>mov ax,0001</code> 占用了 3 个字节。</p>
+<p>我们把之前写入的三条指令都执行完：</p>
+<p><img src="/assembly-language/image-20210818095548189.png" class="lazyload" data-srcset="/assembly-language/image-20210818095548189.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818095548189"></p>
+<p>最后得到 <code>AX=0003</code>，符合预期的结果。</p>
+<h4 id="A"><a href="#A" class="headerlink" title="A"></a>A</h4><p>A 命令用于直接向内存中写入汇编指令，而不是直接写入机器码：</p>
+<p><img src="/assembly-language/image-20210818100006498.png" class="lazyload" data-srcset="/assembly-language/image-20210818100006498.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818100006498"></p>
+<p>这里我们写入了五条汇编指令，用 U 命令查看可以发现成功存入了内存中。用 T 命令将他们全部执行：</p>
+<p><img src="/assembly-language/image-20210818100153858.png" class="lazyload" data-srcset="/assembly-language/image-20210818100153858.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818100153858"></p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><h4 id="修改显存内容"><a href="#修改显存内容" class="headerlink" title="修改显存内容"></a>修改显存内容</h4><p>按照内存地址空间的概念，有一部分地址空间被分配给了显存，在 8086 CPU 环境下它的准确范围是 <code>000A0000</code> ~ <code>000BFFFF</code>。我们通过下面的操作来修改 <code>B8100H</code> 开始的一段内存单元：</p>
+<p><img src="/assembly-language/image-20210818105254472.png" class="lazyload" data-srcset="/assembly-language/image-20210818105254472.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818105254472"></p>
+<p>从上面的显示来看，显存中的数据已经被改变了，请注意右上角的几个字符。</p>
+<p>我们再改变一下输入的数据：</p>
+<p><img src="/assembly-language/image-20210818110326953.png" class="lazyload" data-srcset="/assembly-language/image-20210818110326953.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210818110326953"></p>
+<p>我们输入的数据总共有 8 bytes，观察显示出的符号可以发现总共有四个，实际上输入的数据每两个一组，分别对应着一个符号的内容和颜色。</p>
+<p>这都取决于 DOS 中的设置，比如在 DOS 中色值-颜色对应如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">色值</th>
+<th align="center">颜色</th>
+<th align="center">色值</th>
+<th align="center">颜色</th>
+<th align="center">色值</th>
+<th align="center">颜色</th>
+<th align="center">色值</th>
+<th align="center">颜色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">黑色</td>
+<td align="center">4</td>
+<td align="center">红色</td>
+<td align="center">8</td>
+<td align="center">灰色</td>
+<td align="center">C</td>
+<td align="center">淡红色</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">蓝色</td>
+<td align="center">5</td>
+<td align="center">紫色</td>
+<td align="center">9</td>
+<td align="center">淡蓝色</td>
+<td align="center">D</td>
+<td align="center">淡紫色</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">绿色</td>
+<td align="center">6</td>
+<td align="center">黄色</td>
+<td align="center">A</td>
+<td align="center">淡绿色</td>
+<td align="center">E</td>
+<td align="center">淡黄色</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">浅绿色</td>
+<td align="center">7</td>
+<td align="center">白色</td>
+<td align="center">B</td>
+<td align="center">淡浅绿色</td>
+<td align="center">F</td>
+<td align="center">亮白色</td>
+</tr>
+</tbody></table>
+<p>颜色由两个十六进制值表示，前者为前景色，后者为背景色，因此 07 就代表黑底白字。</p>
+<p>那么前面的 1、2、3、4 就代表了四个符号，这来自<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Code_page_437">Code Page 437 字符集</a>。</p>
+<h2 id="寄存器（内存访问）"><a href="#寄存器（内存访问）" class="headerlink" title="寄存器（内存访问）"></a>寄存器（内存访问）</h2><h3 id="内存中字的存储"><a href="#内存中字的存储" class="headerlink" title="内存中字的存储"></a>内存中字的存储</h3><p>CPU 中一个字（16 bits）存在一个寄存器中，但内存的最小单元为字节，一个字需要存在两个内存单元中，低位字节放在低地址单元，高位字节放在高地址单元。由此引入<strong>字单元</strong>的概念，即存放一个字型数据（16 bits）的内存单元。字单元占用 $n$、$n+1$ 内存单元则被称为 $n$ 地址字单元，如一个字占用 4、5 两个内存单元，则被称为 4 地址字单元。</p>
+<h3 id="DS-和-addresss"><a href="#DS-和-addresss" class="headerlink" title="DS 和 [addresss]"></a>DS 和 [addresss]</h3><p>8086 CPU 中，有一个 DS 寄存器，用于存放待访问<strong>数据</strong>的段地址。如读取 <code>10000H</code> 内存单元的内容，可以使用如下程序：</p>
+<pre><code class="assembly">mov bx, 1000H
+mov ds, bx
+mov al, [0]
+</code></pre>
+<p>其中，往 DS 写入了 <code>1000H</code>，因此 DS 的内容为 <code>1000H</code>，这是段地址。最后一句操作的 <code>[...]</code> 用于指定偏移地址，使用这种语法，CPU 会自动读 DS 内容（段地址），附加偏移地址（”[]”内数字）按照前文中的计算方式生成物理地址，最后读取物理地址指向的内存数据写入目标寄存器，即该语法最终可以直接读内存数据。</p>
+<p>8086 CPU 不支持直接送数据到段寄存器，因此无法使用 <code>mov ds, 1000H</code> 这种写法，这属于 8086 CPU 的硬件设计问题。</p>
+<p>DS 与 CS 的区别在于 CS 用于存储待执行<strong>指令</strong>的内存段地址，而 DS 存放的是待取<strong>数据</strong>的段地址，数据是不应被当作指令执行的。</p>
+<h3 id="字的传送"><a href="#字的传送" class="headerlink" title="字的传送"></a>字的传送</h3><p>上一节中的指令 <code>mov al, [0]</code> 只是将一个字节的数据写入 AL 寄存器，这是因为 AL 寄存器大小为 8 bits。而 8086 CPU 有 16 根数据线，一次性可以传送 16 bits 的数据，即一个字。使用同样的语法即可做到传送 16 bits 数据，如 <code>mov ax, [0]</code>，因为 AX 是 16-bit 寄存器，可以直接读 16 bits 的数据存入。</p>
+<p>示例：</p>
+<p>内存内容：</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Data</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x10000</td>
+<td>23H</td>
+</tr>
+<tr>
+<td>0x10001</td>
+<td>11H</td>
+</tr>
+<tr>
+<td>0x10002</td>
+<td>22H</td>
+</tr>
+<tr>
+<td>0x10003</td>
+<td>66H</td>
+</tr>
+</tbody></table>
+<p>程序：</p>
+<pre><code class="assembly">mov ax, 1000H
+mov ds, ax
+; ds = 1000H
+mov ax, [0]
+; ax = 1123H
+mov bx, [2]
+; bx = 6622H
+mov cx, [1]
+; cx = 2211H
+add bx, [1]
+; bx = 8833H
+sub bx, cx
+; cx = 6622H
+</code></pre>
+<p>这里的 <code>sub</code> 指令是减法指令，前值减去后值，结果存在左侧表示的寄存器中。</p>
+<h3 id="mov、add、sub"><a href="#mov、add、sub" class="headerlink" title="mov、add、sub"></a>mov、add、sub</h3><p>目前已知 <code>mov</code> 指令有以下几种操作：</p>
+<ol>
+<li><p>mov 寄存器，数据</p>
+</li>
+<li><p>mov 寄存器，寄存器</p>
+</li>
+<li><p>mov 寄存器，内存单元</p>
+</li>
+<li><p>mov 内存单元，寄存器</p>
+</li>
+<li><p>mov 段寄存器，寄存器</p>
+</li>
+</ol>
+<p>从第五条可以知道，CPU 中存在段寄存器与通用寄存器之间的通路，因此可以推测也存在反向通路，即段寄存器 -&gt; 寄存器。</p>
+<p>经过验证，得到 <code>mov ax, ds</code> 合法。</p>
+<p>从第四条可以知道，CPU 中存在寄存器到内存单元的通路，而刚刚得出段寄存器可以传送数据到寄存器的结论，由此判断段寄存器可以传送数据到内存单元，如 <code>mov [0], cs</code>。</p>
+<p>经过验证，指令合法。</p>
+<p>根据第三、第五条可以推测存在内存单元 -&gt; 段寄存器的操作，如 <code>mov ds, [0]</code>。</p>
+<p>经过验证，指令合法。</p>
+<p>经过实验，<code>add</code> 和 <code>sub</code> 指令无法操作段寄存器，类似 <code>add ds, ax</code> 的指令不合法。</p>
+<h3 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h3><p>同之前提到过的代码段一样，将需要操作的数据放在同一段内存单元中可以方便程序的执行和内存的管理，这就是数据段。要访问数据段中的数据，可以先用 DS 段寄存器存放数据段的地址，根据需要寻址具体单元。</p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种 LIFO（Last in first out）的数据结构，但在这里不去讨论它的数据结构层面内容，具体可以参考其他资料。这里只提一点：在程序化的角度，应当有指示栈顶位置的标记。</p>
+<p>现在的 CPU 中都有栈的设计，如 8086 CPU 就提供了以栈形式操作内存空间的指令。也就是说通过这些指令，可以将部分内存空间当作栈结构使用。</p>
+<h4 id="PUSH-amp-POP"><a href="#PUSH-amp-POP" class="headerlink" title="PUSH &amp; POP"></a>PUSH &amp; POP</h4><p>PUSH 即入栈，对应指令如 <code>push ax</code>，表示将 AX 中的内容送入栈中。</p>
+<p>POP 即出栈，对应指令如 <code>pop ax</code>，表示将栈中的数据送入 AX 寄存器。</p>
+<p>PUSH 和 POP 操作的数据传送单位都是字。</p>
+<p>可以发现，上述两条指令并没有指定栈的位置在哪，那么如何确定栈空间？根据前面学习的套路，栈很显然也是由某些寄存器指定的，在 8086 CPU 中则是段寄存器 SS 和寄存器 SP。和 <code>CS:IP</code> 的表示形式相同，<strong>栈顶地址</strong>由 <code>SS:SP</code> 指定，SS 和 SP 分别指定段地址和偏移，注意这里是栈顶地址。</p>
+<p>执行 <code>mov ax, 0123H</code> 后再执行 <code>push ax</code> 即把数据 <code>0123H</code> 送入栈，栈顶指针（<code>SS:SP</code>）往低地址方向移动，而数据也按照低地址存放低位字节，高地址存放高位字节的规则将一个字存入两个内存单元。下图中，<code>SS:SP</code> 的值为 <code>1000EH</code>，即指向 <code>23H</code>。其中，SS 的值为 <code>1000H</code>， SP 的值为 <code>000EH</code>。</p>
+<p><img src="/assembly-language/image-20210824225724838.png" class="lazyload" data-srcset="/assembly-language/image-20210824225724838.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="image-20210824225724838"></p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/assembly-language/>https://blog.secriy.com/assembly-language/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年3月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ASM/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>ASM</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/assembly-language/&title=Assembly Language - Secriy's Blog&summary=汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/assembly-language/&title=Assembly Language - Secriy's Blog&summary=汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/assembly-language/&title=Assembly Language - Secriy's Blog&summary=汇编语言的学习笔记，主要是对《汇编语言》（王爽）的总结、概括、补充以及实践。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/sql-practice/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>SQL Practice</p>
+          <p class='content'>SQL 刷题练习。
+
+
+
+LeetCode175. 组合两个表题解select FirstName, LastName, City, State
+from Person
+left join Ad...</p>
+        </a>
+      
+      
+        <a class='next' href='/leetcode-practice/'>
+          <p class='title'>LeetCode 刷题笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>LeetCode 刷题记录。
+
+
+
+Tags
+双指针
+单调栈
+辅助栈
+二分查找
+并查集
+动态规划
+贪心算法
+位运算
+哈希表
+KMP
+DFS
+BFS
+回溯
+排序
+数学
+
+1~1001. Two S...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80"><span class="toc-text">机器语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-text">汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83"><span class="toc-text">存储单元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU-%E8%AF%BB%E5%86%99%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">CPU 读写存储器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E6%80%BB%E7%BA%BF"><span class="toc-text">三类总线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E6%80%BB%E7%BA%BF"><span class="toc-text">地址总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF"><span class="toc-text">数据总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%80%BB%E7%BA%BF"><span class="toc-text">控制总线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-text">内存地址空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">通用寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%9C%A8%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">字在寄存器中的存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%A4%BA%E4%BE%8B"><span class="toc-text">指令示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">段寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CS-%E5%92%8C-IP"><span class="toc-text">CS 和 IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-text">代码段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DEBUG-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E9%AA%8C"><span class="toc-text">DEBUG 程序实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DEBUG-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">DEBUG 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#R"><span class="toc-text">R</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#D"><span class="toc-text">D</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E"><span class="toc-text">E</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#U"><span class="toc-text">U</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T"><span class="toc-text">T</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A"><span class="toc-text">A</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%98%BE%E5%AD%98%E5%86%85%E5%AE%B9"><span class="toc-text">修改显存内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%EF%BC%89"><span class="toc-text">寄存器（内存访问）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E5%AD%97%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">内存中字的存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DS-%E5%92%8C-addresss"><span class="toc-text">DS 和 [addresss]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%9A%84%E4%BC%A0%E9%80%81"><span class="toc-text">字的传送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mov%E3%80%81add%E3%80%81sub"><span class="toc-text">mov、add、sub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="toc-text">数据段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PUSH-amp-POP"><span class="toc-text">PUSH &amp; POP</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Assembly Language";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.secriy.com/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.secriy.com/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.secriy.com/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.secriy.com/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.secriy.com/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.secriy.com/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+  volantis.pjax.push(pjax_scrollrebeal)
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.secriy.com/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.secriy.com/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+</script>
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+  Waves.attach('.flat-btn', ['waves-button']);
+  Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+  Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+  Waves.attach('.flat-box', ['waves-block']);
+  Waves.attach('.float-box', ['waves-block', 'waves-float']);
+  Waves.attach('.waves-image');
+  Waves.init();
+});
+</script>
+
+
+
+
+
+  
+
+<script src="https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+	<script>
+		volantis.pjax.push(window.HideLoading,'HideLoading');
+		volantis.pjax.send(window.ShowLoading,'ShowLoading');
+		volantis.pjax.error(window.HideLoading,'HideLoading');
+	</script>
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

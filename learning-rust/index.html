@@ -1,0 +1,3323 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Learning Rust - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="PL,Rust">
+  
+
+  
+    <meta name="description" content="本文主要根据 The Rust Programming Language 翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论或是难以理解的部分进行了详细介绍，因此对于本文内容请不要认为其等同于原文。本文对于有其他编程语言经验的同学来说比较容易...">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Learning Rust
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/note/">学习笔记</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年9月18日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Learning Rust" data-path="/learning-rust/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/learning-rust/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/learning-rust/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>本文主要根据 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/">The Rust Programming Language</a> 翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论或是难以理解的部分进行了详细介绍，<strong>因此对于本文内容请不要认为其等同于原文</strong>。本文对于<strong>有其他编程语言经验</strong>的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在由于转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。</p></div>
+
+<span id="more"></span>
+
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
+<p>本章没有什么难度，主要是对 Rust 基础概念和用法的学习和适应，无需强行记忆，需要时参考即可，很快能够熟练掌握。</p>
+</blockquote>
+<h3 id="变量和可变性"><a href="#变量和可变性" class="headerlink" title="变量和可变性"></a>变量和可变性</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>Rust 中变量有可变变量（<em>mutable variable</em>）和不可变变量（<em>immutable variable</em>）的区分，看如下的代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+    println!(&quot;&#123;&#125;&quot;, x);
+    x = 6;
+    println!(&quot;&#123;&#125;&quot;, x);
+&#125;
+</code></pre>
+<p>使用 <code>cargo run</code> 运行：</p>
+<pre><code class="shell">$ cargo run
+   Compiling hello-rust v0.1.0
+error[E0384]: cannot assign twice to immutable variable `x`
+ --&gt; src\main.rs:4:5
+  |
+2 |     let x = 5;
+  |         -
+  |         |
+  |         first assignment to `x`
+  |         help: consider making this binding mutable: `mut x`
+3 |     println!(&quot;&#123;&#125;&quot;, x); // 5
+4 |     x = 6;
+  |     ^^^^^ cannot assign twice to immutable variable
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0384`.
+error: could not compile `hello-rust`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>上面的错误表明，变量 <code>x</code> 无法二次赋值，因为它是一个 <em>immutable variable</em>。另外报错还说明，Rust 在编译期间就已经对程序可能出现的某些问题作了判断，如果不通过检查则编译失败。</p>
+<pre><code class="rust">fn main() &#123;
+    let mut x = 5;
+    println!(&quot;&#123;&#125;&quot;, x); // 5
+    x = 6;
+    println!(&quot;&#123;&#125;&quot;, x); // 6
+&#125;
+</code></pre>
+<p>通过 <code>let mut x = 5</code> 的方式将 <code>x</code> 初始化为可变变量。</p>
+<h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>常量的声明使用如下形式的语句：</p>
+<pre><code class="rust">// const [NAME]: [DATA_TYPE] = [DATA];
+const PI: f32 = 3.14159;
+</code></pre>
+<h4 id="差别"><a href="#差别" class="headerlink" title="差别"></a>差别</h4><p>常量和变量有什么差别？</p>
+<ol>
+<li>常量无法使用 <code>mut</code> 修饰，它始终是不可变的；</li>
+<li>常量使用 <code>const</code> 声明，变量使用 <code>let</code>；</li>
+<li>常量必须始终注明其数据类型；</li>
+<li>常量可以在任何范围声明，如全局常量、局部常量；</li>
+<li>常量是通过常量表达式确定值的，在编译期其值就会被确定，而变量的值可以在运行时赋予。</li>
+</ol>
+<h4 id="Shadowing"><a href="#Shadowing" class="headerlink" title="Shadowing"></a>Shadowing</h4><p>Rust 支持使用 <code>let</code> 关键字进行同名变量的重复初始化：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+
+    let x = x + 1;
+
+    let x = x * 2;
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 12
+&#125;
+</code></pre>
+<p>甚至可以赋值给一个不同类型的同名变量：</p>
+<pre><code class="rust">fn main() &#123;
+    let string = &quot;abc&quot;;
+
+    let string = string.len();
+
+    println!(&quot;The length of string is: &#123;&#125;&quot;, string) // The length of string is: 3
+&#125;
+</code></pre>
+<p>第一个 <code>string</code> 和第二个 <code>string</code> 并非同一个变量，它们只是同名，不同于 <code>mut</code> 变量，其两个同名变量之间是没有关联的。按 Rust 官方的说法，第一个变量被第二个变量遮蔽（<em>shadowed</em>）了，因此这个概念在 Rust 中叫做 <em>Shadowing</em>。</p>
+<p>如果对 <code>mut</code> 变量赋新值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut string = &quot;abc&quot;;
+
+    string = string.len();
+
+    println!(&quot;The length of string is: &#123;&#125;&quot;, string)
+&#125;
+</code></pre>
+<p>上面的代码在编译时就无法通过，因为其类型不匹配。</p>
+<p>看下面一段代码，对 <code>mut</code> 变量进行了重新赋值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut string = &quot;abc&quot;;
+
+    string = &quot;xyz&quot;;
+
+    println!(&quot;The string is: &#123;&#125;&quot;, string) // The string is: xyz
+&#125;
+</code></pre>
+<p>这段代码能够通过编译，但是编译期间会输出 <code>warning</code>，即警告信息。这是因为 <code>&quot;abc&quot;</code> 字符串并没有使用就被 <code>&quot;xyz&quot;</code> 覆盖了，所以出现警告，但这并不影响程序的运行。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>数据类型是静态类型语言相当重要的部分，Rust 作为一种静态类型语言，其每一个值都有指定的类型，所有变量的类型在编译期间就已经确定了。</p>
+<p>Rust 中数据类型分为两大类：标量类型（scalar）以及复合类型（compound）。</p>
+<h4 id="标量类型"><a href="#标量类型" class="headerlink" title="标量类型"></a>标量类型</h4><p>标量类型是简单类型，代表了单个值。Rust 中有四种标量类型：</p>
+<ul>
+<li>整数</li>
+<li>浮点数</li>
+<li>布尔值</li>
+<li>字符</li>
+</ul>
+<h5 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h5><p>Rust 中的整数类型如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">长度（Length）</th>
+<th align="center">有符号（Signed）</th>
+<th align="center">无符号（Unsigned）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">8-bit</td>
+<td align="center">i8</td>
+<td align="center">u8</td>
+</tr>
+<tr>
+<td align="center">16-bit</td>
+<td align="center">i16</td>
+<td align="center">u16</td>
+</tr>
+<tr>
+<td align="center">32-bit</td>
+<td align="center">i32</td>
+<td align="center">u32</td>
+</tr>
+<tr>
+<td align="center">64-bit</td>
+<td align="center">i64</td>
+<td align="center">u64</td>
+</tr>
+<tr>
+<td align="center">128-bit</td>
+<td align="center">i128</td>
+<td align="center">u128</td>
+</tr>
+<tr>
+<td align="center">arch</td>
+<td align="center">isize</td>
+<td align="center">usize</td>
+</tr>
+</tbody></table>
+<p><code>arch</code> 即 architecture，表示 CPU 架构的位数，如 64-bit 机器上就是 64 bits，32-bit 机器上就是 32 bits，这在其他编程语言里也很常见，如 C 中的<code>int</code>类型。</p>
+<p>整数类型的字面量表示如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">字面量（Number literals）</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">十六进制（Hex）</td>
+<td align="center">0xff</td>
+</tr>
+<tr>
+<td align="center">十进制（Decimal）</td>
+<td align="center">98_222</td>
+</tr>
+<tr>
+<td align="center">八进制（Octal）</td>
+<td align="center">0o77</td>
+</tr>
+<tr>
+<td align="center">二进制（Binary）</td>
+<td align="center">0b1111_0000</td>
+</tr>
+<tr>
+<td align="center">字节（Byte，仅支持 <code>u8</code>）</td>
+<td align="center">b’A’</td>
+</tr>
+</tbody></table>
+<p>Rust 默认使用 <code>i32</code> 初始化整数。</p>
+<h5 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h5><p>Rust 中有 <code>f32</code> 和 <code>f64</code> 两种浮点数类型，分别占用 32 bits 和 64 bits 的大小。Rust 使用 <code>f64</code> 作为浮点数的默认类型，这是因为在现代 CPU 中，64 位浮点数的运算速度和 32 位基本相同，但 64 位浮点数精度更高。</p>
+<p>示例：</p>
+<pre><code class="rust">let x = 1.0;  // f64
+let y: f32 = 3.0; // f32
+</code></pre>
+<p>按照 IEEE-754 标准，<code>f32</code> 为单精度浮点数，<code>f64</code> 为双精度浮点数。</p>
+<h5 id="数值运算"><a href="#数值运算" class="headerlink" title="数值运算"></a>数值运算</h5><p>示例：</p>
+<pre><code class="rust">fn main() &#123;
+    // 加法 addition
+    let sum = 5 + 10;
+
+    // 减法 subtraction
+    let difference = 95.5 - 4.3;
+
+    // 乘法 multiplication
+    let product = 4 * 30;
+
+    // 除法 division
+    let quotient = 56.7 / 32.2;
+
+    // 取余 remainder
+    let remainder = 43 % 5;
+&#125;
+</code></pre>
+<h5 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h5><p>布尔值的大小为 1 byte，有 <code>true</code> 和 <code>false</code> 这两个可能的值。</p>
+<p>示例：</p>
+<pre><code class="rust">let t = true;
+let f: bool = false; // 显式指定类型
+</code></pre>
+<h5 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h5><p>Rust 中字符类型（<code>char</code>）使用单引号字面量，用于存储单个字符。Rust 的 <code>char</code> 类型在编程语言中比较特殊，它的大小为 4 bytes，表示一个 Unicode 标量值。</p>
+<p>示例：</p>
+<pre><code class="rust">let c = &#39;z&#39;;
+let z = &#39;ℤ&#39;;
+let 汉 = &#39;好&#39;;
+let heart_eyed_cat = &#39;😻&#39;;
+</code></pre>
+<p>可以注意到，Rust 是支持非英文变量名的。</p>
+<h4 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h4><p>复合类型是由多个数据类型组合成的一种数据类型，Rust 有两种原始的复合类型：Tuple（元组）和 Array（数组）。</p>
+<h5 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h5><p>元组的大小固定，一旦被声明，其大小就不可修改。</p>
+<p>创建元组：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+&#125;
+</code></pre>
+<p>上面的代码创建了一个由 <code>i32</code>，<code>f64</code> 和 <code>u8</code> 三个类型组成的元组 <code>tup</code>，并初始化其值。</p>
+<p>从元组中取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 500
+    println!(&quot;The value of y is: &#123;&#125;&quot;, y); // The value of y is: 6.4
+    println!(&quot;The value of z is: &#123;&#125;&quot;, z); // The value of z is: 1
+&#125;
+</code></pre>
+<p>类似 <code>let (x, y, z) = tup</code> 将一个元组赋值给多个变量的用法被称为解构（<em>destructuring</em>）。</p>
+<p>还可以直接根据下标取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, tup.0); // The value of x is: 500
+    println!(&quot;The value of y is: &#123;&#125;&quot;, tup.1); // The value of y is: 6.4
+    println!(&quot;The value of z is: &#123;&#125;&quot;, tup.2); // The value of z is: 1
+&#125;
+</code></pre>
+<p>没有任何内容的元组，即 <code>()</code>，是一种只包含一个值的元组，它被称为单元类型（<em>unit type</em>），这样的表达式返回的值被称为单元值（<em>unit value</em>）。</p>
+<h5 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h5><p>数组和元组的差别很大，前者只能包含相同数据类型的元素，后者则不然。不过 Rust 中的数组和元组一样是固定长度的，不可改变。</p>
+<p>数组的初始化：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [1, 2, 3, 4, 5]; // 初始化
+    let b: [i32; 5] = [1, 2, 3, 4, 5]; // [type; length]
+&#125;
+</code></pre>
+<p>数组特殊在于其一般分配在内存空间中的栈（stack）上而不是堆（heap）上，这在后文会深入讨论。当需要固定长度的一系列元素时，用 数组会比较合适。Rust 中还有一种可变的数组，即 <strong>vector</strong>，但它是由标准库提供的而不是 Rust 语言本身，一般来说 vector 会更常用一些。</p>
+<p>数组的声明和取值：</p>
+<p>和其他大多数编程语言相同，Rust 中取数组元素使用下标，如 <code>a[0]</code>。</p>
+<pre><code class="rust">fn main() &#123;
+ let a: [isize; 5]; // 声明长度为 5 的空数组
+    println!(&quot;&#123;&#125;&quot;, a[0]);
+&#125;
+</code></pre>
+<p>上面的代码会直接编译不通过，报 <code>use of possibly-uninitialized `a` </code> 错误，这是因为 Rust 禁止使用未初始化的变量，改成下面的代码就可以了：</p>
+<pre><code class="rust">fn main() &#123;
+    let a: [isize; 5];
+    a = [3; 5]; // 将一个长度为 5，内容全部为 3 的数组赋给变量 a
+    println!(&quot;&#123;&#125;&quot;, a[0]); // 3
+&#125;
+</code></pre>
+<p><code>a = [3; 5]</code> 等同于 <code>a = [3, 3, 3, 3, 3]</code>。</p>
+<p>我们注意到一件事情：数组变量默认是 <em>mutable</em> 的，不需要使用 <code>mut</code> 修饰就可以对其重新赋值。</p>
+<p>如果我们访问数组时越界会怎么样？在某些编程语言中越界并不会造成程序本身停止或异常，但会给内存上的数据造成破坏。在 Rust 中，编译器会自动检查数组访问的下标是否越界，如果越界则无法编译通过。当下标的值在程序运行时才会确定（如接收用户输入的下标值）时，越界会导致程序 <strong>panic</strong>，并随之中止。</p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>在大多数编程语言中，函数都是相当重要的存在，Rust 也不例外，函数的使用无处不在，比如前文中大量使用的 <code>main</code> 函数。</p>
+<h4 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h4><p>Rust 使用 <code>fn</code> 关键字声明函数，并使用 snake case 命名风格，所有的函数名使用小写字母并使用 <code>_</code> 分隔。Rust 并不在乎函数的定义位置，无论其在代码中是位于 <code>main</code> 函数之前还是之后。</p>
+<pre><code class="rust">fn sample_func() &#123;
+    println!(&quot;Sample function.&quot;);
+&#125;
+
+fn hello_world() &#123;
+    println!(&quot;Hello world.&quot;);
+&#125;
+</code></pre>
+<p>调用函数也很简单，例如 <code>sample_func()</code>：</p>
+<pre><code class="rust">fn main() &#123;
+    sample_func(); // Sample function.
+&#125;
+
+fn sample_func() &#123;
+    println!(&quot;Sample function.&quot;);
+&#125;
+</code></pre>
+<h4 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h4><p>函数参数用法：</p>
+<pre><code class="rust">fn main() &#123;
+    another_function(5);
+&#125;
+
+fn another_function(x: i32) &#123;
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 5
+&#125;
+</code></pre>
+<p>多个参数：</p>
+<pre><code class="rust">fn main() &#123;
+    another_function(5, 6);
+&#125;
+
+fn another_function(x: i32, y: i32) &#123;
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 5
+    println!(&quot;The value of y is: &#123;&#125;&quot;, y); // The value of y is: 6
+&#125;
+</code></pre>
+<p>函数的每个参数都必须指明其类型。</p>
+<h4 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h4><p>函数可以向调用它们的代码返回值。我们不命名返回值，但在箭头（<code>-&gt;</code>）后面声明它们的类型。在 Rust 中，函数的返回值与函数体块中最终表达式的值同义。通过使用 <code>return</code> 关键字并指定值，可以提前从函数返回，但大多数函数隐式返回<strong>最后一个表达式</strong>。</p>
+<p>Rust 中函数返回值是无名的，只需要指定其类型：</p>
+<pre><code class="rust">fn five() -&gt; i32 &#123;
+    5 // 等同于 `return 5;`
+&#125;
+
+fn plus_one(x: i32) -&gt; i32 &#123;
+    return x + 1;
+&#125;
+
+fn main() &#123;
+    let mut x = five();
+    x = plus_one(x);
+
+    println!(&quot;The value of x is: &#123;&#125;&quot;, x); // The value of x is: 6
+&#125;
+</code></pre>
+<p>注意，作为函数返回值的表达式，其后是没有 <code>;</code> 的，如上面的 <code>5</code> 和 <code>x + 1</code>，加上分号就变成了普通表达式，而不是返回值。</p>
+<p><code>plus_one</code> 函数还可以改成如下的形式：</p>
+<pre><code class="rust">fn plus_one(mut x: i32) -&gt; i32 &#123;
+    x = x + 1;
+    x
+&#125;
+</code></pre>
+<p>这和原来的 <code>plus_one</code> 函数是等价的，只不过使用了 <code>mut</code> 修饰符让 <code>x</code> 可变。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注释很简单，例如单行注释：</p>
+<pre><code class="rust">// This is a comment.
+</code></pre>
+<p>多行注释：</p>
+<pre><code class="rust">// Multiple lines
+// comments.
+</code></pre>
+<pre><code class="rust">fn main() &#123;
+    println!(&quot;Hello World!&quot;); // Hello World!
+&#125;
+</code></pre>
+<p>Rust 中还有一种文档注释，但暂时用不到，在之后会介绍。</p>
+<h3 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h3><p>控制流是很基本的概念，Rust 同样包含了多种基本的控制流。</p>
+<h4 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h4><p>Rust 中 <code>if</code> 语句不需要使用括号：</p>
+<pre><code class="rust">fn main() &#123;
+    let number = 3;
+
+    if number &lt; 5 &#123;
+        println!(&quot;number &lt; 5&quot;); // number &lt; 5
+    &#125; else &#123;
+        println!(&quot;number &gt;= 5&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>在 Rust 中，<code>if</code> 表达式只能用布尔值作为条件，即只能判断布尔变量以及条件表达式。</p>
+<p>还可以使用 <code>else if</code> 表达式来增加分支，只有一个分支会被执行，一旦某个分支为 <code>true</code>，就不会判断下一个分支：</p>
+<pre><code class="rust">fn main() &#123;
+    let number = 6;
+
+    if number % 4 == 0 &#123;
+        println!(&quot;number is divisible by 4&quot;);
+    &#125; else if number % 3 == 0 &#123;
+        println!(&quot;number is divisible by 3&quot;); // number is divisible by 3
+    &#125; else if number % 2 == 0 &#123;
+        println!(&quot;number is divisible by 2&quot;);
+    &#125; else &#123;
+        println!(&quot;number is not divisible by 4, 3, or 2&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>使用 <code>if</code> 语句，可以实现下面的条件表达式，类似于某些语言中的三元运算符：</p>
+<pre><code class="rust">fn main() &#123;
+    let condition = true;
+    let number = if condition &#123; 5 &#125; else &#123; 6 &#125;;
+
+    println!(&quot;The value of number is: &#123;&#125;&quot;, number); // 5
+&#125;
+</code></pre>
+<p>其中，根据前面有关函数返回值的学习，我们知道 <code>&#123;&#125;</code> 中没有分号结尾的作为返回值，由此我们可以写出下面的语句，同样是正确的：</p>
+<pre><code class="rust">fn main() &#123;
+    let condition = true;
+    let number = if condition &#123;let x = 2; x+2&#125; else &#123;let x = 1; x+1&#125;;
+
+    println!(&quot;The value of number is: &#123;&#125;&quot;, number); // 4
+&#125;
+</code></pre>
+<p>然而 <code>if</code> 和 <code>else</code> 语句块的值不能为不同类型，这是无法编译通过的，这是因为 Rust 需要在编译期确定所有变量的类型，如果 <code>if</code> 和 <code>else</code> 能够得到不同类型的结果，那么也就无法知道变量 <code>number</code> 的类型。不过，这并不代表这样的实现是不可能的，如果编译器必须跟踪任何变量的多个假设类型，那么编译器将更加复杂，对代码的保证也会更少。</p>
+<h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><p>Rust 有三种循环语句，<code>loop</code>、<code>while</code> 和 <code>for</code>。</p>
+<h5 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h5><p>简而言之，<code>loop</code> 语句就是无限循环，它没有条件语句，也就不能在循环上让其退出。但是 <code>loop</code> 可以通过循环体内的语句退出：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0; // 统计循环次数
+    loop &#123;
+        if count == 5 &#123;break;&#125; // 当 count 等于 5 则退出循环
+        println!(&quot;hello&quot;);
+        count += 1; // 次数加一
+    &#125;
+&#125;
+</code></pre>
+<p>毋庸置疑，上面的代码会输出五行 <code>hello</code>。</p>
+<p>关于 <code>loop</code> 语句还有一点比较特别的是，它可以返回值：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0;
+    let result = loop &#123;
+        if count == 5 &#123;break count + 1;&#125;
+        println!(&quot;hello&quot;);
+        count += 1;
+    &#125;;
+    println!(&quot;The value of result is: &#123;&#125;&quot;, result); // The value of result is: 6
+&#125;
+</code></pre>
+<p>可以看到，<code>break</code> 关键字后面跟返回值，就能赋值给 <code>result</code>，当执行到 <code>break</code> 语句后 <code>loop</code> 立即返回了 <code>count + 1</code>。</p>
+<p>结合前面的内容，可以知道下面的代码也是正确的：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut count = 0;
+    let result = loop &#123;
+        if count == 5 &#123;break &#123;let x = 12; count + x&#125;;&#125;
+        println!(&quot;hello&quot;);
+        count += 1;
+    &#125;;
+    println!(&quot;The value of result is: &#123;&#125;&quot;, result); // The value of result is: 17
+&#125;
+</code></pre>
+<p><code>&#123;let x = 12; count + x&#125;</code> 的值为 <code>count + x</code> 即 17，通过 <code>break</code> 返回给 <code>result</code>。</p>
+<h5 id="While"><a href="#While" class="headerlink" title="While"></a>While</h5><p>循环语句中写循环条件可以让循环处理更简单，Rust 提供了 <code>while</code> 循环支持指定循环条件：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut number = 3;
+
+    while number != 0 &#123;
+        println!(&quot;&#123;&#125;!&quot;, number);
+
+        number -= 1;
+    &#125;
+
+    println!(&quot;LIFTOFF!!!&quot;); // LIFTOFF!!!
+&#125;
+</code></pre>
+<p>这和其他编程语言没什么大的区别，不再赘述。</p>
+<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><p><code>for</code> 循环用于迭代元素集合，如数组（Array），这使用其他两种循环也可以做到：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [10, 20, 30, 40, 50];
+    let mut index = 0;
+
+    while index &lt; 5 &#123;
+        println!(&quot;the value is: &#123;&#125;&quot;, a[index]);
+
+        index += 1;
+    &#125;
+&#125;
+
+// 10
+// 20
+// 30
+// 40
+// 50
+</code></pre>
+<p>但使用 <code>for</code> 循环可以将上面的语句简化为下面的：</p>
+<pre><code class="rust">fn main() &#123;
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a.iter() &#123;
+        println!(&quot;the value is: &#123;&#125;&quot;, element);
+    &#125;
+&#125;
+
+// 10
+// 20
+// 30
+// 40
+// 50
+</code></pre>
+<p>这样的代码会更安全，因为不需要指定数组下标之类，不存在越界的问题。</p>
+<p>下面的语句可以用于生成一个数字范围，类似 Python 中的写法：</p>
+<pre><code class="rust">fn main() &#123;
+    for number in 1..4 &#123;
+        println!(&quot;&#123;&#125;!&quot;, number);
+    &#125;
+    println!(&quot;LIFTOFF!!!&quot;);
+&#125;
+
+// 1!
+// 2!
+// 3!
+// LIFTOFF!!!
+</code></pre>
+<p><code>1..4</code> 很明显，是用来生成范围 $[1,4)$ 的三个数字，接着使用 <code>for</code> 循环遍历这三个数字并输出。</p>
+<p>我们可以写出如下的代码来指定下标从数组中取值：</p>
+<pre><code class="rust">fn main() &#123;
+    let arr = [10, 20, 30, 40, 50];
+    for number in 3..5 &#123;
+        println!(&quot;&#123;&#125;&quot;, arr[number]);
+    &#125;
+&#125;
+
+// 40
+// 50
+</code></pre>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><ol>
+<li><p>用目前学习的内容写一个计算斐波那契数列的函数：</p>
+<p> 动态规划解法：</p>
+<pre><code class="rust">fn fib(mut n: i32) &#123;
+    let mut pre = 1;
+    let mut post = 1;
+
+    while n &gt; 2 &#123;
+        let tmp = post;
+        post += pre;
+        pre = tmp;
+        n -= 1;
+    &#125;
+
+    println!(&quot;&#123;&#125;&quot;, post);
+&#125;
+
+fn main() &#123;
+    fib(1);  // 1
+    fib(2);  // 1
+    fib(3);  // 2
+    fib(10); // 55
+&#125;
+</code></pre>
+</li>
+</ol>
+<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（Ownership）是 Rust 最独特的特性，它使 Rust 能够在不需要垃圾收集器的情况下保证内存安全。因此，了解所有权在 Rust 中的作用非常重要。在本章中，我们将讨论所有权以及几个相关特性：借用（borrowing）、切片（slices）以及 Rust 如何在内存中布局数据。</p>
+<blockquote>
+<p>注：Ownership 应当是 Rust 较复杂的一部分，但对于理解和掌握 Rust 编程相当重要，因此本文遵循 The Rust Programming Language 的章节安排，先介绍该部分。</p>
+</blockquote>
+<h3 id="什么是所有权"><a href="#什么是所有权" class="headerlink" title="什么是所有权"></a>什么是所有权</h3><p>所有程序在运行的时候都必须管理它们使用计算机内存的方式。有些编程语言使用垃圾回收机制来不断地寻找不再使用的内存（如 Java、Go）；还有些编程语言中，开发者必须手动分配和释放内存（如 C、C++）。Rust 则另辟蹊径：内存通过一个所有权系统来管理，它具有一组编译器在编译时检查的规则。当程序运行时，所有权的任何功能都不会影响程序的效率。</p>
+<p>Ownership 对大多数学习 Rust 的人来说是一个全新的概念，因此需要花一些时间来学习和适应。</p>
+<blockquote>
+<p><strong>栈（Stack）和堆（Heap）</strong></p>
+<p>在许多编程语言中，开发者不必经常考虑栈和堆。但是在像 Rust 这样的系统级编程语言中，值（value）是在栈上还是在堆上对<strong>语言的行为</strong>以及<strong>为什么必须做出某些决定</strong>有很大的影响。下面作出简要说明。</p>
+<p>栈和堆都是可供程序在运行时使用的内存的一部分，但它们的结构不同。类似于数据结构中栈的概念，内存中的栈空间同样满足 LIFO 的规则，不再赘述。栈上存储的所有数据的大小必须在编译期已知且固定，如果编译期无法确定一个数据的大小或者其大小可能发生改变，那它将被分配到堆上。堆的组织性较差，当数据放在堆上时，需要请求一定量的空间，然后由内存分配器在堆上找到一个足够大的空间，将该空间标记为正在使用，接着返回一个指针，即该地址的位置。这个过程被称为堆分配（<em>allocating on the heap</em>），有时简称为分配（<em>allocating</em>）。将值放到栈上不视为分配。由于指针是已知的固定大小，所以可以将指针存储在栈上，但当需要实际数据时，必须找寻指针的指向地址。</p>
+<p>显然，在栈上分配内存更快，因为只需要从栈顶入栈就行了，而堆中由于空闲空间并不一定连续，需要花时间寻找满足的堆空间，并记录变化。</p>
+<p>访问堆中的数据同样比访问栈上的数据慢，因为必须通过指针才能找到目标位置。现代处理器在内存中的跳跃越少，则速度越快。继续类推，考虑一家餐馆的服务员从许多表格中获取订单的例子。在去到下一张桌子之前，在一张桌子上拿到所有订单是最高效的。从表 A 获取订单，然后从表 B 获取订单，然后再从 A 获取订单，然后再从 B 获取订单将是一个慢得多的过程。同样，如果处理器处理的数据与其他数据相近（如栈上的数据），而不是距离较远（如堆上的数据），则处理器可以更好地完成其工作。在堆上分配大量空间也需要时间。</p>
+<p>当代码调用函数时，传递到函数中的值（这里指的是函数参数，可能包括指向堆上数据的指针）和函数的局部变量被压入栈中。当函数结束（返回）时，这些值会从栈中弹出。</p>
+<p>跟踪代码的哪些部分正在使用堆上的哪些数据，最小化堆上的重复数据量，清理堆上未使用的数据以避免耗尽空间，这些都是所有权所要解决的问题。一旦了解了所有权，就不需要经常考虑栈和堆，但是明白<strong>管理堆数据</strong>是所有权存在的原因有助于理解它为什么以这种方式工作。</p>
+</blockquote>
+<h4 id="Ownership-规则"><a href="#Ownership-规则" class="headerlink" title="Ownership 规则"></a>Ownership 规则</h4><p>首先牢记以下规则：</p>
+<ul>
+<li>Rust 中的每个值（value）都有一个称为其所有者（owner）的变量。</li>
+<li>一次只能有一个所有者。</li>
+<li>当所有者超出作用域范围（即程序不能访问它）时，该值将被删除。</li>
+</ul>
+<h4 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h4><p>变量作用域（Variable Scope）指的是某个变量的作用范围，即它对其他代码可见的范围。</p>
+<p>在下面的代码中，<code>x</code> 的作用域就是整个 <code>main</code> 函数，在 <code>main</code> 函数内 <code>x</code> 可以被任何语法访问。</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 1;
+    println!(&quot;&#123;&#125;&quot;, x); // 1
+&#125;
+</code></pre>
+<p>在 Rust 中，可以使用 <code>&#123;&#125;</code> 指定一块作用域：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+    &#123;
+        let y = 6;
+    &#125;
+    println!(&quot;&#123;&#125;&quot;, x);
+    println!(&quot;&#123;&#125;&quot;, y);
+&#125;
+</code></pre>
+<p>上面的代码不能通过编译，会出现 <code>cannot find value `y` in this scope</code> 的报错，这是因为<code>y</code>在一个独立的作用域里，外部无法访问到它。</p>
+<p>作用域能够访问到其外部的作用域，因此下面的代码中，<code>x</code> 和 <code>y</code> 都能被打印出来：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+    &#123;
+        let y = 6;
+        println!(&quot;&#123;&#125;&quot;, x); // 5
+        println!(&quot;&#123;&#125;&quot;, y); // 6
+    &#125;
+    // println!(&quot;&#123;&#125;&quot;, x);
+    // println!(&quot;&#123;&#125;&quot;, y);
+&#125;
+</code></pre>
+<p>现在来分析一下作用域的生命周期：</p>
+<pre><code class="rust">fn main() &#123;
+    &#123;                      // 变量 s 不可用, 因为它还没有被声明
+        let s = &quot;hello&quot;;   // 变量 s 现在可用
+
+        // 处理 s 相关的代码
+    &#125;                      // 作用域结束，s 不再可用
+&#125;
+</code></pre>
+<p>也就是说 <code>s</code> 的生命周期是从其被声明直到遇到 <code>&#125;</code> 其作用域结束的这个区间。</p>
+<p>就目前来看，Rust 中变量作用域机制和其他很多编程语言中的变量作用域机制很近似。现在我们引入字符串类型再进行探讨。</p>
+<h4 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h4><p>前面介绍的数据类型都存储在栈上，在它们所在的作用域结束（如函数返回）后就会被弹出栈空间。我们现在看看存储在堆上的数据，并探究 Rust 如何知道何时清理这些数据。</p>
+<p>这里我们使用 <code>String</code>（字符串）类型作为示例，重点介绍 <code>String</code> 中与所有权相关的部分。这些部分也同样适用于其他复杂数据类型（无论它们是由标准库提供的还是由程序员自行创建的）。</p>
+<p>我们早已经见过字符串字面量（string literals），如 <code>&quot;hello world!&quot;</code>，这是写在代码中的一段字符串。使用字符串字面量很直观也很方便，但可能并不适用于所有需要进行文本处理的情况。其中一个原因是字符串是不可变（<em>immutable</em>）的，还有一个原因是字符串内容很可能是在运行时才能够被确定的（比如是由用户输入的字符串）。出于这些情况，Rust 提供了不同于字符串字面量的 <code>String</code> 类型。这个类型是在堆上分配的（而字符串字面量在栈上），因此能够存储大量在编译时未知的文本。</p>
+<p><code>String</code> 的用法如下：</p>
+<pre><code class="rust">let s = String::from(&quot;hello&quot;); // 使用字符串字面量创建一个 String
+</code></pre>
+<p>其中，<code>::</code> 是一个运算符，在这里用于调用 <code>String</code> 类型命名空间下的 <code>from</code> 函数。</p>
+<p>现在可以使用可变的字符串了：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    s.push_str(&quot;, world!&quot;); // push_str() 将一个字符串字面量放入一个 String 中
+
+    println!(&quot;&#123;&#125;&quot;, s); // hello, world!
+&#125;
+</code></pre>
+<p>从字符串的例子中我们知道，字符串字面量不可变，但 <code>String</code> 可变，这是因为这两种类型处理内存的方式不同。</p>
+<h4 id="内存和内存分配"><a href="#内存和内存分配" class="headerlink" title="内存和内存分配"></a>内存和内存分配</h4><p>由于字符串字面量是在编译时就确定的，因此它可以被直接硬编码到最终的可执行文件中。这也是字符串字面量快速并高效的原因。但其高效的前提是字符串字面量是不可变的。我们无法将<strong>在编译时大小未知</strong>或是<strong>在程序运行时大小可能会改变</strong>的文本放入二进制文件中。</p>
+<p>对于 <code>String</code> 类型，为了支持可变的、可增长的文本，我们需要在堆上分配一定量的内存（编译时未知）来保存内容。这意味着：</p>
+<ul>
+<li><p>必须在运行时（runtime）从内存分配器（memory allocator）请求内存。</p>
+</li>
+<li><p>我们需要一种在处理完 <code>String</code> 后将内存返回给分配器的方法（即回收内存）。</p>
+</li>
+</ul>
+<p>第一点由编程人员完成，通过调用如 <code>String::from</code> 的函数来实现请求所需的内存。这在编程语言中非常普遍。</p>
+<p>然而，第二点就有一些不同了。在使用垃圾回收（<em>garbage collector, GC</em>）机制的语言中，GC 跟踪并清理不再使用的内存，编程人员无需考虑这些。如果没有 GC，编程人员就需要判断内存何时不再被使用，并调用代码显式返回（return）它，就像我们请求（request）它一样。然而完全正确地执行此操作历来是一个相当困难的编程问题。如果忘记了回收内存，轻则造成内存浪费，重则出现大量内存泄漏，导致内存占用越来越大；然而如果回收的过早，会导致某些仍需要使用的变量失效，出现悬挂指针（<em>dangling pointer</em>）问题；如果重复进行了回收，这同样会导致程序 bug。我们的任务是将 <code>allocate</code>（分配）和 <code>free</code>（回收）操作准确地配对。</p>
+<p>Rust 采用了不同的路径：<strong>一旦占用内存的变量超出作用域，内存就会自动返回。</strong></p>
+<p>看下面一段代码，使用了 <code>String</code> 类型声明变量 <code>s</code>：</p>
+<pre><code class="rust">fn main() &#123;
+    &#123;
+        let s = String::from(&quot;hello&quot;); // 变量 s 被初始化
+
+        // 处理 s 相关的代码
+    &#125; // 作用域结束，s 不再可用
+
+&#125;
+</code></pre>
+<p>注意作用域结束的地方 <code>&#125;</code>，当这个作用域结束，<code>s</code> 即不再可用，也就可以回收其内存了。Rust 在这时会调用一个特殊的函数 <code>drop</code>，<code>String</code> 的作者（author，这个作者指的是 <code>String</code> 标准库的开发者，并非使用者）可以在这里放置代码以返回内存。</p>
+<blockquote>
+<p>注：在 C++ 中，在项目的生命周期结束时释放资源的这种模式有时称为 <em>Resource Acquisition Is Initialization</em>（<em>RAII</em>）。如果你使用过 RAII 模式，Rust 中的 drop 函数对你来说会很熟悉。</p>
+</blockquote>
+<blockquote>
+<p>【截至写下本文，我都还不会 C++，我的下半生估计是废了 o(T ヘ To)】</p>
+</blockquote>
+<p>上述模式对 Rust 代码的编写方式有着深远的影响。现在看起来可能很简单，但在更复杂的情况下，当我们想要让多个变量使用我们在堆上分配的数据时，代码的行为可能会出人意料。接下来让我们来探讨其中的一些情况。</p>
+<h4 id="变量和数据交互的方式：移动"><a href="#变量和数据交互的方式：移动" class="headerlink" title="变量和数据交互的方式：移动"></a>变量和数据交互的方式：移动</h4><p>在 Rust 中，多个变量可以以不同的方式与相同的数据交互。比如下面这个例子：</p>
+<pre><code class="rust">let x = 5;
+let y = x;
+</code></pre>
+<p>我们大概可以猜到这是在做什么：“将值 5 绑定到 <code>x</code>，然后复制 <code>x</code> 中的值并将其绑定到 <code>y</code>。”我们现在有两个变量，<code>x</code> 和 <code>y</code>，它们都等于 5。这确实是实际的执行过程，因为整数是具有已知固定大小的简单值，这两个 5 会被压入栈。</p>
+<p>现在我们来看看 <code>String</code> 的版本：</p>
+<pre><code class="rust">let s1 = String::from(&quot;hello&quot;);
+let s2 = s1;
+</code></pre>
+<p>这和固定大小的 <code>i32</code> 整数有很大的区别，它并不是从 <code>s1</code> 直接复制值并赋给 <code>s2</code> 的。我们先看看 <code>String</code> 背后的结构：</p>
+<p><img src="/learning-rust/trpl04-01.svg" class="lazyload" data-srcset="/learning-rust/trpl04-01.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="String in memory"></p>
+<blockquote>
+<p>注：本章节的图片均取自 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/title-page.html">The Rust Programming Language</a>。</p>
+</blockquote>
+<p>这和 Go 对字符串类型的实现基本相同。</p>
+<p>其中，左边的部分是位于栈上的，右边的部分在堆上。长度（len）表示当前字符串已经占用的空间大小（以字节为单位），容量（capacity）表示可供使用的空间大小，即底层数组的实际大小（以字节为单位）。当复制 <code>s1</code> 时，仅仅是复制了栈中的部分，因此是下图的结果：</p>
+<p><img src="/learning-rust/trpl04-02.svg" class="lazyload" data-srcset="/learning-rust/trpl04-02.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="s1 and s2 pointing to the same value"></p>
+<p>由此可以看出，<code>s1</code> 和 <code>s2</code> 实际的内容是相同的。假设 Rust 同时也会复制堆数据会怎样？如下图的情况：</p>
+<p><img src="/learning-rust/trpl04-03.svg" class="lazyload" data-srcset="/learning-rust/trpl04-03.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="s1 and s2 to two places"></p>
+<p>可以预见，当字符串占用大量空间时，对其进行复制会耗费相当的时间和空间。下面我们丢掉这个假设，看实际的情况。</p>
+<p>前面我们提到了，因为所有权机制，变量超出作用域会立即释放堆内存空间，那么对于具有相同内存空间来说的 <code>s1</code> 和 <code>s2</code>，会发生什么？显然，会调用两次 <code>drop()</code> 来释放同一块内存，这被称为<strong>双重释放</strong>（<em>double free</em>）错误，是我们之前提到的内存安全错误之一。</p>
+<p>为了确保内存安全，在 <code>s2 = s1</code> 这条语句后，Rust 就会认为 <code>s1</code> 不再有效了，因此无需再释放 <code>s1</code>，作用域结束时释放 <code>s2</code> 即可。这直接导致了下面的现象：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = String::from(&quot;hello&quot;);
+    let s2 = s1;
+    println!(&quot;&#123;&#125;&quot;, s1);
+    println!(&quot;&#123;&#125;&quot;, s2);
+&#125;
+</code></pre>
+<pre><code class="shell">$ cargo run
+   Compiling ownership v0.1.0
+error[E0382]: borrow of moved value: `s1`
+  --&gt; src\main.rs:15:20
+   |
+12 |     let s1 = String::from(&quot;hello&quot;);
+   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+13 | 
+14 |     let s2 = s1;
+   |              -- value moved here
+15 |     println!(&quot;&#123;&#125;&quot;, s1);
+   |                    ^^ value borrowed here after move
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `ownership` due to previous error
+</code></pre>
+<p>可以看到，编译直接出错了，其原因是 <code>s1</code> 已经失效了。尝试修改为下面的代码，再次运行：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = String::from(&quot;hello&quot;);
+    println!(&quot;&#123;&#125;&quot;, s1);  // hello
+    let s2 = s1;
+    println!(&quot;&#123;&#125;&quot;, s2);  // hello
+&#125;
+</code></pre>
+<p>这一次就正常输出了意料之中的结果。</p>
+<p>如果你在使用其他语言时听说过<strong>浅拷贝</strong>（<em>shallow copy</em>）和<strong>深拷贝</strong>（<em>deep copy</em>）这两个术语，那么复制指针、长度和容量而不复制堆中数据的概念可能听起来像进行浅拷贝。但是由于 Rust 会让第一个变量无效，因此这个概念没有被叫做浅拷贝，它被称为<strong>移动</strong>（<em>move</em>）。在上述的例子中，我们会说 <code>s1</code> 被移动到了 <code>s2</code> 中，即把 <code>s1</code> 放到 <code>s2</code> 中并删除 <code>s1</code>。</p>
+<p>现在，我们可以说解决了双重释放的问题。从这个设计中我们可以看出，Rust 永远不会自动创建一个“深拷贝”，因此，任何自动化的复制行为都是性能很优良的。</p>
+<h4 id="变量和数据交互的方式：克隆"><a href="#变量和数据交互的方式：克隆" class="headerlink" title="变量和数据交互的方式：克隆"></a>变量和数据交互的方式：克隆</h4><p>如果想要深拷贝 <code>String</code> 的堆中数据，可以使用一种叫做 <code>clone</code> 的通用方法。</p>
+<blockquote>
+<p>方法（method）是一种很常见的编程语言组成部分，在后文中才会对方法进行介绍。</p>
+</blockquote>
+<p>下面是一个示例：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = String::from(&quot;hello&quot;);
+    let s2 = s1.clone();
+    println!(&quot;s1 = &#123;&#125;, s2 = &#123;&#125;&quot;, s1, s2);
+&#125;
+</code></pre>
+<p>上面这段代码显式地进行了 <code>s1</code> 的深拷贝。通过 <code>clone</code> 方法进行操作，能够提醒开发者注意这样的操作是可能影响性能的，要三思而后行。</p>
+<h4 id="仅存在栈上的数据：复制"><a href="#仅存在栈上的数据：复制" class="headerlink" title="仅存在栈上的数据：复制"></a>仅存在栈上的数据：复制</h4><p>需要注意的是，那些只存储在栈上的数据是没有深拷贝和浅拷贝的区分的，拷贝它们不会导致各种问题。比如下面的代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let x = 5;
+    let y = x;
+
+    println!(&quot;x = &#123;&#125;, y = &#123;&#125;&quot;, x, y);
+&#125;
+</code></pre>
+<p>大小确定的类型并不需要 <code>clone</code> 这样的方法来进行复制，因为它们在栈上，而不是堆上。对这样大小确定的栈数据的复制是很高效的。</p>
+<p>Rust 有一个特殊的注解（annotation）叫做 <code>Copy</code> trait，我们可以把它放在像整数（integer）这样存储在栈中的类型上。如果一个类型实现了 <code>Copy</code> trait，那么这个类型的一个旧的变量在赋给其他变量后仍然可用（就像上面的那段代码中的 <code>x</code>，赋值给 <code>y</code> 后仍然可用）。如果一个类型或者这个类型的任何部分实现了 <code>Drop</code> trait，Rust 就会不允许使用 <code>Copy</code> trait 注解该类型。</p>
+<p>如果某个类型的变量离开作用域时需要进行某些特殊处理，我们对该变量使用 <code>Copy</code> 注解会发生编译错误。</p>
+<blockquote>
+<p>关于 Trait，这是一种 Rust 中的概念，将在后文中进行介绍，暂时可以忽略。需要了解如何将 <code>Copy</code> 注解添加到类型中以实现 trait，请参阅 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/appendix-03-derivable-traits.html">Derivable  Traits</a>。</p>
+</blockquote>
+<p>那么什么类型实现了 <code>Copy</code> trait？可以查看给定类型的文档来确定，但作为一个通用的规则，任何一组简单的<strong>标量值</strong>都可以实现 <code>Copy</code>，并且任何不需要内存分配（allocation，指前文所提到的在堆中分配）和某些形式资源的类型都可以实现 <code>Copy</code>。以下是一些实现 <code>Copy</code> 的类型：</p>
+<ul>
+<li>所有整数类型，例如 <code>u32</code>；</li>
+<li>布尔类型 <code>bool</code>；</li>
+<li>所有浮点类型，例如 <code>f64</code>；</li>
+<li>字符类型，<code>char</code>；</li>
+<li>Tuple，如果只包含同样实现 <code>Copy</code> 的类型。例如，<code>(i32, i32)</code> 实现了 <code>Copy</code>，但 <code>(i32, String)</code> 没有。</li>
+</ul>
+<h4 id="所有权和函数"><a href="#所有权和函数" class="headerlink" title="所有权和函数"></a>所有权和函数</h4><p>将值传递给函数类似于为变量赋值。和变量赋值一样，将变量传递给函数会出现移动（move）或复制（copy）。看下面的一段代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let s = String::from(&quot;hello&quot;);  // s 进入作用域
+
+    takes_ownership(s);             // s 的值被移动（move）到了 takes_ownership 函数中，
+                                    // 因此它不再可用了
+
+    let x = 5;                      // x 进入作用域
+
+    makes_copy(x);                  // x 被传入 makes_copy 函数,
+                                    // 但是因为 i32 类型实现了 Copy,
+                                    // 因此在接下来还能够被使用
+
+&#125; // x 离开作用域, 接着 s 离开作用域. 但是由于 s 的所有权被拿走了，因此不会有什么特别的操作
+
+fn takes_ownership(some_string: String) &#123; // some_string 进入作用域
+    println!(&quot;&#123;&#125;&quot;, some_string);
+&#125; // some_string 离开作用域，接着 drop() 被调用以回收内存
+
+fn makes_copy(some_integer: i32) &#123; // some_integer 进入作用域
+    println!(&quot;&#123;&#125;&quot;, some_integer);
+&#125; // some_integer 离开作用域，没有什么特别的操作
+</code></pre>
+<p>如果调用 <code>takes_ownership()</code> 之后尝试使用 <code>s</code>，Rust 会抛出一个编译错误。这些静态检查能够使我们免于出错。</p>
+<h4 id="返回值和作用域"><a href="#返回值和作用域" class="headerlink" title="返回值和作用域"></a>返回值和作用域</h4><p>返回值也可以转移所有权：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = gives_ownership();         // s1 获得了 gives_ownership() 返回值的所有权
+
+    let s2 = String::from(&quot;hello&quot;);
+
+    let s3 = takes_and_gives_back(s2);  // s2 的所有权交给了 takes_and_gives_back() 的参数，
+                                        // 但又通过这个函数的返回值传给了 s3
+&#125; // s3、s1 经由 drop() 回收
+
+fn gives_ownership() -&gt; String &#123;
+    let some_string = String::from(&quot;yours&quot;);
+
+    some_string // some_string 堆中部分的所有权将被交给调用它的变量
+&#125;
+
+fn takes_and_gives_back(a_string: String) -&gt; String &#123; 
+    a_string
+&#125;
+</code></pre>
+<p>所有变量的所有权都遵循相同的程式：把值直接赋给另一个变量会产生移动（move）。当包含了堆数据的变量离开作用域时，该值将通过 <code>drop()</code> 清除，除非该数据的所有权已经归另一个变量所有。</p>
+<p>测试下面的一段代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let s = String::from(&quot;hello&quot;);
+    
+    takes_ownership(s);
+    
+    println!(&quot;&#123;&#125;&quot;, s.len())
+&#125;
+
+fn takes_ownership(s: String) &#123;
+    println!(&quot;&#123;&#125;&quot;, s.len());
+&#125;
+</code></pre>
+<p>意料之中地发生了编译错误，那么如何重新取得一个变量的所有权呢？可以通过下面的方式解决：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = String::from(&quot;hello&quot;);
+
+    let (s1, len) = calculate_length(s1);
+
+    println!(&quot;The length of &#39;&#123;&#125;&#39; is &#123;&#125;.&quot;, s1, len);
+&#125;
+
+fn calculate_length(s: String) -&gt; (String, usize) &#123;
+    let length = s.len();
+
+    (s, length)
+&#125;
+</code></pre>
+<p>上面的代码借 Tuple 实现了多返回值，并使用了 Rust 的 <em>shadowing</em> 机制重新得到了所有权并交给了同名变量 <code>s1</code>，可以感觉到这个过程还是太麻烦了。幸运的是，Rust 提供了<strong>引用</strong>（<em>references</em>）机制来解决这个问题。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本节对于 Rust 的所有权机制进行了一个初步的介绍，Rust 用所有权机制让栈中的变量与其在堆中分配的数据一对一地关联起来（个人感觉这就像一条牵狗绳），在变量赋值的过程中，原变量会失去堆中数据的所有权，转交给被赋值的变量。通过这种方式，Rust 硬性地解决了常见的各种内存分配问题。由于所有权的唯一化，在变量作用域结束时就可以将其自动回收，不会出现忘记回收以及重复回收的问题。</p>
+<h3 id="引用和借用"><a href="#引用和借用" class="headerlink" title="引用和借用"></a>引用和借用</h3><p>上一节末尾提到的<strong>引用</strong>（<em>references</em>）机制，可以在不移动所有权的前提下访问一个变量的堆中数据。下面是由上一节末尾处代码改写的一个示例：</p>
+<pre><code class="rust">fn main() &#123;
+    let s1 = String::from(&quot;hello&quot;);
+
+    let len = calculate_length(&amp;s1);
+
+    println!(&quot;The length of &#39;&#123;&#125;&#39; is &#123;&#125;.&quot;, s1, len);
+&#125;
+
+fn calculate_length(s: &amp;String) -&gt; usize &#123;
+    s.len()
+&#125;
+</code></pre>
+<p>注意这段代码中的新语法 <code>&amp;</code>（<code>&amp;s1</code> 和 <code>&amp;String</code>），使用这个操作符能够引用一个变量，从而在没有所有权的情况下操作这个变量的堆中数据。其底层的情况如下图所示：</p>
+<p><img src="/learning-rust/trpl04-05.svg" class="lazyload" data-srcset="/learning-rust/trpl04-05.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="&amp;String s pointing at String s1"></p>
+<blockquote>
+<p>注意：使用 <code>&amp;</code> 进行引用的相反操作是取消引用，可以通过取消引用操作符 <code>*</code> 来完成，这些内容暂时不进行讨论。</p>
+</blockquote>
+<p>上述代码中，<code>calculate_length</code> 函数中的 <code>s</code> 是一个 <code>&amp;String</code> 类型，即一个 <code>String</code> 的引用类型，这表明它不具有某个值的所有权，在离开作用域时不会对其调用 <code>drop()</code> 操作，并且这个函数也不需要归还任何值的所有权。</p>
+<p>我们把创建引用的行为称为<strong>借用</strong>（<em>borrowing</em>），这个名字包含了“有借有还”的原则。</p>
+<blockquote>
+<p>reference 作名词，borrow 作动词，而在中文语境下不怎么需要纠结它们的差别。</p>
+</blockquote>
+<p>看到这里很自然地会有一个问题：我们能不能对“借”来的值进行写操作呢？尝试编译运行下面的代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let s = String::from(&quot;hello&quot;);
+
+    change(&amp;s);
+&#125;
+
+fn change(some_string: &amp;String) &#123;
+    some_string.push_str(&quot;, world&quot;);
+&#125;
+</code></pre>
+<pre><code class="shell">$ cargo run
+   Compiling ownership v0.1.0
+error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&amp;` reference
+  --&gt; src\main.rs:42:5
+   |
+41 | fn change(some_string: &amp;String) &#123;
+   |                        ------- help: consider changing this to be a mutable reference: `&amp;mut String`
+42 |     some_string.push_str(&quot;, world&quot;);
+   |     ^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+
+For more information about this error, try `rustc --explain E0596`.
+error: could not compile `ownership` due to previous error
+</code></pre>
+<p>答案是不能，从编译错误的信息中我们能够看到，由 <code>&amp;</code> 借用来的 <code>String</code> 引用，默认是不可变的。</p>
+<h4 id="可变引用"><a href="#可变引用" class="headerlink" title="可变引用"></a>可变引用</h4><p>我们可以用下面的方式解决引用不可变的问题：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;); // mut
+
+    change(&amp;mut s); // mut
+&#125;
+
+fn change(some_string: &amp;mut String) &#123; // mut
+    some_string.push_str(&quot;, world&quot;);
+&#125;
+</code></pre>
+<p>上面的代码成功编译并运行了。需要注意的是所有权的拥有者（<code>s</code>）同样也要被改为可变的。</p>
+<p>然而有个很大的问题是只能借用一次可变，下面的代码就会编译出错：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    let r1 = &amp;mut s;
+    let r2 = &amp;mut s;
+
+    println!(&quot;&#123;&#125;, &#123;&#125;&quot;, r1, r2);
+&#125;
+</code></pre>
+<p>不能多次借用 <code>s</code> 作为可变参数。可能有人会想（比如我就这么想）：既然不能进行多次可变借用，那多次不可变借用行不行？</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;); // 由于 mut 属性没有被用到，编译时会警告但不会报错
+
+    let r1 = &amp;s;
+    let r2 = &amp;s;
+
+    println!(&quot;&#123;&#125;, &#123;&#125;&quot;, r1, r2);
+&#125;
+</code></pre>
+<p>这么写就可以了，但要是一个可变借用一个不可变借用呢？尝试下面的情况：</p>
+<pre><code class="rust">let r1 = &amp;mut s;
+let r2 = &amp;s;
+</code></pre>
+<p>这次编译报错，提示 <code>cannot borrow `s` as immutable because it is also borrowed as mutable</code>，意思是已经以可变的方式借用过了，不能再以不可变的方式借用了。再给它颠倒过来试一下：</p>
+<pre><code class="rust">let r1 = &amp;s;
+let r2 = &amp;mut s;
+</code></pre>
+<p>这次仍然报错，提示 <code>cannot borrow `s` as mutable because it is also borrowed as immutable</code>，同样不行，报错信息也反过来了。</p>
+<p>第一个可变借用在 <code>r1</code> 中并且必须持续到它在 <code>println!</code> 中使用为止，要想再借用就必须在这之后（无论是可变还是不可变），所以下面的代码都是有效的：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    let r1 = &amp;mut s;
+    println!(&quot;&#123;&#125;&quot;, r1);
+    
+    let r2 = &amp;mut s;
+    println!(&quot;&#123;&#125;&quot;, r2);
+&#125;
+</code></pre>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    let r1 = &amp;mut s;
+    println!(&quot;&#123;&#125;&quot;, r1);
+    
+    let r2 = &amp;s;
+    println!(&quot;&#123;&#125;&quot;, r2);
+&#125;
+</code></pre>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    let r1 = &amp;s;
+    println!(&quot;&#123;&#125;&quot;, r1);
+    
+    let r2 = &amp;mut s;
+    println!(&quot;&#123;&#125;&quot;, r2);
+&#125;
+</code></pre>
+<p>综上所述，防止对同一数据进行多个可变引用的限制很严格，从而非常安全可控。不过虽然可以通过上面的代码来实现值的变动，但这实在是有些麻烦。</p>
+<blockquote>
+<p>这也是很多新的 Rust 人士（Rustaceans，Rust 开发者的自称）想要努力解决的问题，因为大多数语言都可以让开发者随时进行变动。</p>
+</blockquote>
+<p>有这个限制的好处是 Rust 可以在编译时防止出现<strong>数据竞争</strong>（<em>data races</em>）。数据竞争类似于竞争条件（<em>race condition</em>），当出现以下三种行为时就会发生：</p>
+<ul>
+<li>两个或多个指针同时访问相同的数据；</li>
+<li>至少有一个指针用于写入数据；</li>
+<li>没有用于同步数据访问的机制。</li>
+</ul>
+<p>数据竞争会导致未定义的行为，并且当你尝试在运行时追踪它们，可能难以诊断和修复。Rust 防止了这个问题的发生，因为带有数据竞争的代码编译直接不能通过。</p>
+<p>既然上述的限制都是在同一个作用域之中的，那么使用新的作用域也就不会有问题了：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    &#123;
+        let r1 = &amp;mut s;
+    &#125; // r1 已经离开作用域了，因此可以在后面再次引用 s
+
+    let r2 = &amp;mut s;
+&#125;
+</code></pre>
+<p>需要注意的是，引用的作用范围是从它<strong>被引用的地方开始</strong>，直到<strong>最后一次被使用</strong>。因此下面的代码不会出现编译错误，因为它们的作用范围没有交叉，根本不会引起冲突。</p>
+<pre><code class="rust">fn main() &#123;
+    let mut s = String::from(&quot;hello&quot;);
+
+    let r1 = &amp;mut s;
+    let r2 = &amp;mut s;
+    let r3 = &amp;mut s;
+&#125;
+</code></pre>
+<blockquote>
+<p>无需特别记忆这个规则，实际上很简单，就是看作用范围有没有重叠。没有出现引用的作用范围重叠的代码就是预期之中的。另外，编译器在某变量作用范围结束之前判断其<strong>不再使用引用</strong>的能力被称为非词法生命周期（Non-Lexical Lifetimes，简称 NLL），参照 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a>。</p>
+</blockquote>
+<p>如果不了解所有权机制，可能会写出很多错误的代码，但是 Rust 在这方面做的最贴心的地方就是编译器会尽早（在编译时而不是在运行时）指出潜在的错误，并准确地展示问题所在。这样就省去了很多花在在运行时 debug 的时间。大概率不会产生“为什么这个地方和我预期的结果不一样”的疑问。</p>
+<h4 id="悬挂引用"><a href="#悬挂引用" class="headerlink" title="悬挂引用"></a>悬挂引用</h4><blockquote>
+<p>Dangling References，也可以译为悬空引用。</p>
+</blockquote>
+<p>在带有指针的编程语言中，如果释放了一块内存但是没有删除指向该内存的指针，那这个指针就变成了悬挂指针。该指针可能指向的是一块未分配的内存，也可能指向了<strong>已经被分配给了其他数据</strong>的内存，这是很严重的错误。相比之下，在 Rust 中，编译器能保证引用永远不会是悬挂引用：如果你持有一些数据（这段话中的数据指的都是堆中的值）的引用，编译器将确保在引用的数据处理完之前数据不会离开作用域。</p>
+<pre><code class="rust">fn main() &#123;
+    let reference_to_nothing = dangle();
+&#125;
+
+fn dangle() -&gt; &amp;String &#123;
+    let s = String::from(&quot;hello&quot;);
+
+    &amp;s
+&#125;
+</code></pre>
+<p>上面的这段代码中，<code>dangle</code> 函数返回的是 <code>String</code> 的引用，而非转让它的所有权，因此当这个函数返回时，<code>reference_to_nothing</code> 引用的那块堆内存已经被 <code>drop</code> 了。下面是编译器报错：</p>
+<pre><code class="shell">$ cargo run
+   Compiling ownership v0.1.0
+error[E0106]: missing lifetime specifier
+  --&gt; src\main.rs:45:16
+   |
+45 | fn dangle() -&gt; &amp;String &#123;
+   |                ^ expected named lifetime parameter
+   |
+   = help: this function&#39;s return type contains a borrowed value, but there is no value for it to be borrowed from
+help: consider using the `&#39;static` lifetime
+   |
+45 | fn dangle() -&gt; &amp;&#39;static String &#123;
+   |                ^^^^^^^^
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `ownership` due to previous error
+</code></pre>
+<p>这段错误涉及到我们的知识盲区了，这个 <em>lifetime</em> 是什么？我暂时也不知道，但这不重要，看其中的一段错误信息：</p>
+<p><em>this function’s return type contains a borrowed value, but there is no value for it to be borrowed from.</em></p>
+<p>这句话的意思是这个函数返回了<strong>包含一个借用来的值</strong>的类型，但是没有它能借用的值。借用来的值实际上就是指引用值，也就是说引用的对象已经不存在了。这很好理解，<code>dangle</code> 函数结束时把 <code>s</code> 给 <code>drop</code> 了。那怎么解决呢？很简单，就照没学引用的那时候办，直接转让所有权就行了：</p>
+<pre><code class="rust">fn no_dangle() -&gt; String &#123;
+    let s = String::from(&quot;hello&quot;);
+
+    s
+&#125;
+</code></pre>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>让我们最后回顾一下本节关于引用的内容：</p>
+<ul>
+<li>在任何时候，可以有一个可变引用<strong>或</strong>任意数量的不可变引用。</li>
+<li>引用必须始终有效。</li>
+</ul>
+<blockquote>
+<p>要注意这个或啊，作用范围内生效的可变引用只能有一个，和不可变引用不能同时都有，不可变引用的话数量不限。</p>
+</blockquote>
+<h3 id="切片类型"><a href="#切片类型" class="headerlink" title="切片类型"></a>切片类型</h3><blockquote>
+<p>Slice，很常见的类型，如果只是停留在它的表象上可以理解为可变的数组。</p>
+</blockquote>
+<p>切片是一种没有所有权的类型，它用于引用一个<strong>连续的元素序列</strong>的一部分。</p>
+<h4 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h4><p>字符串切片（string slice）引用一个字符串的一部分，它的类型是 <code>&amp;str</code>，例如下面的代码：</p>
+<pre><code class="rust">fn main() &#123;
+    let s = String::from(&quot;hello world&quot;);
+
+    let hello = &amp;s[0..5];
+    let world = &amp;s[6..11];
+    
+    println!(&quot;&#123;&#125; &#123;&#125;&quot;, hello, world); // hello world
+&#125;
+</code></pre>
+<p>其中，<code>hello</code> 和 <code>world</code> 各引用了 <code>s</code> 的一部分，它们通过下标来指定范围（这和其他编程语言没什么差别），使用了我们已经学过的 <code>&amp;</code> 来引用。</p>
+<p>如果把 <code>&amp;s[0..5]</code> 改为 <code>s[0..5]</code> 会怎么样呢？可以尝试一下，这时候编译器会报 <code>doesn&#39;t have a size known at compile-time</code> 错误，意思是这个值的大小在编译期间未知，这很合理。</p>
+<p>下图展示了 <code>s</code> 和 <code>world</code> 两个变量的实际结构：</p>
+<p><img src="/learning-rust/trpl04-06.svg" class="lazyload" data-srcset="/learning-rust/trpl04-06.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="world containing a pointer to the byte at index 6 of String s and a length 5"></p>
+<p>Rust 的范围语法支持很灵活的表示方式，比如省略开始下标（<code>[..n]</code>）和省略结束下标（<code>[n..]</code>）来实现从头开始和到尾结束，这也是比较常见的用法。</p>
+<p>需要注意的一点是，<code>String</code> 采用 UTF-8 编码，当字符串截取到非法的位置，是会引起运行时错误的。下面的代码展示了正确的情况：</p>
+<pre><code class="rust">fn main() &#123;
+    let s = String::from(&quot;你好世界&quot;);
+
+    let len = s.len();
+
+    println!(&quot;&#123;&#125;&quot;, len); // 12
+
+    let hello = &amp;s[..6];
+    let world = &amp;s[6..];
+    let whole = &amp;s[..]; // 等同于 `&amp;s[0..s.len()]`
+
+    println!(&quot;&#123;&#125; &#123;&#125;&quot;, hello, world); // 你好 世界
+    println!(&quot;&#123;&#125;&quot;, whole); // 你好世界
+&#125;
+</code></pre>
+<p>可以看到，四个中文字符总共占用了 12 bytes，根据 UTF-8 编码方式，它们每个字符占用的是 3 bytes，我们尝试在字符的中间位置截取字符串，把 <code>&amp;s[..6]</code> 改为 <code>&amp;s[..2]</code>：</p>
+<pre><code class="rust">let hello = &amp;s[..2];
+</code></pre>
+<pre><code class="shell">$ cargo run
+   Compiling ownership v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.33s
+     Running `\path_to\ownership\target\debug\ownership.exe`
+12
+thread &#39;main&#39; panicked at &#39;byte index 2 is not a char boundary; it is inside &#39;你&#39; (bytes 0..3) of `你好世界`&#39;, src\main.rs:58:18
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: process didn&#39;t exit successfully: `\path_to\ownership\target\debug\ownership.exe` (exit code: 101)
+</code></pre>
+<p>注意这次产生的是运行时错误，和以往的编译错误不同，它不会影响出错位置之前的代码执行，因此 12 这个结果能够正常输出。错误的原因也非常简单，刚刚已经提到过了，字符串截取的范围非法（不在字符边界）。这个问题需要留意，以免写出错误的程序。</p>
+<blockquote>
+<p>在之后的章节有对 Rust 关于字符串 UTF-8 编码的详细介绍。</p>
+</blockquote>
+<p>下面再看一段程序：</p>
+<pre><code class="rust">fn first_word(s: &amp;String) -&gt; &amp;str &#123;
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() &#123;
+        if item == b&#39; &#39; &#123;
+            return &amp;s[0..i];
+        &#125;
+    &#125;
+
+    &amp;s[..]
+&#125;
+
+fn main() &#123;
+    let mut s = String::from(&quot;hello world&quot;);
+
+    let word = first_word(&amp;s);
+
+    s.clear(); // error!
+
+    println!(&quot;the first word is: &#123;&#125;&quot;, word);
+&#125;
+</code></pre>
+<p>其中，<code>first_word</code> 函数的作用是返回一个字符串的第一个单词切片，使用了迭代特性，遇到空格就把前面的这部分字符串返回。<code>first_word</code> 函数暂时不是我们的重点，重点是 <code>main</code> 函数部分，它抛出了一个编译错误 <code>cannot borrow `s` as mutable because it is also borrowed as immutable</code>，这个错误之前已经见过了。<code>clear</code> 方法是一个用于清空字符串内容的方法，显然它应当是以可变引用的方式借用的原字符串，而 <code>first_world</code> 函数是以不可变引用的方式借用的，并且它在 <code>clear</code> 被调用后仍在被使用，因此二者会出现冲突。</p>
+<h4 id="字符串字面量是切片"><a href="#字符串字面量是切片" class="headerlink" title="字符串字面量是切片"></a>字符串字面量是切片</h4><p>回忆一下之前提到的字符串字面量：</p>
+<pre><code class="rust">let s = &quot;Hello, world!&quot;;
+</code></pre>
+<p><code>s</code> 的类型实际上是 <code>&amp;str</code>，一个字符串切片，不过它指向的是栈空间中特定位置的二进制内容（指这段字符串）。这同时解释了为什么字符串字面量是不可变的。</p>
+<h4 id="字符串切片作为参数"><a href="#字符串切片作为参数" class="headerlink" title="字符串切片作为参数"></a>字符串切片作为参数</h4><p>之前见到的处理字符串的函数通常是这样的：</p>
+<pre><code class="rust">fn first_word(s: &amp;String) -&gt; &amp;str &#123;&#125;
+</code></pre>
+<p>而更有经验的程序员会使用下面的写法：</p>
+<pre><code class="rust">fn first_word(s: &amp;str) -&gt; &amp;str &#123;&#125;
+</code></pre>
+<p>这有什么好处呢？实际上，第二种写法既能接收字符串引用，也能接收字符串切片，而第一种写法只能接收字符串引用：</p>
+<pre><code class="rust">fn first_word(s: &amp;str) -&gt; &amp;str &#123;
+    // 省略
+&#125;
+
+fn main() &#123;
+    // 下面的所有用法都是正确的
+    let my_string = String::from(&quot;hello world&quot;);
+
+    let word = first_word(&amp;my_string[0..6]);
+    let word = first_word(&amp;my_string[..]);
+    let word = first_word(&amp;my_string); // ?
+
+    let my_string_literal = &quot;hello world&quot;;
+
+    let word = first_word(&amp;my_string_literal[0..6]);
+    let word = first_word(&amp;my_string_literal[..]);
+    let word = first_word(my_string_literal);
+&#125;
+</code></pre>
+<p>其他的地方都没什么好说的，需要特别注意的是上面问号注释的一行，实参是一个 <code>&amp;String</code> 类型，而 <code>first_world</code> 的形参是一个 <code>&amp;str</code> 类型，这说明 Rust 存在<strong>隐式类型转换</strong>，具体的实现未来再介绍。</p>
+<h4 id="其他切片"><a href="#其他切片" class="headerlink" title="其他切片"></a>其他切片</h4><p>字符串切片是基于字符串类型的，除了字符串切片还有很多切片类型，比如 <code>&amp;[i32]</code> 切片：</p>
+<pre><code class="rust">fn main() &#123;
+    let arr = [1, 2, 3, 4, 5];
+    
+    let slice = &amp;arr[1..3];
+    
+    for e in slice &#123;
+        println!(&quot;&#123;&#125;&quot;, e);
+    &#125;
+    
+    assert_eq!(slice, &amp;[2, 3]); // 断言
+&#125;
+
+// 2
+// 3
+</code></pre>
+<p>这种切片的原理和实现和字符串切片相同，不再赘述。类似其他语言中的断言，Rust 的相等断言在其参数不相等时会报错，因此 <code>slice</code> 变量的内容和 <code>&amp;[2, 3]</code> 是完全相等的。</p>
+<h4 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h4><p>所有权、借用和切片的概念确保了 Rust 程序在编译期间的内存安全。Rust 让你可以像使用其他系统编程语言（理解为主要用于开发操作系统的语言）一样控制内存的使用。但是让数据所有者在离开作用域时自动清理该数据，意味着开发者不必编写和调试额外的代码就能够得到这种控制。</p>
+<p>所有权机制会影响 Rust 许多其他部分的工作方式，因此在剩下的部分中还会讨论相关的某些概念。</p>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>结构体（<em>struct</em>，也即 <em>structure</em>）是一种自定义数据类型，可用于命名和打包一组有意义的多个相关值。如果你熟悉 OO（面向对象）语言，结构体就像对象的数据属性。在本章中，我们将比较元组和结构体，并演示如何定义和实例化结构体。我们将讨论如何定义关联函数（associated functions），特别是被称为方法（<em>method</em>）的关联函数类型，以指定与结构体类型关联的行为。结构体和枚举（enum）是在程序域中创建新类型的构建块，以充分利用 Rust 的编译期类型检查。</p>
+<h3 id="定义和实例化结构体"><a href="#定义和实例化结构体" class="headerlink" title="定义和实例化结构体"></a>定义和实例化结构体</h3><p>结构体和元组类似，能够组合多个不同的类型，但它会对其中的每个字段进行命名，因此其中的字段可以通过名称进行操作。下面是一个结构体的定义和实例化示例：</p>
+<pre><code class="rust">// 定义一个结构体
+struct User &#123;
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+&#125;
+
+fn main() &#123;
+    // 实例化一个结构体给 `user1`
+    let user1 = User &#123;
+        email: String::from(&quot;someone@example.com&quot;),
+        username: String::from(&quot;someusername123&quot;),
+        active: true,
+        sign_in_count: 1,
+    &#125;;
+
+    println!(&quot;&#123;&#125;&quot;, user1.email); // someone@example.com
+    println!(&quot;&#123;&#125;&quot;, user1.username); // someusername123
+    println!(&quot;&#123;&#125;&quot;, user1.active); // true
+    println!(&quot;&#123;&#125;&quot;, user1.sign_in_count); // 1
+&#125;
+</code></pre>
+<p>和 Go 中的结构体类似，Rust 结构体实例化时将各个字段的值初始化为指定的内容。如果要修改结构体的一个或多个字段，同样可以使用 <code>mut</code> 定义：</p>
+<pre><code class="rust">fn main() &#123;
+    let mut user1 = User &#123;
+        email: String::from(&quot;someone@example.com&quot;),
+        username: String::from(&quot;someusername123&quot;),
+        active: true,
+        sign_in_count: 1,
+    &#125;;
+
+    user1.email = String::from(&quot;anotheremail@example.com&quot;);
+    
+    println!(&quot;&#123;&#125;&quot;, user1.email); // anotheremail@example.com
+&#125;
+</code></pre>
+<p>需要注意的是，可变的结构体实例其每一个字段都是可变的，不允许为字段单独设置可变属性。下面的函数 <code>build_user</code> 可以返回一个 <code>User</code> 结构体：</p>
+<pre><code class="rust">fn build_user(email: String, username: String) -&gt; User &#123;
+    User &#123;
+        email: email,
+        username: username,
+        active: true,
+        sign_in_count: 1,
+    &#125;
+&#125;
+
+fn main() &#123;
+    let user1 = build_user(
+        String::from(&quot;someone@example.com&quot;),
+        String::from(&quot;someusername123&quot;),
+    );
+&#125;
+</code></pre>
+<p>可以通过将参数名设置为和结构体字段<strong>同名</strong>来简化结构体字段初始化操作：</p>
+<pre><code class="rust">fn build_user(email: String, username: String) -&gt; User &#123;
+    User &#123;
+        email, // 等同于 `email: email`
+        username, // 等同于 `username: username`
+        active: true,
+        sign_in_count: 1,
+    &#125;
+&#125;
+</code></pre>
+<p>有时候需要修改一个结构体实例的部分字段，用于初始化另一个新的结构体，下面的代码是原始的写法：</p>
+<pre><code class="rust">let user1 = User &#123;
+    email: String::from(&quot;someone@example.com&quot;),
+    username: String::from(&quot;someusername123&quot;),
+    active: true,
+    sign_in_count: 1,
+&#125;;
+
+let user2 = User &#123;
+    active: user1.active,
+    username: user1.username,
+    email: String::from(&quot;another@example.com&quot;),
+    sign_in_count: user1.sign_in_count,
+&#125;;
+</code></pre>
+<p>使用结构体更新语法可以简化这个操作：</p>
+<pre><code class="rust">let user2 = User &#123;
+    email: String::from(&quot;another@example.com&quot;), // 修改 `email` 字段
+    ..user1 // 从 `user1` 中获取剩余的各字段值
+&#125;;
+</code></pre>
+<p><strong>需要特别注意，<code>..user1</code> 必须放在结构体初始化语句的末尾。</strong></p>
+<p>另外，把 <code>user1</code> 中的字段值给 <code>user2</code> 等同于使用 <code>=</code> 进行赋值的操作，涉及到所有权的移动，需要参照前文的所有权机制进行讨论。因此，<code>user2</code> 通过结构体更新获取 <code>user1</code> 的字段后，<code>user1</code> 中的字段就不再可用了。</p>
+<pre><code class="rust">fn main() &#123;
+    let user1 = User &#123;
+        email: String::from(&quot;someone@example.com&quot;),
+        username: String::from(&quot;someusername123&quot;),
+        active: true,
+        sign_in_count: 1,
+    &#125;;
+
+    let user2 = User &#123;
+        email: String::from(&quot;another@example.com&quot;),
+        ..user1
+    &#125;;
+
+    println!(&quot;&#123;&#125;&quot;, user1.email); // 所有权未移动，不出错
+    println!(&quot;&#123;&#125;&quot;, user1.username); // 所有权已移动，出错
+    println!(&quot;&#123;&#125;&quot;, user1.active); // 栈数据，不出错
+    println!(&quot;&#123;&#125;&quot;, user1.sign_in_count); // 栈数据，不出错
+&#125;
+</code></pre>
+<h3 id="元组结构体"><a href="#元组结构体" class="headerlink" title="元组结构体"></a>元组结构体</h3><p>Rust 支持定义一种类似于元组的结构体，叫做元组结构体（<em>tuple structs</em>）。元组结构体首先是结构体，拥有结构体的命名特性，但是其内部的字段是只有类型而没有名字的。元组结构体适用于定义可复用的元组类型。定义元组结构体的示例如下：</p>
+<pre><code class="rust">struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+let black = Color(0, 0, 0);
+let origin = Point(0, 0, 0);
+</code></pre>
+<p>虽然 <code>Color</code> 和 <code>Point</code> 包含的数据类型完全相同，但是它们并不是同一类型，因此 <code>black</code> 和 <code>origin</code> 是不同类型的两个变量。同样的，不同名的结构体都是不同的类型。</p>
+<h3 id="没有任何字段的单元式结构体"><a href="#没有任何字段的单元式结构体" class="headerlink" title="没有任何字段的单元式结构体"></a>没有任何字段的单元式结构体</h3><p>Rust 支持定义没有任何字段的结构体，这种结构体被称为单元式结构体（<em>unit-like structs</em>）因为它很类似于 <code>()</code>。</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+        <div class='references'>
+          <section class='header'>
+            
+              <i class="fas fa-quote-left fa-fw" aria-hidden="true"></i>
+            
+            <span>参考资料</span>
+          </section>
+          <section class='body'>
+            <ul>
+              
+                <li>
+                  <a href="https://doc.rust-lang.org/book/" rel="external nofollow noopener noreferrer" target="_blank">
+                  The Rust Programming Language
+                  </a>
+                </li>
+              
+            </ul>
+          </section>
+        </div>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/learning-rust/>https://blog.secriy.com/learning-rust/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年3月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PL</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Rust/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Rust</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/learning-rust/&title=Learning Rust - Secriy's Blog&summary=本文主要根据 The Rust Programming Language 翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论或是难以理解的部分进行了详细介绍，因此对于本文内容请不要认为其等同于原文。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在由于转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/learning-rust/&title=Learning Rust - Secriy's Blog&summary=本文主要根据 The Rust Programming Language 翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论或是难以理解的部分进行了详细介绍，因此对于本文内容请不要认为其等同于原文。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在由于转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/learning-rust/&title=Learning Rust - Secriy's Blog&summary=本文主要根据 The Rust Programming Language 翻译总结而成，大多内容纯粹是对该书的翻译，但按照我个人的学习路线以及练习增删了一些内容，同时也参考了其他文档对需要深入讨论或是难以理解的部分进行了详细介绍，因此对于本文内容请不要认为其等同于原文。本文对于有其他编程语言经验的同学来说比较容易接受，容易引起歧义的英文翻译都会标注原文。由于本文完全直接参考官方教程等英文文献，可以确保内容不存在由于转经多人之手而出现的偏差。但受限于个人知识水平，难免出现疏漏错误，烦请告知。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/basics-of-innodb/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>The Basics of InnoDB</p>
+          <p class='content'>本文是 MySQL InnoDB 存储引擎的相关基础知识总结，主要是对 MySQL 5.7 官方文档 InnoDB 部分进行的翻译和精简，但参考了其他的相关文档（如 MariaDB）以及一些书籍...</p>
+        </a>
+      
+      
+        <a class='next' href='/multicast-dns/'>
+          <p class='title'>Multicast DNS<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>玩 Wireshark 的时候无意中发现了一个叫 mDNS 的协议，有些好奇就打算深入了解一下。
+
+
+
+简介multicast DNS (mDNS) 协议，即多播 DNS 协议，顾名思义和 DN...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E5%8F%AF%E5%8F%98%E6%80%A7"><span class="toc-text">变量和可变性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E5%88%AB"><span class="toc-text">差别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shadowing"><span class="toc-text">Shadowing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="toc-text">标量类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-text">整数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E8%BF%90%E7%AE%97"><span class="toc-text">数值运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="toc-text">字符类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">复合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Tuple"><span class="toc-text">Tuple</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Array"><span class="toc-text">Array</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-text">命名规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-text">函数参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">函数返回值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-text">条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-text">循环</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#loop"><span class="toc-text">loop</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#While"><span class="toc-text">While</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#for"><span class="toc-text">for</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-text">练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">什么是所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ownership-%E8%A7%84%E5%88%99"><span class="toc-text">Ownership 规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">变量作用域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%92%8C%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">内存和内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%9A%E7%A7%BB%E5%8A%A8"><span class="toc-text">变量和数据交互的方式：移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%85%8B%E9%9A%86"><span class="toc-text">变量和数据交互的方式：克隆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%85%E5%AD%98%E5%9C%A8%E6%A0%88%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%9A%E5%A4%8D%E5%88%B6"><span class="toc-text">仅存在栈上的数据：复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E5%92%8C%E5%87%BD%E6%95%B0"><span class="toc-text">所有权和函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">返回值和作用域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%92%8C%E5%80%9F%E7%94%A8"><span class="toc-text">引用和借用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%BC%95%E7%94%A8"><span class="toc-text">可变引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%82%AC%E6%8C%82%E5%BC%95%E7%94%A8"><span class="toc-text">悬挂引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%B1%BB%E5%9E%8B"><span class="toc-text">切片类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87"><span class="toc-text">字符串切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E9%9D%A2%E9%87%8F%E6%98%AF%E5%88%87%E7%89%87"><span class="toc-text">字符串字面量是切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-text">字符串切片作为参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%88%87%E7%89%87"><span class="toc-text">其他切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">定义和实例化结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">元组结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E4%BB%BB%E4%BD%95%E5%AD%97%E6%AE%B5%E7%9A%84%E5%8D%95%E5%85%83%E5%BC%8F%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">没有任何字段的单元式结构体</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Learning Rust";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.secriy.com/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.secriy.com/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.secriy.com/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.secriy.com/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.secriy.com/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.secriy.com/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+  volantis.pjax.push(pjax_scrollrebeal)
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.secriy.com/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.secriy.com/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+</script>
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+  Waves.attach('.flat-btn', ['waves-button']);
+  Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+  Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+  Waves.attach('.flat-box', ['waves-block']);
+  Waves.attach('.float-box', ['waves-block', 'waves-float']);
+  Waves.attach('.waves-image');
+  Waves.init();
+});
+</script>
+
+
+
+
+
+  
+
+<script src="https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+	<script>
+		volantis.pjax.push(window.HideLoading,'HideLoading');
+		volantis.pjax.send(window.ShowLoading,'ShowLoading');
+		volantis.pjax.error(window.HideLoading,'HideLoading');
+	</script>
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

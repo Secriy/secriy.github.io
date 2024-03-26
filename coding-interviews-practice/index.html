@@ -1,0 +1,3709 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>剑指 Offer 刷题笔记 - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="Algorithms">
+  
+
+  
+    <meta name="description" content="剑指 Offer 刷题记录。">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://upyun.secriy.com/statics/img/sun.png">
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+          
+          
+            Secriy's Blog
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/projects/
+                  
+                  
+                  
+                    id="projects"
+                  >
+                  <i class='fas fa-code-branch fa-fw'></i>项目
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" 
+                  
+                  
+                  >
+                  <i class='fas fa-ellipsis-v fa-fw'></i>其他
+                </a>
+                
+                  <ul class="list-v">
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://cloud.secriy.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:cloudsecriycom"
+                  >
+                  <i class='fas fa-cloud fa-fw'></i>私有云盘
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=https://h.acgfate.com/
+                  
+                  
+                    target="_blank"
+                  
+                  
+                    id="https:hacgfatecom"
+                  >
+                  <i class='fas fa-images fa-fw'></i>个人图床
+                </a>
+                
+              </li>
+            
+          
+                    
+                      
+            
+              <hr>
+            
+          
+                    
+                      
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>暗黑模式
+                </a>
+              <li>
+            
+          
+                    
+                  </ul>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post search' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Secriy's Blog</p>
+    
+    
+      <p class="subtitle">The world is a fine place and worth fighting for.</p>
+    
+  </div>
+  <div class='bottom'>
+    
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+          <i class="icon fas fa-search fa-fw"></i>
+        </form>
+      </div>
+    
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <i class='fas fa-rss fa-fw'></i><p>博客</p>
+            </a>
+          
+            <a href="/projects/"
+              
+              
+              id="projects">
+              <i class='fas fa-code-branch fa-fw'></i><p>项目</p>
+            </a>
+          
+            <a href="/friends/"
+              
+              
+              id="friends">
+              <i class='fas fa-link fa-fw'></i><p>友链</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <i class='fas fa-info-circle fa-fw'></i><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        剑指 Offer 刷题笔记
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/algorithms/">算法刷题</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年6月22日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="剑指 Offer 刷题笔记" data-path="/coding-interviews-practice/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
+  
+  <a href="/coding-interviews-practice/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/coding-interviews-practice/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>剑指 Offer 刷题记录。</p></div>
+
+<span id="more"></span>
+
+<h2 id="3-数组中重复的数字"><a href="#3-数组中重复的数字" class="headerlink" title="3. 数组中重复的数字"></a>3. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/">数组中重复的数字</a></h2><h3 id="Ideas"><a href="#Ideas" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
+<li>遍历数组，将每个数字放入 Map 中，当遍历过程中发现键已在 Map 中时直接返回该键。</li>
+<li>题目中提到数组内的数字都在 0 到 n-1 的范围内，而找到数组中重复元素的关键就是遍历过程中知道重复元素所在的位置，因此将每个元素按照 <code>numbers[i]==i</code> 的规则放到固定的位置。</li>
+</ul>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>Map</p>
+<blockquote>
+<p>难度 1 分</p>
+</blockquote>
+<pre><code class="go">func duplicate( numbers []int ) int &#123;
+    m := make(map[int]bool)
+    for _, v := range numbers &#123;
+        if _, ok := m[v]; ok &#123;
+            return v
+        &#125;
+        m[v] = true
+    &#125;
+    return -1
+&#125;
+</code></pre>
+</li>
+<li><p>替换法</p>
+<blockquote>
+<p>难度 3 分</p>
+</blockquote>
+<pre><code class="go">func findRepeatNumber(nums []int) int &#123;
+    for i := 0; i &lt; len(nums); i++ &#123;
+        for nums[i] != i &#123;
+            if nums[i] == nums[nums[i]] &#123;
+                return nums[i]
+            &#125;
+            nums[i], nums[nums[i]] = nums[nums[i]], nums[i]
+        &#125;
+    &#125;
+    return -1
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="4-二维数组中的查找"><a href="#4-二维数组中的查找" class="headerlink" title="4. 二维数组中的查找"></a>4. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/">二维数组中的查找</a></h2><h3 id="常规"><a href="#常规" class="headerlink" title="常规"></a>常规</h3><p>将这个二维数组看作一个矩阵，其行列都递增排列。很明显解题方法是对比某一中间数字，不断缩小范围，所以要确定对比的数字。</p>
+<p>从左上角入手对比并不会缩小很明显的范围，右下角同理，而左下角和右上角数字满足。</p>
+<p>选取右上角进行对比，当前对比的数字为 num，当 target &gt; num，缩小范围，排除第一行。当 target &lt; num，排除最后一列，直到找到目标数字。</p>
+<pre><code class="go">func findNumberIn2DArray(matrix [][]int, target int) bool &#123;
+    row, col := len(matrix)-1, 0
+    for row &gt;= 0 &amp;&amp; row &lt; len(matrix) &amp;&amp; col &lt; len(matrix[0])&#123;
+        if target == matrix[row][col] &#123;
+            return true
+        &#125;
+        if target &lt; matrix[row][col] &#123;
+            row--
+        &#125; else &#123;
+            col++
+        &#125;
+    &#125;
+    return false
+&#125;
+</code></pre>
+<h2 id="5-替换空格"><a href="#5-替换空格" class="headerlink" title="5. 替换空格"></a>5. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/">替换空格</a></h2><h3 id="常规-1"><a href="#常规-1" class="headerlink" title="常规"></a>常规</h3><ul>
+<li><p>对于字符数组（如 C 实现）的原地实现，可以先遍历一遍数组，得出空格个数 $x$，则新数组长度为 $length+2x$。扩容后使用双指针解法，从最后一个非空元素开始移到数组末尾，遇到空格新增三个目标字符，直到替换完最后一个空格。</p>
+</li>
+<li><p>对于 Golang 非原地实现，可以直接遍历字符串将其替换为 <code>%20</code>。</p>
+</li>
+</ul>
+<pre><code class="go">func replaceSpace( s string ) string &#123;
+    var newString string
+    for _, v := range s &#123;
+        if string(v) == &quot; &quot;&#123;
+            newString += &quot;%20&quot;
+        &#125; else &#123;
+            newString += string(v)
+        &#125;
+    &#125;
+
+    return newString
+&#125;
+</code></pre>
+<h2 id="6-从尾到头打印链表"><a href="#6-从尾到头打印链表" class="headerlink" title="6. 从尾到头打印链表"></a>6. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/">从尾到头打印链表</a></h2><h3 id="Ideas-1"><a href="#Ideas-1" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
+<li><p>简单思路是使用一个栈存储每次遍历的值，最后从栈中取出即可。</p>
+</li>
+<li><p>递归思路是递归调用函数，首先将最深层函数的结果返回，该方法等同于栈方案。</p>
+</li>
+</ul>
+<h3 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>存储结果</p>
+<pre><code class="go">func reversePrint(head *ListNode) []int &#123;
+    var result []int
+    for head != nil&#123;
+        result = append(result, head.Val)
+        head = head.Next
+    &#125;
+    // 反转Slice
+    for i, j := 0, len(result)-1; i &lt; j; i, j = i+1, j-1 &#123;
+        result[i], result[j] = result[j], result[i]
+    &#125;
+    return result
+&#125;
+</code></pre>
+</li>
+<li><p>递归</p>
+<pre><code class="go">func reversePrint(head *ListNode) []int &#123;
+    if head == nil &#123;
+        return []int&#123;&#125;
+    &#125;
+    return append(reversePrint(head.Next), head.Val)
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="7-重建二叉树"><a href="#7-重建二叉树" class="headerlink" title="7. 重建二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/">7. 重建二叉树</a></h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func buildTree(preorder []int, inorder []int) *TreeNode &#123;
+    for k, v := range inorder &#123;
+        if v == preorder[0] &#123;
+            return &amp;TreeNode&#123;
+                Val: v,
+                Left: buildTree(preorder[1:k+1], inorder[:k]),
+                Right: buildTree(preorder[k+1:], inorder[k+1:]),
+            &#125;
+        &#125;
+    &#125;
+    return nil
+&#125;
+</code></pre>
+<h2 id="9-用两个栈实现队列"><a href="#9-用两个栈实现队列" class="headerlink" title="9. 用两个栈实现队列"></a>9. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/">用两个栈实现队列</a></h2><h3 id="Solutions-2"><a href="#Solutions-2" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>Common</p>
+<pre><code class="go">type CQueue struct &#123;
+    Nums   []int
+    Length int
+&#125;
+
+func Constructor() CQueue &#123;
+    return CQueue&#123;&#125;
+&#125;
+
+func (this *CQueue) AppendTail(value int)  &#123;
+    this.Nums = append(this.Nums, value)
+    this.Length++
+&#125;
+
+func (this *CQueue) DeleteHead() int &#123;
+    if this.Length == 0 &#123;
+        return -1
+    &#125;
+    tmp := this.Nums[0]
+    this.Nums = this.Nums[1:]
+    this.Length--
+    return tmp
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="10-I-斐波那契数列"><a href="#10-I-斐波那契数列" class="headerlink" title="10- I. 斐波那契数列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/">10- I. 斐波那契数列</a></h2><h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><pre><code class="go">func fib(n int) int &#123;
+    pre, post := 0, 1
+    for i := 2; i &lt;= n; i++ &#123;
+        pre, post = post, (pre+post)%1000000007
+    &#125;
+    if n == 0 &#123;
+        return pre
+    &#125;
+    return post
+&#125;
+</code></pre>
+<h2 id="10-II-青蛙跳台阶问题"><a href="#10-II-青蛙跳台阶问题" class="headerlink" title="10- II. 青蛙跳台阶问题"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/">10- II. 青蛙跳台阶问题</a></h2><h3 id="动态规划-1"><a href="#动态规划-1" class="headerlink" title="动态规划"></a>动态规划</h3><p>斐波那契数列解法，典型动态规划</p>
+<pre><code class="go">func numWays(n int) int &#123;
+    pre, post := 1, 1
+    for i := 2; i &lt;= n; i++ &#123;
+        pre, post = post, (pre+post)%1000000007
+    &#125;
+    return post
+&#125;
+</code></pre>
+<h2 id="11-旋转数组的最小数字"><a href="#11-旋转数组的最小数字" class="headerlink" title="11. 旋转数组的最小数字"></a>11. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/">旋转数组的最小数字</a></h2><h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><p>遍历找到逆序的第一个元素</p>
+<pre><code class="go">func minArray(numbers []int) int &#123;
+    pre1, pre2 := 0, 1
+    length := len(numbers)
+    if length &lt; 2 &#123;
+        return numbers[0]
+    &#125;
+    for pre2 &lt; length &#123;
+        if numbers[pre2] &lt; numbers[pre1] &#123;
+            return numbers[pre2]
+        &#125;
+        pre1++
+        pre2++
+    &#125;
+    return numbers[0]
+&#125;
+</code></pre>
+<h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><pre><code class="go">func minArray(numbers []int) int &#123;
+    low, high := 0, len(numbers)-1
+    mid := 0
+    for low &lt; high &#123;
+        mid = (low+high)&gt;&gt;1
+        if numbers[mid] &lt; numbers[high] &#123;
+            // 右侧有序
+            high = mid
+        &#125; else if numbers[mid] &gt; numbers[high] &#123;
+            // 左侧有序
+            low = mid + 1
+        &#125; else &#123;
+            // 去重
+            high--
+        &#125;
+    &#125;
+    return numbers[low]
+&#125;
+</code></pre>
+<h2 id="12-矩阵中的路径"><a href="#12-矩阵中的路径" class="headerlink" title="12. 矩阵中的路径"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/">12. 矩阵中的路径</a></h2><h3 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h3><pre><code class="go">func exist(board [][]byte, word string) bool &#123;
+    rows, cols := len(board), len(board[0])
+    // 创建Visited数组
+    visited := make([][]bool, rows)
+    for i := range visited &#123;
+        visited[i] = make([]bool, cols)
+    &#125;
+    var find bool
+    for i := 0; i &lt; rows; i++ &#123;
+        for j := 0; j &lt; cols; j++ &#123;
+            backtracking(i, j, &amp;board, &amp;visited, &amp;word, 0, &amp;find)
+        &#125;
+    &#125;
+    return find
+&#125;
+
+func backtracking(row, col int, board *[][]byte, visited *[][]bool, word *string, idx int, find *bool) &#123;
+    if row &lt; 0 || row &gt;= len(*board) || col &lt; 0 || col &gt;= len((*board)[0]) &#123;
+        return
+    &#125;
+    if (*board)[row][col] != byte((*word)[idx]) || *find || (*visited)[row][col] &#123;
+        return
+    &#125;
+    if idx == len(*word)-1 &#123;
+        *find = true
+        return
+    &#125;
+    (*visited)[row][col] = true
+    backtracking(row+1, col, board, visited, word, idx+1, find)
+    backtracking(row-1, col, board, visited, word, idx+1, find)
+    backtracking(row, col+1, board, visited, word, idx+1, find)
+    backtracking(row, col-1, board, visited, word, idx+1, find)
+    (*visited)[row][col] = false
+&#125;
+</code></pre>
+<h3 id="回溯优化"><a href="#回溯优化" class="headerlink" title="回溯优化"></a>回溯优化</h3><pre><code class="go">func exist(board [][]byte, word string) bool &#123;
+   m, n := len(board), len(board[0])
+   for i := 0; i &lt; m; i++ &#123;
+       for j := 0; j &lt; n; j++ &#123;
+            if dfs(board, i, j, 0, word) &#123;
+                return true
+            &#125;
+        &#125;
+    &#125;
+    return false
+&#125;
+
+func dfs(board [][]byte, row, col, level int, word string) bool &#123;
+    if level == len(word) &#123;
+        return true
+    &#125;
+
+    if row &lt; 0 || col &lt; 0 || row == len(board) || col == len(board[0]) &#123;
+        return false
+    &#125;
+
+    if board[row][col] != word[level] &#123;
+        return false
+    &#125;
+
+    temp := board[row][col]
+    board[row][col] = &#39; &#39; // 将数组元素改为空格来代替 Visited 数组的功能
+    if dfs(board, row, col + 1, level + 1, word) ||
+    dfs(board, row, col - 1, level + 1, word) ||
+    dfs(board, row + 1, col, level + 1, word) ||
+    dfs(board, row - 1, col, level + 1, word)  &#123;
+        return true
+    &#125;
+    board[row][col] = temp
+    return false
+&#125;
+</code></pre>
+<h2 id="13-机器人的运动范围"><a href="#13-机器人的运动范围" class="headerlink" title="13. 机器人的运动范围"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/">13. 机器人的运动范围</a></h2><h3 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h3><pre><code class="go">func movingCount(m int, n int, k int) int &#123;
+    visited := make([][]bool, m)
+    for k := range visited &#123;
+        visited[k] = make([]bool, n)
+    &#125;
+    return dfs(m, n, k, 0, 0, visited)
+&#125;
+
+func dfs(m, n, k, row, col int, visited [][]bool) int &#123;
+    if row &gt;= m || col &gt;= n || visited[row][col] &#123;
+        return 0
+    &#125;
+    if row%10 + row/10 + col%10 + col/10 &gt; k &#123;
+        return 0
+    &#125;
+    visited[row][col] = true
+    return dfs(m, n, k, row, col+1, visited) + dfs(m, n, k, row+1, col, visited) + 1
+&#125;
+</code></pre>
+<h2 id="14-I-剪绳子"><a href="#14-I-剪绳子" class="headerlink" title="14- I. 剪绳子"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/jian-sheng-zi-lcof/">14- I. 剪绳子</a></h2><h3 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h3><pre><code class="go">func cuttingRope(n int) int &#123;
+    if n &lt;= 3 &#123;
+        return n-1
+    &#125;
+    sum := 1
+    for n &gt; 4 &#123;
+        sum *= 3
+        n-=3
+    &#125;
+    return sum*n
+&#125;
+</code></pre>
+<h2 id="14-II-剪绳子-II"><a href="#14-II-剪绳子-II" class="headerlink" title="14- II. 剪绳子 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/jian-sheng-zi-ii-lcof/">14- II. 剪绳子 II</a></h2><h3 id="数学-1"><a href="#数学-1" class="headerlink" title="数学"></a>数学</h3><pre><code class="go">func cuttingRope(n int) int &#123;
+    if n &lt;= 3 &#123;
+        return n-1
+    &#125;
+    sum := 1
+    for n &gt; 4 &#123;
+        sum *= 3
+        sum %= 1000000007
+        n-=3
+    &#125;
+    return sum*n % 1000000007
+&#125;
+</code></pre>
+<h2 id="15-二进制中-1-的个数"><a href="#15-二进制中-1-的个数" class="headerlink" title="15. 二进制中 1 的个数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/">15. 二进制中 1 的个数</a></h2><h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><p>位运算，移位统计。</p>
+<pre><code class="go">func hammingWeight(num uint32) int &#123;
+    count := 0
+    for i := 0; i &lt; 32; i++ &#123;
+        if num%2 == 1 &#123;
+            count++
+        &#125;
+        num = num &gt;&gt; 1
+    &#125;
+    return count
+&#125;
+</code></pre>
+<h2 id="16-数值的整数次方"><a href="#16-数值的整数次方" class="headerlink" title="16. 数值的整数次方"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/">16. 数值的整数次方</a></h2><h3 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h3><pre><code class="go">func myPow(x float64, n int) float64 &#123;
+    if n == 0 &#123;
+        return 1
+    &#125;
+    if n == 1 &#123;
+        return x
+    &#125;
+    if n == -1 &#123;
+        return 1/x
+    &#125;
+    mid := myPow(x, n/2)
+    return mid * mid * myPow(x, n%2)
+&#125;
+</code></pre>
+<h2 id="17-打印从-1-到最大的-n-位数"><a href="#17-打印从-1-到最大的-n-位数" class="headerlink" title="17. 打印从 1 到最大的 n 位数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/">17. 打印从 1 到最大的 n 位数</a></h2><h3 id="不考虑大数"><a href="#不考虑大数" class="headerlink" title="不考虑大数"></a>不考虑大数</h3><pre><code class="go">func printNumbers(n int) []int &#123;
+    count := 1
+    for i := 0; i &lt; n; i++ &#123;
+        count *= 10
+    &#125;
+    result := make([]int, count - 1)
+    for i := range result &#123;
+        result[i] = i + 1
+    &#125;
+    return result
+&#125;
+</code></pre>
+<h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><pre><code class="go">func printNumbers(n int) []int &#123;
+    res := make([]int, int(math.Pow(10, float64(n)))-1)
+    for i := range res &#123;
+        res[i] = i+1
+    &#125;
+    return res
+&#125;
+</code></pre>
+<h2 id="18-删除链表的节点"><a href="#18-删除链表的节点" class="headerlink" title="18. 删除链表的节点"></a>18. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/">删除链表的节点</a></h2><ul>
+<li><p>虚拟结点</p>
+<pre><code class="go">func deleteNode(head *ListNode, val int) *ListNode &#123;
+    dummy := new(ListNode)
+    dummy.Next = head
+    head = dummy
+    for head != nil &amp;&amp; head.Next != nil &#123;
+        if head.Next.Val == val &#123;
+            head.Next = head.Next.Next
+        &#125;
+        head = head.Next
+    &#125;
+    return dummy.Next
+&#125;
+</code></pre>
+</li>
+<li><p>递归</p>
+<pre><code class="go">func deleteNode(head *ListNode, val int) *ListNode &#123;
+    if head == nil &#123;
+        return head
+    &#125;
+    if head.Val == val &#123;
+        return head.Next
+    &#125;
+    head.Next = deleteNode(head.Next, val)
+    return head
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="21-调整数组顺序使奇数位于偶数前面"><a href="#21-调整数组顺序使奇数位于偶数前面" class="headerlink" title="21. 调整数组顺序使奇数位于偶数前面"></a>21. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/">调整数组顺序使奇数位于偶数前面</a></h2><ul>
+<li><p>头尾双指针</p>
+<pre><code class="go">func exchange(nums []int) []int &#123;
+    low, high := 0, len(nums) - 1
+    for low &lt; high &#123;
+        if nums[high] % 2 == 0 &#123;
+            high--
+        &#125;
+        if nums[low] % 2 != 0 &#123;
+            low++
+        &#125;
+        if low &lt; high &amp;&amp; nums[low] % 2 == 0 &amp;&amp; nums[high] % 2 != 0 &#123;
+            nums[low], nums[high] = nums[high], nums[low]
+        &#125;
+    &#125;
+    return nums
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="22-链表中倒数第-k-个节点"><a href="#22-链表中倒数第-k-个节点" class="headerlink" title="22. 链表中倒数第 k 个节点"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/">22. 链表中倒数第 k 个节点</a></h2><h3 id="计算长度"><a href="#计算长度" class="headerlink" title="计算长度"></a>计算长度</h3><p>由于是倒数 k 个节点，因此可以先遍历一遍链表得到链表长度，再减去 k 得到结果链表的起始位置，最后将从该位置开始的链表返回即可。</p>
+<p>$O(n)$|$O(1)$</p>
+<pre><code class="go">func getKthFromEnd(head *ListNode, k int) *ListNode &#123;
+    count := 0
+    p := head
+    for p != nil &#123;
+        count++
+        p = p.Next
+    &#125;
+    if count &lt; k &#123;
+        return nil
+    &#125;
+    for i := 0; i &lt;count-k; i++&#123;
+        head = head.Next
+    &#125;
+
+    return head
+&#125;
+</code></pre>
+<h3 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h3><p>首先遍历到链表第 k 个节点，然后再用一个指针去从头遍历，第二个指针遍历的过程中第一个指针也同步往后移动，直到指向末尾，返回第二个指针。<br>$O(n)$|$O(1)$</p>
+<pre><code class="go">func getKthFromEnd(head *ListNode, k int) *ListNode &#123;
+    slow, fast := head, head
+    for k &gt; 0 &#123;
+        fast = fast.Next
+        k--
+    &#125;
+    for fast != nil &#123;
+        slow = slow.Next
+        fast = fast.Next
+    &#125;
+    return slow
+&#125;
+</code></pre>
+<h2 id="23-反转链表"><a href="#23-反转链表" class="headerlink" title="23. 反转链表"></a>23. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/">反转链表</a></h2><h3 id="Ideas-2"><a href="#Ideas-2" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
+<li>记录前一结点，遍历链表修改结点</li>
+</ul>
+<h3 id="Solutions-3"><a href="#Solutions-3" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>preNode</p>
+<pre><code class="go">func reverseList(head *ListNode) *ListNode &#123;
+    if head == nil &#123;
+        return head
+    &#125;
+    var pre, next *ListNode
+    for &#123;
+        next = head.Next
+        head.Next = pre
+        if next == nil &#123;
+            break
+        &#125;
+        pre = head
+        head = next
+    &#125;
+    return head
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="25-合并两个排序的链表"><a href="#25-合并两个排序的链表" class="headerlink" title="25. 合并两个排序的链表"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/">25. 合并两个排序的链表</a></h2><h3 id="递归-1"><a href="#递归-1" class="headerlink" title="递归"></a>递归</h3><pre><code class="go">/**
+ * Definition for singly-linked list.
+ * type ListNode struct &#123;
+ *     Val int
+ *     Next *ListNode
+ * &#125;
+ */
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode &#123;
+    if l1 == nil &#123;
+        return l2
+    &#125;
+    if l2 == nil &#123;
+        return l1
+    &#125;
+    if l1.Val &lt;= l2.Val &#123;
+        l1.Next = mergeTwoLists(l1.Next, l2)
+        return l1
+    &#125; else &#123;
+        l2.Next = mergeTwoLists(l1, l2.Next)
+        return l2
+    &#125;
+&#125;
+</code></pre>
+<h2 id="26-树的子结构"><a href="#26-树的子结构" class="headerlink" title="26. 树的子结构"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/">26. 树的子结构</a></h2><h3 id="递归-2"><a href="#递归-2" class="headerlink" title="递归"></a>递归</h3><ul>
+<li>时间复杂度：$O(mn)$</li>
+<li>空间复杂度：$O(m)$</li>
+</ul>
+<blockquote>
+<p>m 为 A 树规模，n 为 B 树规模</p>
+</blockquote>
+<pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func isSubStructure(A *TreeNode, B *TreeNode) bool &#123;
+    if A == nil || B == nil &#123;
+        return false
+    &#125;
+    // 判断当前结点、递归左子树、递归右子树
+    return subTree(A, B) || isSubStructure(A.Left, B) || isSubStructure(A.Right, B)
+&#125;
+
+// 判断 B 是否是 A 包含根节点的子树
+func subTree(A *TreeNode, B *TreeNode) bool &#123;
+    if B == nil &#123;
+        // B 递归完毕
+        return true
+    &#125;
+    if A == nil || A.Val != B.Val &#123;
+        // A 递归完毕或 A B 当前结点不相等
+        return false
+    &#125;
+    // 往左右子树分别递归判断
+    return subTree(A.Left, B.Left) &amp;&amp; subTree(A.Right, B.Right)
+&#125;
+</code></pre>
+<h2 id="27-二叉树的镜像"><a href="#27-二叉树的镜像" class="headerlink" title="27. 二叉树的镜像"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/">27. 二叉树的镜像</a></h2><h3 id="递归-3"><a href="#递归-3" class="headerlink" title="递归"></a>递归</h3><pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func mirrorTree(root *TreeNode) *TreeNode &#123;
+    if root == nil &#123;
+        return nil
+    &#125;
+    root.Left, root.Right = root.Right, root.Left    // 交换左右子树
+    mirrorTree(root.Left)
+    mirrorTree(root.Right)
+    return root
+&#125;
+</code></pre>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func mirrorTree(root *TreeNode) *TreeNode &#123;
+    if root == nil &#123;
+        return nil
+    &#125;
+    queue := []*TreeNode&#123;root&#125;
+    for len(queue) &gt; 0 &#123;
+        node := queue[0]
+        queue = queue[1:]
+        node.Left, node.Right = node.Right, node.Left
+        if node.Left != nil &#123;
+            queue = append(queue, node.Left)
+        &#125;
+        if node.Right != nil &#123;
+            queue = append(queue, node.Right)
+        &#125;
+    &#125;
+    return root
+&#125;
+</code></pre>
+<h2 id="28-对称的二叉树"><a href="#28-对称的二叉树" class="headerlink" title="28. 对称的二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/">28. 对称的二叉树</a></h2><h3 id="递归（DFS）"><a href="#递归（DFS）" class="headerlink" title="递归（DFS）"></a>递归（DFS）</h3><pre><code class="go">func isSymmetric(root *TreeNode) bool &#123;
+    if root == nil &#123;
+        return true
+    &#125;
+    return helper(root.Left, root.Right)
+&#125;
+
+func helper(left, right *TreeNode) bool &#123;
+    if left == nil &amp;&amp; right == nil &#123;
+        return true
+    &#125;
+
+    if left == nil || right == nil &#123;
+        return false
+    &#125;
+
+    if left.Val != right.Val &#123;
+        return false
+    &#125;
+
+    return helper(left.Left, right.Right) &amp;&amp; helper(left.Right, right.Left)
+&#125;
+</code></pre>
+<h2 id="29-顺时针打印矩阵"><a href="#29-顺时针打印矩阵" class="headerlink" title="29. 顺时针打印矩阵"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">29. 顺时针打印矩阵</a></h2><h3 id="模拟"><a href="#模拟" class="headerlink" title="模拟"></a>模拟</h3><p>模拟路径、缩小边界即可。</p>
+<ul>
+<li>时间复杂度：$O(mn)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<blockquote>
+<p>m 和 n 分别为行和列的长度，result 数组为必须使用的空间，因此空间复杂度为$O(1)$</p>
+</blockquote>
+<pre><code class="go">func spiralOrder(matrix [][]int) []int &#123;
+    if len(matrix) == 0 &#123;
+        // 边界判断
+        return nil
+    &#125;
+    // 存储结果
+    result := make([]int, len(matrix) * len(matrix[0]))
+    index := 0
+
+    // 限制边界
+    rowMin, rowMax, colMin, colMax := 0, len(matrix), 0, len(matrix[0])
+
+    for &#123;
+        // 左 -&gt; 右
+        for i := colMin; i &lt; colMax; i++ &#123;
+            result[index] = matrix[rowMin][i]
+            index++
+        &#125;
+        rowMin++
+        if rowMin &gt;= rowMax &#123;
+            break
+        &#125;
+        // 上 -&gt; 下
+        for i := rowMin; i &lt; rowMax; i++ &#123;
+            result[index] = matrix[i][colMax-1]
+            index++
+        &#125;
+        colMax--
+        if colMin &gt;= colMax &#123;
+            break
+        &#125;
+        // 右 -&gt; 左
+        for i := colMax-1; i &gt;= colMin; i-- &#123;
+            result[index] = matrix[rowMax-1][i]
+            index++
+        &#125;
+        rowMax--
+        if rowMin &gt;= rowMax &#123;
+            break
+        &#125;
+        // 下 -&gt; 上
+        for i := rowMax-1; i &gt;= rowMin; i-- &#123;
+            result[index] = matrix[i][colMin]
+            index++
+        &#125;
+        colMin++
+        if colMin &gt;= colMax &#123;
+            break
+        &#125;
+    &#125;
+    return result
+&#125;
+</code></pre>
+<h2 id="30-包含-min-函数的栈"><a href="#30-包含-min-函数的栈" class="headerlink" title="30. 包含 min 函数的栈"></a>30. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/">包含 min 函数的栈</a></h2><h3 id="Ideas-3"><a href="#Ideas-3" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
+<li>使用<strong>辅助栈</strong>，push 时将更小的值放入辅助栈，pop 时当二者栈顶一致时弹出辅助栈栈顶元素。</li>
+</ul>
+<h3 id="Solutions-4"><a href="#Solutions-4" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>辅助栈</p>
+<pre><code class="go">type MinStack struct &#123;
+    Nums []int
+    Helper []int
+&#125;
+
+/** initialize your data structure here. */
+func Constructor() MinStack &#123;
+    return MinStack&#123;make([]int, 0), make([]int, 0)&#125;
+&#125;
+
+func (this *MinStack) Push(x int)  &#123;
+    if len(this.Helper) == 0 || x &lt;= this.Helper[len(this.Helper)-1] &#123;
+    this.Helper = append(this.Helper, x)
+    &#125;
+    this.Nums = append(this.Nums, x)
+&#125;
+
+func (this *MinStack) Pop()  &#123;
+    num := this.Nums[len(this.Nums)-1]
+    hnum := this.Helper[len(this.Helper)-1]
+    this.Nums = this.Nums[:len(this.Nums)-1]
+    if num == hnum &#123;
+        this.Helper = this.Helper[:len(this.Helper)-1]
+    &#125;
+&#125;
+
+func (this *MinStack) Top() int &#123;
+    return this.Nums[len(this.Nums)-1]
+&#125;
+
+func (this *MinStack) Min() int &#123;
+    return this.Helper[len(this.Helper)-1]
+&#125;
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.Min();
+ */
+</code></pre>
+</li>
+</ul>
+<h2 id="31-栈的压入、弹出序列"><a href="#31-栈的压入、弹出序列" class="headerlink" title="31. 栈的压入、弹出序列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/">31. 栈的压入、弹出序列</a></h2><h3 id="模拟-1"><a href="#模拟-1" class="headerlink" title="模拟"></a>模拟</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func validateStackSequences(pushed []int, popped []int) bool &#123;
+    stack := make([]int, 0)    // 模拟栈
+    for i := range pushed &#123;
+        stack = append(stack, pushed[i]) // 压栈
+        for len(popped) &gt; 0 &amp;&amp; len(stack) &gt; 0 &amp;&amp; stack[len(stack)-1] == popped[0] &#123;
+            // 循环出栈
+            stack = stack[:len(stack)-1]
+            popped = popped[1:]
+        &#125;
+    &#125;
+    return len(stack) == 0
+&#125;
+</code></pre>
+<h2 id="32-I-从上到下打印二叉树"><a href="#32-I-从上到下打印二叉树" class="headerlink" title="32 - I. 从上到下打印二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/">32 - I. 从上到下打印二叉树</a></h2><h3 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func levelOrder(root *TreeNode) []int &#123;
+    if root == nil &#123;
+        return []int&#123;&#125;
+    &#125;
+
+    queue := []*TreeNode&#123;root&#125;    // 队列
+    result := make([]int, 0)    // 存放结果
+
+    for len(queue) &gt; 0 &#123;
+        root := queue[0]
+        if root.Left != nil &#123;
+            queue = append(queue, root.Left)
+        &#125;
+        if root.Right != nil &#123;
+            queue = append(queue, root.Right)
+        &#125;
+        result = append(result, root.Val)
+        queue = queue[1:]
+    &#125;
+
+    return result
+&#125;
+</code></pre>
+<h2 id="32-II-从上到下打印二叉树-II"><a href="#32-II-从上到下打印二叉树-II" class="headerlink" title="32 - II. 从上到下打印二叉树 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/">32 - II. 从上到下打印二叉树 II</a></h2><h3 id="层序遍历-1"><a href="#层序遍历-1" class="headerlink" title="层序遍历"></a>层序遍历</h3><ul>
+<li>时间复杂度：</li>
+<li>空间复杂度：</li>
+</ul>
+<pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func levelOrder(root *TreeNode) [][]int &#123;
+    if root == nil &#123;
+        return [][]int&#123;&#125;
+    &#125;
+    queue := []*TreeNode&#123;root&#125;
+    result := make([][]int, 0)
+
+    for len(queue) &gt; 0 &#123;
+        tmp := make([]int, 0)    // 单层结点值
+        for i := len(queue); i &gt; 0; i-- &#123;
+            // 出队
+            node := queue[0]
+            queue = queue[1:]
+            tmp = append(tmp, node.Val)
+            if node.Left != nil &#123;
+                queue = append(queue, node.Left)
+            &#125;
+            if node.Right != nil &#123;
+                queue = append(queue, node.Right)
+            &#125;
+        &#125;
+        result = append(result, tmp)
+    &#125;
+    return result
+&#125;
+</code></pre>
+<h2 id="32-III-从上到下打印二叉树-III"><a href="#32-III-从上到下打印二叉树-III" class="headerlink" title="32 - III. 从上到下打印二叉树 III*"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/">32 - III. 从上到下打印二叉树 III</a>*</h2><h3 id="双端队列"><a href="#双端队列" class="headerlink" title="双端队列"></a>双端队列</h3><pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func levelOrder(root *TreeNode) [][]int &#123;
+    if root == nil &#123;
+        return [][]int&#123;&#125;
+    &#125;
+
+    queue := []*TreeNode&#123;root&#125;
+    result := make([][]int, 0)
+
+    for len(queue) &gt; 0 &#123;
+        tmp := make([]int, 0)
+        for i := len(queue); i &gt; 0; i-- &#123;
+            node := queue[0]
+            queue = queue[1:]
+            if node.Left != nil &#123;
+                queue = append(queue, node.Left)
+            &#125;
+            if node.Right != nil &#123;
+                queue = append(queue, node.Right)
+            &#125;
+            tmp = append(tmp, node.Val)
+        &#125;
+        result = append(result, tmp)
+        if len(queue) == 0 &#123;
+            break
+        &#125;
+        tmp = make([]int, 0)
+        for i := len(queue); i &gt; 0; i-- &#123;
+            node := queue[len(queue)-1]
+            queue = queue[:len(queue)-1]
+            if node.Right != nil &#123;
+                queue = append([]*TreeNode&#123;node.Right&#125;, queue...)
+            &#125;
+            if node.Left != nil &#123;
+                queue = append([]*TreeNode&#123;node.Left&#125;, queue...)
+            &#125;
+            tmp = append(tmp, node.Val)
+        &#125;
+        result = append(result, tmp)
+    &#125;
+
+    return result
+&#125;
+</code></pre>
+<h2 id="33-二叉搜索树的后序遍历序列"><a href="#33-二叉搜索树的后序遍历序列" class="headerlink" title="33. 二叉搜索树的后序遍历序列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/">33. 二叉搜索树的后序遍历序列</a></h2><h3 id="递归-4"><a href="#递归-4" class="headerlink" title="递归"></a>递归</h3><p>思路是后序遍历最右结点为根结点，其左边第一个大于根结点的值后面的值也必定大于根结点，如不满足则返回<code>false</code>，递归由此切分的左右子树，当子树只有一个结点则返回<code>true</code>。</p>
+<pre><code class="go">func verifyPostorder(postorder []int) bool &#123;
+   return verify(postorder, 0, len(postorder)-1)
+&#125;
+
+func verify(postorder []int, left, right int) bool &#123;
+    if left &gt;= right &#123;
+        return true
+    &#125;
+    tmp := left
+    for postorder[tmp] &lt; postorder[right] &#123;
+        tmp++
+    &#125;
+    for _, v := range postorder[tmp:right] &#123;
+        if v &lt; postorder[right] &#123;
+            return false
+        &#125;
+    &#125;
+    return verify(postorder, left, tmp-1) &amp;&amp; verify(postorder, tmp, right-1)
+&#125;
+</code></pre>
+<h2 id="34-二叉树中和为某一值的路径"><a href="#34-二叉树中和为某一值的路径" class="headerlink" title="34. 二叉树中和为某一值的路径"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/">34. 二叉树中和为某一值的路径</a></h2><h3 id="回溯（DFS）"><a href="#回溯（DFS）" class="headerlink" title="回溯（DFS）"></a>回溯（DFS）</h3><p>回溯法，设置一个二维列表<code>res</code>存储结果，设置一个列表<code>tmp</code>存放当前路径。</p>
+<pre><code class="go">func pathSum(root *TreeNode, target int) [][]int &#123;
+    res := make([][]int, 0)
+    tmp := make([]int, 0)
+    backtracking(root, target, &amp;res, &amp;tmp)
+    return res
+&#125;
+
+func backtracking(root *TreeNode, target int, res *[][]int, tmp *[]int) &#123;
+    if root == nil &#123;
+        return
+    &#125;
+    target -= root.Val
+    *tmp = append(*tmp, root.Val)
+    if target == 0 &amp;&amp; root.Left == nil &amp;&amp; root.Right == nil &#123;
+        // 深拷贝，防止共用底层数组导致结果重复
+        dest := make([]int, len(*tmp))
+        copy(dest, *tmp)
+        *res = append(*res, dest)
+    &#125;
+    backtracking(root.Left, target, res, tmp)
+    backtracking(root.Right, target, res, tmp)
+    *tmp = (*tmp)[:len(*tmp)-1]
+&#125;
+</code></pre>
+<h2 id="35-复杂链表的复制"><a href="#35-复杂链表的复制" class="headerlink" title="35. 复杂链表的复制*"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof/">35. 复杂链表的复制</a>*</h2><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><p>哈希表的思路是用一个哈希表存储原链表结点和新链表结点的对应关系，然后将<code>Next</code>和<code>Random</code>属性复制过去。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">/**
+ * Definition for a Node.
+ * type Node struct &#123;
+ *     Val int
+ *     Next *Node
+ *     Random *Node
+ * &#125;
+ */
+
+func copyRandomList(head *Node) *Node &#123;
+    if head == nil &#123;
+        return nil
+    &#125;
+
+    m := make(map[*Node]*Node)
+
+    for cur := head; cur != nil; cur = cur.Next &#123;
+        m[cur] = &amp;Node&#123;cur.Val, nil, nil&#125;
+    &#125;
+
+    for cur := head; cur != nil; cur = cur.Next &#123;
+        m[cur].Next = m[cur.Next]
+        m[cur].Random = m[cur.Random]
+    &#125;
+
+    return m[head]
+&#125;
+</code></pre>
+<h2 id="38-字符串的排列"><a href="#38-字符串的排列" class="headerlink" title="38. 字符串的排列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/">38. 字符串的排列</a></h2><h3 id="回溯（DFS）-1"><a href="#回溯（DFS）-1" class="headerlink" title="回溯（DFS）"></a>回溯（DFS）</h3><p>使用标准的回溯加上<code>visited</code>数组去重可以完成字符串的所有排列，但当输入的字符串中存在重复字符，结果集就会有重复。需要在同一层判断重复元素并跳过。可以先对字符串进行字符排序，让重复字符位置连续。</p>
+<pre><code class="go">func permutation(s string) []string &#123;
+    // 排序字符串
+    t := []byte(s)
+    sort.Slice(t, func(a, b int) bool &#123;return t[a] &lt; t[b]&#125;)
+    s = string(t)
+    res := make([]string, 0)    // 结果集
+    visited := make([]bool, len(s))    // 判断是否访问
+    dfs(s, &quot;&quot;, &amp;res, visited)
+    return res
+&#125;
+
+func dfs(s, tmp string, res *[]string, visited []bool) &#123;
+    if len(tmp) == len(s) &#123;
+        *res = append(*res, tmp)
+        return
+    &#125;
+
+    for i := 0; i &lt; len(s); i++ &#123;
+        if visited[i] || (i &gt; 0 &amp;&amp; s[i-1] == s[i] &amp;&amp; !visited[i-1]) &#123;
+            continue
+        &#125;
+        visited[i] = true
+        dfs(s, tmp + s[i:i+1], res, visited)
+        visited[i] = false
+    &#125;
+&#125;
+</code></pre>
+<h2 id="39-数组中出现次数超过一半的数字"><a href="#39-数组中出现次数超过一半的数字" class="headerlink" title="39. 数组中出现次数超过一半的数字"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/">39. 数组中出现次数超过一半的数字</a></h2><h3 id="摩尔投票法"><a href="#摩尔投票法" class="headerlink" title="摩尔投票法"></a>摩尔投票法</h3><p>由于需要找到的数字的出现次数超过数组大小的一半，因此可以将不相等的数字从数组中剔除，最终留下的就是众数。基于这个思路简化的<strong>摩尔投票法</strong>设定一个变量，当选中的两个数字不等则将该变量-1 操作，相等则+1。</p>
+<pre><code class="go">func majorityElement(nums []int) int &#123;
+    num, sum := 0, 0
+    for _, v := range nums &#123;
+        if sum == 0 &#123;
+            num = v        // 当sum为0重新设置众数
+        &#125;
+        if v != num &#123;
+            sum--
+        &#125; else &#123;
+            sum++
+        &#125;
+    &#125;
+    return num
+&#125;
+</code></pre>
+<h2 id="40-最小的-k-个数"><a href="#40-最小的-k-个数" class="headerlink" title="40. 最小的 k 个数"></a>40. <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/">最小的 k 个数</a></h2><h3 id="Ideas-4"><a href="#Ideas-4" class="headerlink" title="Ideas"></a>Ideas</h3><ul>
+<li>排序</li>
+<li>大根堆</li>
+</ul>
+<h3 id="Solutions-5"><a href="#Solutions-5" class="headerlink" title="Solutions"></a>Solutions</h3><h2 id="42-连续子数组的最大和"><a href="#42-连续子数组的最大和" class="headerlink" title="42. 连续子数组的最大和"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/">42. 连续子数组的最大和</a></h2><h3 id="动态规划-2"><a href="#动态规划-2" class="headerlink" title="动态规划"></a>动态规划</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func maxSubArray(nums []int) int &#123;
+    dp := make([]int, len(nums))
+    dp[0] = nums[0]
+    maxNum := dp[0]
+    for i := 1; i &lt; len(nums); i++ &#123;
+        dp[i] = max(dp[i-1] + nums[i], nums[i])
+        if dp[i] &gt; maxNum &#123;
+            maxNum = dp[i]
+        &#125;
+    &#125;
+    return maxNum
+&#125;
+
+func max(a, b int) int &#123;
+    if a &gt; b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h3 id="动态规划（OPT）"><a href="#动态规划（OPT）" class="headerlink" title="动态规划（OPT）"></a>动态规划（OPT）</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func maxSubArray(nums []int) int &#123;
+    pre, post := nums[0], 0
+    maxNum := pre
+    for i := 1; i &lt; len(nums); i++ &#123;
+        pre, post = post, max(pre + nums[i], nums[i])
+        maxNum = max(maxNum, post)
+    &#125;
+    return maxNum
+&#125;
+
+func max(a, b int) int &#123;
+    if a &gt; b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h2 id="47-礼物的最大价值"><a href="#47-礼物的最大价值" class="headerlink" title="47. 礼物的最大价值"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/">47. 礼物的最大价值</a></h2><h3 id="动态规划-3"><a href="#动态规划-3" class="headerlink" title="动态规划"></a>动态规划</h3><p>遍历整个矩阵，从上到下填充当前路径的最大值。</p>
+<ul>
+<li>时间复杂度：$O(mn)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func maxValue(grid [][]int) int &#123;
+    for i := range grid &#123;
+        for j := range grid[0] &#123;
+            if i == 0 &amp;&amp; j &gt; 0 &#123;
+                grid[i][j] += grid[i][j-1]
+            &#125; else if i &gt; 0 &amp;&amp; j == 0 &#123;
+                grid[i][j] += grid[i-1][j]
+            &#125; else if i &gt; 0 &amp;&amp; j &gt; 0 &#123;
+                grid[i][j] += max(grid[i-1][j], grid[i][j-1])
+            &#125;
+        &#125;
+    &#125;
+    return grid[len(grid)-1][len(grid[0])-1]
+&#125;
+
+func max(a, b int) int &#123;
+    if a &gt; b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h2 id="49-丑数"><a href="#49-丑数" class="headerlink" title="49. 丑数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/chou-shu-lcof/">49. 丑数</a></h2><p>所有的丑数都由已存在的丑数乘以 2 或 3 或 5 得到。因此可以采用动态规划 + 三指针的解法。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func nthUglyNumber(n int) int &#123;
+    if n &lt;= 0 &#123;
+        return -1
+    &#125;
+
+    dp := make([]int, n)
+    dp[0] = 1
+
+    p1, p2, p3 := 0, 0, 0    // 三个指针
+
+    for i := 1; i &lt; n; i++ &#123;
+        dp[i] = min(dp[p1] * 2, dp[p2] * 3, dp[p3] * 5)
+        if dp[i] == dp[p1] * 2 &#123;
+            p1++
+        &#125;
+        if dp[i] == dp[p2] * 3 &#123;
+            p2++
+        &#125;
+        if dp[i] == dp[p3] * 5 &#123;
+            p3++
+        &#125;
+    &#125;
+    return dp[len(dp)-1]
+&#125;
+
+// 求三数最小值
+func min(a, b, c int) int &#123;
+    switch &#123;
+    case a &lt;= b &amp;&amp; a &lt;= c:
+        return a
+    case a &lt;= b:
+        return c
+    case b &lt;= c:
+        return b
+    default:
+        return c
+    &#125;
+&#125;
+</code></pre>
+<h2 id="50-第一个只出现一次的字符"><a href="#50-第一个只出现一次的字符" class="headerlink" title="50. 第一个只出现一次的字符"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/">50. 第一个只出现一次的字符</a></h2><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>简单思路是使用 HashMap 统计每个字符的出现次数，再遍历一次取目标值。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func firstUniqChar(s string) byte &#123;
+    m := make(map[byte]int)
+    for i := range s &#123;
+        m[s[i]]++
+    &#125;
+    for i := range s &#123;
+        if m[s[i]] == 1 &#123;
+            return s[i]
+        &#125;
+    &#125;
+    return &#39; &#39;
+&#125;
+</code></pre>
+<h3 id="字符数组"><a href="#字符数组" class="headerlink" title="字符数组"></a>字符数组</h3><p>和 Map 思路相同，但是由于题目说明字符只能是小写字母，因此可以用字符数组存储。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func firstUniqChar(s string) byte &#123;
+    m := make([]int, 26)
+    for _, v := range s &#123;
+        m[v-&#39;a&#39;]++
+    &#125;
+    for _, v := range s &#123;
+        if m[v-&#39;a&#39;] == 1 &#123;
+            return byte(v)
+        &#125;
+    &#125;
+
+    return byte(&#39; &#39;)
+&#125;
+</code></pre>
+<h2 id="52-两个链表的第一个公共节点"><a href="#52-两个链表的第一个公共节点" class="headerlink" title="52. 两个链表的第一个公共节点"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">52. 两个链表的第一个公共节点</a></h2><h3 id="双指针-1"><a href="#双指针-1" class="headerlink" title="双指针"></a>双指针</h3><p>二者遍历到<code>nil</code>时，跳转到对方链路的头结点继续遍历，从而使两条链路长度相等。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">/**
+ * Definition for singly-linked list.
+ * type ListNode struct &#123;
+ *     Val int
+ *     Next *ListNode
+ * &#125;
+ */
+func getIntersectionNode(headA, headB *ListNode) *ListNode &#123;
+    if headA == nil || headB == nil &#123;
+        return nil
+    &#125;
+    pa, pb := headA, headB
+    for pa != pb &#123;
+        if pa == nil &#123;
+            pa = headB
+        &#125; else &#123;
+            pa = pa.Next
+        &#125;
+        if pb == nil &#123;
+            pb = headA
+        &#125; else &#123;
+            pb = pb.Next
+        &#125;
+    &#125;
+    return pa
+&#125;
+</code></pre>
+<h2 id="53-I-在排序数组中查找数字-I"><a href="#53-I-在排序数组中查找数字-I" class="headerlink" title="53 - I. 在排序数组中查找数字 I"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/">53 - I. 在排序数组中查找数字 I</a></h2><h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><p>二分查找到第一个目标数字，再从该位置向后遍历统计等于目标值的元素个数。</p>
+<pre><code class="go">func search(nums []int, target int) int &#123;
+    length := len(nums)
+    left, right, mid := 0, length - 1, 0
+    for left &lt; right &#123;
+        mid = (left+right)&gt;&gt;1
+        if nums[mid] &lt; target &#123;
+            left = mid + 1
+        &#125; else &#123;
+            right = mid
+        &#125;
+    &#125;
+    count := 0
+    for left &lt; length &amp;&amp; nums[left] == target &#123;
+        count++
+        left++
+    &#125;
+    return count
+&#125;
+</code></pre>
+<h3 id="两次二分查找"><a href="#两次二分查找" class="headerlink" title="两次二分查找"></a>两次二分查找</h3><pre><code class="go">func search(nums []int, target int) int &#123;
+    length := len(nums)
+    left, right, mid := 0, length - 1, 0
+    // 找左边界
+    for left &lt; right &#123;
+        mid = (left+right)&gt;&gt;1
+        if nums[mid] &lt; target &#123;
+            left = mid + 1
+        &#125; else &#123;
+            right = mid
+        &#125;
+    &#125;
+    l := left // 记录左边界
+
+    if length &gt; 0 &amp;&amp; nums[l] != target &#123;
+        // 找不到，提前返回
+        return 0
+    &#125;
+
+    // 找右边界
+    right = length-1
+    for left &lt;= right &#123;
+        mid = (left+right)&gt;&gt;1
+        if nums[mid] &lt;= target &#123;
+            left = mid + 1
+        &#125; else &#123;
+            right = mid - 1
+        &#125;
+    &#125;
+
+    return right - l + 1
+&#125;
+</code></pre>
+<h3 id="两次二分查找（OPT）"><a href="#两次二分查找（OPT）" class="headerlink" title="两次二分查找（OPT）"></a>两次二分查找（OPT）</h3><p>可以注意到，查找<code>target-1</code>右边界时，会定位到<code>target</code>的左边界，以此简化代码如下：</p>
+<pre><code class="go">func search(nums []int, target int) int &#123;
+    length := len(nums)
+    left, right, mid := 0, length-1, 0
+    helper := func(l, r, t int) int &#123;
+        for l &lt;= r &#123;
+            mid = (l+r)&gt;&gt;1
+            if nums[mid] &lt;= t &#123;
+                l = mid + 1
+            &#125; else &#123;
+                r = mid - 1
+            &#125;
+        &#125;
+        return r
+    &#125;
+
+    return helper(left, right, target) - helper(left, right, target-1)
+&#125;
+</code></pre>
+<h2 id="53-II-0-～-n-1-中缺失的数字"><a href="#53-II-0-～-n-1-中缺失的数字" class="headerlink" title="53 - II. 0 ～ n-1 中缺失的数字"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/">53 - II. 0 ～ n-1 中缺失的数字</a></h2><h3 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找"></a>二分查找</h3><p>数组只缺少一个数字，缺失数字之前的数字下标和其值相等，因此可使用二分法进行查找。</p>
+<ul>
+<li>时间复杂度：$O(log{n})$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func missingNumber(nums []int) int &#123;
+    length := len(nums)
+
+    if length - 1 == nums[length-1] &#123;
+        // 当缺失的数字在数组最后时的情况
+        return nums[length-1] + 1
+    &#125;
+
+    left, right, mid := 0, length - 1, 0
+    for left &lt; right &#123;
+        // 二分法查找目标数字
+        mid = (left + right) / 2
+        if nums[mid] == mid &#123;
+            // 下标匹配，表明左半部分有序
+            left = mid + 1
+        &#125; else &#123;
+            // 左半部分无序
+            right = mid
+        &#125;
+    &#125;
+
+    return left
+&#125;
+</code></pre>
+<h2 id="54-二叉搜索树的第-k-大节点"><a href="#54-二叉搜索树的第-k-大节点" class="headerlink" title="54. 二叉搜索树的第 k 大节点"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">54. 二叉搜索树的第 k 大节点</a></h2><h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><p>由于二叉搜索树的特性，即中序遍历结果有序，因此可以使用中序遍历得到结果。</p>
+<p>时间复杂度：$O(n)$</p>
+<p>空间复杂度：$O(n)$</p>
+<blockquote>
+<p>最差情况：当树退化为链表时。</p>
+</blockquote>
+<pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+var res = 0
+var count = 0
+func kthLargest(root *TreeNode, k int) int &#123;
+    res = 0        // 重置全局变量值，防止用例干扰
+    count = 0
+    inorder(root, k)
+    return res
+&#125;
+
+func inorder(root *TreeNode, k int) &#123;
+    if root == nil &#123;
+        return
+    &#125;
+    inorder(root.Right, k)    // 先遍历右子树，得到中序遍历结果的逆序
+    count++
+    if count == k &#123;
+        // 当遍历的结点数等于 k 则返回
+        res = root.Val
+        return
+    &#125;
+    inorder(root.Left, k)
+&#125;
+</code></pre>
+<h2 id="55-I-二叉树的深度"><a href="#55-I-二叉树的深度" class="headerlink" title="55 - I. 二叉树的深度"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/">55 - I. 二叉树的深度</a></h2><h3 id="递归（DFS）-1"><a href="#递归（DFS）-1" class="headerlink" title="递归（DFS）"></a>递归（DFS）</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func maxDepth(root *TreeNode) int &#123;
+    if root == nil &#123;
+        return 0
+    &#125;
+    return max(maxDepth(root.Left), maxDepth(root.Right)) + 1
+&#125;
+
+// 返回较大值
+func max(a, b int) int &#123;
+    if a &gt;= b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h3 id="层序遍历（BFS）"><a href="#层序遍历（BFS）" class="headerlink" title="层序遍历（BFS）"></a>层序遍历（BFS）</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func maxDepth(root *TreeNode) int &#123;
+    if root == nil &#123;
+        return 0
+    &#125;
+    count := 0    // 统计层数
+    queue := []*TreeNode&#123;root&#125; // 队列
+    for len(queue) &gt; 0 &#123;
+        for i := len(queue); i &gt; 0; i-- &#123;
+            node := queue[0]
+            queue = queue[1:]
+            if node.Left != nil &#123;
+                queue = append(queue, node.Left)
+            &#125;
+            if node.Right != nil &#123;
+                queue = append(queue, node.Right)
+            &#125;
+        &#125;
+        count++
+    &#125;
+    return count
+&#125;
+</code></pre>
+<h2 id="55-II-平衡二叉树"><a href="#55-II-平衡二叉树" class="headerlink" title="55 - II. 平衡二叉树*"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof/">55 - II. 平衡二叉树</a>*</h2><h3 id="DFS-1"><a href="#DFS-1" class="headerlink" title="DFS"></a>DFS</h3><pre><code class="go">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct &#123;
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * &#125;
+ */
+func isBalanced(root *TreeNode) bool &#123;
+    if root == nil &#123;
+        // 递归完毕，返回
+        return true
+    &#125;
+    if sub := depth(root.Left) - depth(root.Right); sub &lt;= 1 &amp;&amp; -sub &lt;= 1 &#123;
+        // 当前结点平衡，递归求下一结点
+        return isBalanced(root.Left) &amp;&amp; isBalanced(root.Right)
+    &#125;
+    return false
+&#125;
+
+// depth 求子树高度
+func depth(root *TreeNode) int &#123;
+    if root == nil &#123;
+        return 0
+    &#125;
+    return max(depth(root.Left), depth(root.Right)) + 1
+&#125;
+
+func max(a, b int) int &#123;
+    if a &gt; b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h2 id="56-I-数组中数字出现的次数"><a href="#56-I-数组中数字出现的次数" class="headerlink" title="56 - I. 数组中数字出现的次数*"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/">56 - I. 数组中数字出现的次数</a>*</h2><h3 id="哈希表-1"><a href="#哈希表-1" class="headerlink" title="哈希表"></a>哈希表</h3><pre><code class="go">func singleNumbers(nums []int) []int &#123;
+    m := make(map[int]int)
+    res := make([]int, 2)
+    for i := range nums &#123;
+        m[nums[i]]++
+    &#125;
+
+    i := 0
+
+    for k, v := range m &#123;
+        if v == 1 &#123;
+            res[i] = k
+            i++
+        &#125;
+    &#125;
+    return res
+&#125;
+</code></pre>
+<h3 id="位运算-1"><a href="#位运算-1" class="headerlink" title="位运算"></a>位运算</h3><ol>
+<li>将所有数字进行异或运算，得到结果</li>
+<li>求异或结果的低位真值（带 1）</li>
+<li>将结果分组异或，得到原始值</li>
+</ol>
+<pre><code class="go">func singleNumbers(nums []int) []int &#123;
+    res := []int&#123;0, 0&#125;
+    sum := 0
+    for i := range nums &#123;
+        sum = sum ^ nums[i]
+    &#125;
+    low := sum ^ sum &amp; (sum-1)
+    for i := range nums &#123;
+        if nums[i] &amp; low &gt; 0 &#123;
+            res[0] ^= nums[i]
+        &#125; else &#123;
+            res[1] ^= nums[i]
+        &#125;
+    &#125;
+    return res
+&#125;
+</code></pre>
+<h2 id="56-II-数组中数字出现的次数-II"><a href="#56-II-数组中数字出现的次数-II" class="headerlink" title="56 - II. 数组中数字出现的次数 II*"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">56 - II. 数组中数字出现的次数 II</a>*</h2><h3 id="哈希表-2"><a href="#哈希表-2" class="headerlink" title="哈希表"></a>哈希表</h3><p>简单粗暴，效率不高。</p>
+<pre><code class="go">func singleNumber(nums []int) int &#123;
+    m := make(map[int]int)
+    for _, v := range nums &#123;
+        m[v]++
+    &#125;
+    for k, v := range m &#123;
+        if v == 1 &#123;
+            return k
+        &#125;
+    &#125;
+    return 0
+&#125;
+</code></pre>
+<h3 id="位运算-2"><a href="#位运算-2" class="headerlink" title="位运算"></a>位运算</h3><h2 id="57-和为-s-的两个数字"><a href="#57-和为-s-的两个数字" class="headerlink" title="57. 和为 s 的两个数字"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/">57. 和为 s 的两个数字</a></h2><h3 id="双指针-2"><a href="#双指针-2" class="headerlink" title="双指针"></a>双指针</h3><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func twoSum(nums []int, target int) []int &#123;
+    low, high := 0, len(nums) - 1
+    for low &lt; high &#123;
+        if nums[low] + nums[high] == target &#123;
+            return []int&#123;nums[low], nums[high]&#125;
+        &#125; else if nums[low] + nums[high] &gt; target &#123;
+            high--
+        &#125; else &#123;
+            low++
+        &#125;
+    &#125;
+    return nil
+&#125;
+</code></pre>
+<h3 id="二分查找-2"><a href="#二分查找-2" class="headerlink" title="二分查找"></a>二分查找</h3><p>对每个数字二分查找目标值。</p>
+<ul>
+<li>时间复杂度：$O(nlogn)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<h2 id="58-I-翻转单词顺序"><a href="#58-I-翻转单词顺序" class="headerlink" title="58 - I. 翻转单词顺序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/">58 - I. 翻转单词顺序</a></h2><h3 id="库函数"><a href="#库函数" class="headerlink" title="库函数"></a>库函数</h3><blockquote>
+<p>该解法效率极低。</p>
+</blockquote>
+<pre><code class="go">func reverseWords(s string) string &#123;
+    s = strings.Trim(s, &quot; &quot;)
+    arr := strings.Split(s, &quot; &quot;)
+    res := &quot;&quot;
+    for i := len(arr)-1; i &gt;= 0; i-- &#123;
+        if !strings.Contains(arr[i], &quot; &quot;) &amp;&amp; arr[i] != &quot;&quot; &#123;
+            res += strings.Trim(arr[i], &quot; &quot;)
+            if i &gt; 0 &#123;
+                res += &quot; &quot;
+            &#125;
+        &#125;
+
+    &#125;
+    return res
+&#125;
+</code></pre>
+<h2 id="58-II-左旋转字符串"><a href="#58-II-左旋转字符串" class="headerlink" title="58 - II. 左旋转字符串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">58 - II. 左旋转字符串</a></h2><h4 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h4><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func reverseLeftWords(s string, n int) string &#123;
+    return s[n:] + s[:n]
+&#125;
+</code></pre>
+<h4 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h4><p>反转整个字符串再翻转两个局部字符串。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度（Go）：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func reverseLeftWords(s string, n int) string &#123;
+    str := []byte(s)
+
+    rev := func(s []byte) &#123;
+        for i, j := 0, len(s)-1; i &lt; j; i, j = i+1, j-1 &#123;
+            s[i], s[j] = s[j], s[i]
+        &#125;
+    &#125;
+
+    rev(str)
+    rev(str[:len(str)-n])
+    rev(str[len(str)-n:])
+
+    return string(str)
+&#125;
+</code></pre>
+<h2 id="61-扑克牌中的顺子"><a href="#61-扑克牌中的顺子" class="headerlink" title="61. 扑克牌中的顺子"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof/">61. 扑克牌中的顺子</a></h2><h3 id="排序-数学"><a href="#排序-数学" class="headerlink" title="排序 + 数学"></a>排序 + 数学</h3><ol>
+<li>首先通过排序方便检查重复并判断有序</li>
+<li>记录 0 的个数</li>
+<li>当非 0 的数字出现重复，则可以确定不满足条件</li>
+<li>0 的个数正好等于第一个非零数字的下标</li>
+<li>非零数字的两端差值小于 5 则表明中间能够用 0 填充使其满足条件</li>
+</ol>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(n)$</li>
+</ul>
+<pre><code class="go">func isStraight(nums []int) bool &#123;
+    sort.Ints(nums)    // 排序
+    count := 0
+    for i := 0; i &lt; 4; i++ &#123;
+        if nums[i] == 0 &#123;
+            // 统计 0 的个数
+            count++
+        &#125; else if nums[i] == nums[i+1] &#123;
+            // 非 0 数字重复
+            return false
+        &#125;
+    &#125;
+    return nums[4] - nums[count] &lt; 5
+&#125;
+</code></pre>
+<h2 id="63-股票的最大利润"><a href="#63-股票的最大利润" class="headerlink" title="63. 股票的最大利润"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/gu-piao-de-zui-da-li-run-lcof/">63. 股票的最大利润</a></h2><h3 id="动态规划-4"><a href="#动态规划-4" class="headerlink" title="动态规划"></a>动态规划</h3><p>由于本题股票只能购买一次，实际上就是找整数对（买入价格，卖出价格），找出差值最大的整数对即可。</p>
+<ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<pre><code class="go">func maxProfit(prices []int) int &#123;
+    if len(prices) &lt;= 1 &#123;
+        return 0
+    &#125;
+
+    res := 0            // 差值
+    min := prices[0]    // 记录最低买入价
+
+    for i := 1; i &lt; len(prices); i++ &#123;
+        if prices[i] &lt; min &#123;
+            // 记录更低的价格
+            min = prices[i]
+        &#125; else &#123;
+            // 将更大的差值
+            res = max(res, prices[i] - min)
+        &#125;
+    &#125;
+    return res
+&#125;
+
+func max(a, b int) int &#123;
+    if a &gt; b &#123;
+        return a
+    &#125;
+    return b
+&#125;
+</code></pre>
+<h2 id="64-求-1-2-…-n"><a href="#64-求-1-2-…-n" class="headerlink" title="64. 求 1+2+…+n"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/qiu-12n-lcof/">64. 求 1+2+…+n</a></h2><h3 id="数学-2"><a href="#数学-2" class="headerlink" title="数学"></a>数学</h3><p>解法：</p>
+<p>$f(x) = {x(1 + x) \over 2}$</p>
+<blockquote>
+<p>梯形面积公式。</p>
+</blockquote>
+<pre><code class="go">func sumNums(n int) int &#123;
+    return (1 + n) * n / 2
+&#125;
+</code></pre>
+<h2 id="65-不用加减乘除做加法"><a href="#65-不用加减乘除做加法" class="headerlink" title="65. 不用加减乘除做加法"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/">65. 不用加减乘除做加法</a></h2><h3 id="位运算-3"><a href="#位运算-3" class="headerlink" title="位运算"></a>位运算</h3><p>使用<code>sum</code>记录和，<code>carry</code>记录进位的大小。</p>
+<pre><code class="go">func add(a int, b int) int &#123;
+    for b != 0 &#123;
+        sum := a ^ b
+        carry := a &amp; b &lt;&lt; 1
+        a = sum
+        b = carry
+    &#125;
+    return a
+&#125;
+</code></pre>
+<pre><code class="go">func add(a int, b int) int &#123;
+    for b != 0 &#123;
+        a, b = a ^ b, a &amp; b &lt;&lt; 1
+    &#125;
+    return a
+&#125;
+</code></pre>
+<h2 id="68-I-二叉搜索树的最近公共祖先"><a href="#68-I-二叉搜索树的最近公共祖先" class="headerlink" title="68 - I. 二叉搜索树的最近公共祖先"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">68 - I. 二叉搜索树的最近公共祖先</a></h2><h3 id="简单遍历"><a href="#简单遍历" class="headerlink" title="简单遍历"></a>简单遍历</h3><p>由于是二叉搜索树，因此从根结点遍历，判断目标节点在其左子树还是右子树，不断遍历直到根结点的值大于小目标值，小于大目标值。</p>
+<pre><code class="go">func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode &#123;
+    for root != nil &#123;
+        if root.Val &lt; p.Val &amp;&amp; root.Val &lt; q.Val &#123;
+            root = root.Right
+        &#125; else if root.Va &gt; p.Val &amp;&amp; root.Val &gt; q.Val &#123;
+            root = root.Left
+        &#125; else &#123;
+            break
+        &#125;
+    &#125;
+    return root
+&#125;
+</code></pre>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/coding-interviews-practice/>https://blog.secriy.com/coding-interviews-practice/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年3月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Algorithms/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Algorithms</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/coding-interviews-practice/&title=剑指 Offer 刷题笔记 - Secriy's Blog&summary=剑指 Offer 刷题记录。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/coding-interviews-practice/&title=剑指 Offer 刷题笔记 - Secriy's Blog&summary=剑指 Offer 刷题记录。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/coding-interviews-practice/&title=剑指 Offer 刷题笔记 - Secriy's Blog&summary=剑指 Offer 刷题记录。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/leetcode-practice/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>LeetCode 刷题笔记</p>
+          <p class='content'>LeetCode 刷题记录。
+
+
+
+Tags
+双指针
+单调栈
+辅助栈
+二分查找
+并查集
+动态规划
+贪心算法
+位运算
+哈希表
+KMP
+DFS
+BFS
+回溯
+排序
+数学
+
+1~1001. Two S...</p>
+        </a>
+      
+      
+        <a class='next' href='/cloudmusic-levelup/'>
+          <p class='title'>腾讯云函数部署 CloudMusic-LevelUp 脚本<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>腾讯云函数部署 CloudMusic-LevelUp 脚本具体操作说明。
+
+
+
+联系由于个人精力有限，现创建相关 QQ 群聊来统一解决大家的问题，如有疑问可以申请加群：
+
+部署下载仓库项目地址（...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-text">3. 数组中重复的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ideas"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE"><span class="toc-text">4. 二维数组中的查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84"><span class="toc-text">常规</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC"><span class="toc-text">5. 替换空格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84-1"><span class="toc-text">常规</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8"><span class="toc-text">6. 从尾到头打印链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ideas-1"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions-1"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">7. 重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-text">递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97"><span class="toc-text">9. 用两个栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions-2"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-I-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="toc-text">10- I. 斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-text">动态规划</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-II-%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6%E9%97%AE%E9%A2%98"><span class="toc-text">10- II. 青蛙跳台阶问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-1"><span class="toc-text">动态规划</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="toc-text">11. 旋转数组的最小数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3"><span class="toc-text">迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%B3%95"><span class="toc-text">二分法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-text">12. 矩阵中的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BA%AF"><span class="toc-text">回溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BA%AF%E4%BC%98%E5%8C%96"><span class="toc-text">回溯优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E8%BF%90%E5%8A%A8%E8%8C%83%E5%9B%B4"><span class="toc-text">13. 机器人的运动范围</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DFS"><span class="toc-text">DFS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-I-%E5%89%AA%E7%BB%B3%E5%AD%90"><span class="toc-text">14- I. 剪绳子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6"><span class="toc-text">数学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-II-%E5%89%AA%E7%BB%B3%E5%AD%90-II"><span class="toc-text">14- II. 剪绳子 II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6-1"><span class="toc-text">数学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD-1-%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-text">15. 二进制中 1 的个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-text">位运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9"><span class="toc-text">16. 数值的整数次方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82"><span class="toc-text">快速幂</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E6%89%93%E5%8D%B0%E4%BB%8E-1-%E5%88%B0%E6%9C%80%E5%A4%A7%E7%9A%84-n-%E4%BD%8D%E6%95%B0"><span class="toc-text">17. 打印从 1 到最大的 n 位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E8%80%83%E8%99%91%E5%A4%A7%E6%95%B0"><span class="toc-text">不考虑大数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%BA%93"><span class="toc-text">标准库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-text">18. 删除链表的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2"><span class="toc-text">21. 调整数组顺序使奇数位于偶数前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%AC-k-%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="toc-text">22. 链表中倒数第 k 个节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E9%95%BF%E5%BA%A6"><span class="toc-text">计算长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88"><span class="toc-text">双指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-text">23. 反转链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ideas-2"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions-3"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8"><span class="toc-text">25. 合并两个排序的链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92-1"><span class="toc-text">递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26-%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84"><span class="toc-text">26. 树的子结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92-2"><span class="toc-text">递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F"><span class="toc-text">27. 二叉树的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92-3"><span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-text">队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28-%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">28. 对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%EF%BC%88DFS%EF%BC%89"><span class="toc-text">递归（DFS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29-%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5"><span class="toc-text">29. 顺时针打印矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F"><span class="toc-text">模拟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E5%8C%85%E5%90%AB-min-%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88"><span class="toc-text">30. 包含 min 函数的栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ideas-3"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions-4"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#31-%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97"><span class="toc-text">31. 栈的压入、弹出序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F-1"><span class="toc-text">模拟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32-I-%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">32 - I. 从上到下打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-text">层序遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32-II-%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91-II"><span class="toc-text">32 - II. 从上到下打印二叉树 II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86-1"><span class="toc-text">层序遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32-III-%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91-III"><span class="toc-text">32 - III. 从上到下打印二叉树 III*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97"><span class="toc-text">双端队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#33-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97"><span class="toc-text">33. 二叉搜索树的后序遍历序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92-4"><span class="toc-text">递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#34-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-text">34. 二叉树中和为某一值的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BA%AF%EF%BC%88DFS%EF%BC%89"><span class="toc-text">回溯（DFS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#35-%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="toc-text">35. 复杂链表的复制*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-text">哈希表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#38-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97"><span class="toc-text">38. 字符串的排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BA%AF%EF%BC%88DFS%EF%BC%89-1"><span class="toc-text">回溯（DFS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#39-%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-text">39. 数组中出现次数超过一半的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%A9%E5%B0%94%E6%8A%95%E7%A5%A8%E6%B3%95"><span class="toc-text">摩尔投票法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#40-%E6%9C%80%E5%B0%8F%E7%9A%84-k-%E4%B8%AA%E6%95%B0"><span class="toc-text">40. 最小的 k 个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ideas-4"><span class="toc-text">Ideas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solutions-5"><span class="toc-text">Solutions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#42-%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-text">42. 连续子数组的最大和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-2"><span class="toc-text">动态规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88OPT%EF%BC%89"><span class="toc-text">动态规划（OPT）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#47-%E7%A4%BC%E7%89%A9%E7%9A%84%E6%9C%80%E5%A4%A7%E4%BB%B7%E5%80%BC"><span class="toc-text">47. 礼物的最大价值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-3"><span class="toc-text">动态规划</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#49-%E4%B8%91%E6%95%B0"><span class="toc-text">49. 丑数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#50-%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="toc-text">50. 第一个只出现一次的字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84"><span class="toc-text">字符数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#52-%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E8%8A%82%E7%82%B9"><span class="toc-text">52. 两个链表的第一个公共节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88-1"><span class="toc-text">双指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#53-I-%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97-I"><span class="toc-text">53 - I. 在排序数组中查找数字 I</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AC%A1%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text">两次二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AC%A1%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88OPT%EF%BC%89"><span class="toc-text">两次二分查找（OPT）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#53-II-0-%EF%BD%9E-n-1-%E4%B8%AD%E7%BC%BA%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-text">53 - II. 0 ～ n-1 中缺失的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-1"><span class="toc-text">二分查找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#54-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%AC-k-%E5%A4%A7%E8%8A%82%E7%82%B9"><span class="toc-text">54. 二叉搜索树的第 k 大节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-text">中序遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#55-I-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6"><span class="toc-text">55 - I. 二叉树的深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%EF%BC%88DFS%EF%BC%89-1"><span class="toc-text">递归（DFS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%88BFS%EF%BC%89"><span class="toc-text">层序遍历（BFS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#55-II-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">55 - II. 平衡二叉树*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DFS-1"><span class="toc-text">DFS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#56-I-%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-text">56 - I. 数组中数字出现的次数*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8-1"><span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97-1"><span class="toc-text">位运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#56-II-%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0-II"><span class="toc-text">56 - II. 数组中数字出现的次数 II*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8-2"><span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97-2"><span class="toc-text">位运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#57-%E5%92%8C%E4%B8%BA-s-%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97"><span class="toc-text">57. 和为 s 的两个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88-2"><span class="toc-text">双指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-2"><span class="toc-text">二分查找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#58-I-%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F"><span class="toc-text">58 - I. 翻转单词顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%93%E5%87%BD%E6%95%B0"><span class="toc-text">库函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#58-II-%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">58 - II. 左旋转字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87"><span class="toc-text">字符串切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC"><span class="toc-text">字符串反转</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#61-%E6%89%91%E5%85%8B%E7%89%8C%E4%B8%AD%E7%9A%84%E9%A1%BA%E5%AD%90"><span class="toc-text">61. 扑克牌中的顺子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F-%E6%95%B0%E5%AD%A6"><span class="toc-text">排序 + 数学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#63-%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6"><span class="toc-text">63. 股票的最大利润</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-4"><span class="toc-text">动态规划</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#64-%E6%B1%82-1-2-%E2%80%A6-n"><span class="toc-text">64. 求 1+2+…+n</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6-2"><span class="toc-text">数学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#65-%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%81%9A%E5%8A%A0%E6%B3%95"><span class="toc-text">65. 不用加减乘除做加法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97-3"><span class="toc-text">位运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#68-I-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="toc-text">68 - I. 二叉搜索树的最近公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E9%81%8D%E5%8E%86"><span class="toc-text">简单遍历</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+  
+    
+    
+
+<section class="widget text shadow floatable desktop">
+  
+  <header>
+    
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
+    
+  </header>
+
+
+  <div class='content'>
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
+
+    
+  </div>
+</section>
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="剑指 Offer 刷题笔记";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='741934630'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="mailto:me@secriy.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/secriy"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=494386912"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="https://blog.secriy.com/">Copyright © 2018-2021 Secriy</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.secriy.com/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.css", window.volantis.loadcss);
+  
+  
+  loadCSS("https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/styles/monokai.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.secriy.com/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.secriy.com/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.secriy.com/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.secriy.com/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
+
+
+
+
+   <script type="text/javascript">
+  loadScript("https://cdn.secriy.com/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js")
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+  var checkScrollReveal = setInterval(function () {
+    if ($("#safearea").css("display")!="block") return
+    if (typeof ScrollReveal=="undefined") return
+    clearInterval(checkScrollReveal)
+	pjax_scrollrebeal();
+  }, 100)
+  });
+  volantis.pjax.push(pjax_scrollrebeal)
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '741934630';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.secriy.com/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.secriy.com/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+</script>
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"2vPmpbITcoNLH4pYUREeHcUG-gzGzoHsz","appKey":"kez3VpW1ATEYJA2JNBudkNLs","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":true,"avatar":"retro","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+		document.addEventListener("pjax:success", listenSearch);
+	
+}
+</script>
+
+
+
+
+
+  
+<script src="https://cdn.secriy.com/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+  Waves.attach('.flat-btn', ['waves-button']);
+  Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+  Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+  Waves.attach('.flat-box', ['waves-block']);
+  Waves.attach('.float-box', ['waves-block', 'waves-float']);
+  Waves.attach('.waves-image');
+  Waves.init();
+});
+</script>
+
+
+
+
+
+  
+
+<script src="https://cdn.secriy.com/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://blog.secriy.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://blog.secriy.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+	<script>
+		volantis.pjax.push(window.HideLoading,'HideLoading');
+		volantis.pjax.send(window.ShowLoading,'ShowLoading');
+		volantis.pjax.error(window.HideLoading,'HideLoading');
+	</script>
+</div>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
