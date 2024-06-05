@@ -22,13 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Go Learning: defer - Secriy&#39;s Blog</title>
+  <title>Learn JavaScript - Secriy&#39;s Blog</title>
   
-    <meta name="keywords" content="Go,PL">
+    <meta name="keywords" content="PL,JavaScript">
   
 
   
-    <meta name="description" content="本文是 Golang 中 defer 语句的学习和深入理解。">
+    <meta name="description" content="本文是 JavaScript 的个人学习笔记，仅适合有编程基础快速上手新语言使用。">
   
 
   <!-- feed -->
@@ -613,7 +613,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        Go Learning: defer
+        Learn JavaScript
       </h1>
       <div class='new-meta-box'>
         
@@ -644,7 +644,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年4月20日</p>
+    <p>发布于：2023年8月17日</p>
   </a>
 </div>
 
@@ -655,7 +655,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Go Learning: defer" data-path="/go-learning-defer/">
+      <div id="lc-pv" data-title="Learn JavaScript" data-path="/learn-javascript/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -670,9 +670,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
 <div class="new-meta-item comments-count">
   
-  <a href="/go-learning-defer/#comments">
+  <a href="/learn-javascript/#comments">
     <i class="fas fa-comment-dots fa-fw"></i>
-    <span class="valine-comment-count" data-xid="/go-learning-defer/">0</span>
+    <span class="valine-comment-count" data-xid="/learn-javascript/">0</span>
     <span class="leancloud-comments-count">&nbsp;</span>
   </a>
 </div>
@@ -687,74 +687,550 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <div class="note quote cyan"><p>本文是 Golang 中 <code>defer</code> 语句的学习和深入理解。</p></div>
+  <div class="note quote cyan"><p>本文是 JavaScript 的个人学习笔记，仅适合有编程基础快速上手新语言使用。</p></div>
 
 <span id="more"></span>
 
-<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="一、有关-defer-的执行顺序"><a href="#一、有关-defer-的执行顺序" class="headerlink" title="一、有关 defer 的执行顺序"></a>一、有关 <code>defer</code> 的执行顺序</h3><p>程序执行到 <code>defer</code> 语句时，并不会直接执行 <code>defer</code> 后的语句，而是将其存入该函数的栈中，等待最后函数返回后出栈执行，因此当多个 <code>defer</code> 出现的时候，执行顺序遵循 FILO。</p>
-<h3 id="二、defer-和-return-执行的先后"><a href="#二、defer-和-return-执行的先后" class="headerlink" title="二、defer 和 return 执行的先后"></a>二、<code>defer</code> 和 <code>return</code> 执行的先后</h3><p>同时包含 <code>defer</code> 和 <code>return</code> 语句的函数执行顺序如下：</p>
-<ol>
-<li><code>defer</code> 语句顺序入栈。</li>
-<li><code>return</code> 语句执行，设置返回值。</li>
-<li><code>defer</code> 语句出栈执行。</li>
-<li>程序携返回值退出。</li>
-</ol>
-<h3 id="三、defer-和-panic-执行的先后"><a href="#三、defer-和-panic-执行的先后" class="headerlink" title="三、defer 和 panic 执行的先后"></a>三、<code>defer</code> 和 <code>panic</code> 执行的先后</h3><p>当程序进入 <code>panic</code> 后，首先立即执行所有的 <code>defer</code>，接着执行 <code>panic</code>，最后将 <code>panic</code> 状态上溯至包含其的所有函数，直到结束整个 goroutine。</p>
-<p>示例：</p>
-<pre><code class="go">func main() &#123;
-    f1()
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p>Specification：<a target="_blank" rel="noopener" href="https://www.ecma-international.org/publications/standards/Ecma-262.htm">The ECMA-262 specification</a></p>
+</li>
+<li><p>MDN 手册：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">MDN (Mozilla) JavaScript Reference</a></p>
+</li>
+</ul>
+<h2 id="语言基础"><a href="#语言基础" class="headerlink" title="语言基础"></a>语言基础</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>  JavaScript 引擎：JavaScrit 的运行环境，负责将 JavaScript 代码转为机器码执行。如 Chrome 使用的 V8。</li>
+</ul>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><pre><code class="javascript">// 单行注释
+
+/* 多
+行
+注
+释
+*/
+</code></pre>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><pre><code class="javascript">var text; // 变量声明但不初始化，其值为 undefined
+
+var message = &quot;hello&quot;; // 变量初始化
+
+message = 100; // 将不同类型的值赋给已初始化变量，合法但不推荐
+</code></pre>
+<p>变量作用域：</p>
+<pre><code class="javascript">function test() &#123;
+    var text = &quot;&quot;; // 局部变量，函数外访问不到
 &#125;
 
-func f1() &#123;
-    defer println(&quot;f1-begin&quot;)
-    f2()
-    defer println(&quot;f1-end&quot;)
-&#125;
-
-func f2() &#123;
-    defer println(&quot;f2-begin&quot;)
-    f3()
-    defer println(&quot;f2-end&quot;)
-&#125;
-
-func f3() &#123;
-    defer println(&quot;f3-begin&quot;)
-    panic(0)
-    defer println(&quot;f3-end&quot;)
+function test() &#123;
+    text = &quot;&quot;; // 无 var 关键字，text 为全局变量，函数外可访问
+    
+    // 注意，test 函数被调用后 text 才会被声明，其后能被函数外的代码访问到
 &#125;
 </code></pre>
-<p>上述代码的执行顺序如下：</p>
-<ol>
-<li>从 <code>main.main()</code> 进入，执行 <code>f1()</code>。</li>
-<li><code>println(&quot;f1-begin&quot;)</code> 入栈，执行 <code>f2()</code>。</li>
-<li><code>println(&quot;f2-begin&quot;)</code> 入栈，执行 <code>f3()</code>。</li>
-<li><code>println(&quot;f3-begin&quot;)</code> 入栈，触发 <code>panic(0)</code>。</li>
-<li>执行当前函数内所有 <code>defer</code> 语句，<code>println(&quot;f3-begin&quot;)</code> 出栈执行，<code>panic f3()</code>。</li>
-<li><code>panic</code> 向上执行至 <code>f2()</code>，同理 <code>println(&quot;f2-begin&quot;)</code> 出栈执行，<code>panic f2()</code>。</li>
-<li><code>panic</code> 向上执行至 <code>f1()</code>，同理 <code>println(&quot;f1-begin&quot;)</code> 出栈执行，<code>panic f1()</code>。</li>
-<li><code>panic</code> 向上执行至 <code>main.main()</code>，<code>panic main.main()</code>，退出该 Goroutine。</li>
-</ol>
-<h3 id="四、defer-中包含子函数"><a href="#四、defer-中包含子函数" class="headerlink" title="四、defer 中包含子函数"></a>四、<code>defer</code> 中包含子函数</h3><p>当 <code>defer</code> 语句中的函数包含子函数调用时，由于需要 Push Stack 操作，存入函数地址和实参，因此 Push Stack 操作前会先执行子函数返回。</p>
-<p>示例：</p>
-<pre><code class="go">func f(index int, value int) int &#123;
-    fmt.Println(index)
-
-    return index
+<p>多变量声明：</p>
+<pre><code class="javascript">var a, b, c = 1, false, &quot;c&quot;;
+</code></pre>
+<p><code>var</code> 声明会被提升到作用域顶部：</p>
+<pre><code class="javascript">function test() &#123;
+    console.log(text); // undefined
+    var text = &quot;hello&quot;;
 &#125;
 
-func main() &#123;
-    defer f(1, f(3, 0))
-    defer f(2, f(4, 0))
+// 声明会被提升，但初始化不会，因此上面的函数等价于：
+function test() &#123;
+    var text;
+    console.log(text); // 不会报错，但 text 并未初始化，因此为 undefined
+    text = &quot;hello&quot;;
 &#125;
 </code></pre>
-<p>执行流程：</p>
-<ol>
-<li>从 <code>main.main()</code> 进入</li>
-<li><code>f(1, f(3, 0))</code> 准备入栈，执行 <code>f(3, 0)</code>，输出 3，将函数地址和参数一并入栈。</li>
-<li><code>f(2, f(4, 0))</code> 准备入栈，执行 <code>f(4, 0)</code>，输出 4，将函数地址和参数一并入栈。</li>
-<li><code>f(2, f(4, 0))</code> 出栈执行，输出 2。</li>
-<li><code>f(1, f(3, 0))</code> 出栈执行，输出 1。</li>
-</ol>
+<p><code>var</code> 重复声明是合法的：</p>
+<pre><code class="javascript">var a = 1;
+var a = 2;
+var a = 3;
+
+console.log(a); // 3
+</code></pre>
+<p><code>let</code> 与 <code>var</code> 的区别，作用域不同：</p>
+<pre><code class="javascript">// var 的作用域更大，能覆盖整个函数
+if (condition) &#123;
+    var text = &quot;hello&quot;;
+    console.log(text); // hello
+&#125;
+console.log(text); // hello
+
+// let 只能在局部作用域（块作用域）生效
+if (condition) &#123;
+    var text = &quot;hello&quot;;
+    console.log(text); // hello
+&#125;
+console.log(text); // ReferenceError: text is not defined
+</code></pre>
+<p><code>let</code> 与 <code>var</code> 的区别，不能在同一个块中重复声明：</p>
+<pre><code class="javascript">let a = 1;
+let a = 2; // SyntaxError: Identifier &#39;a&#39; has already been declared
+
+let b = 1;
+if (condition) &#123;
+    let b = 2; // 合法，因为不在同一个块级作用域
+&#125;
+</code></pre>
+<p>注意以 Chrome 浏览器的 Console 为例，每行命令为独立块作用域，因此重复 <code>let</code> 声明不会报错。</p>
+<p><code>let</code> 与 <code>var</code> 的区别，不会被提升：</p>
+<pre><code class="javascript">function test() &#123;
+    console.log(text); // ReferenceError: Cannot access &#39;text&#39; before initialization
+    let text = &quot;hello&quot;;
+&#125;
+</code></pre>
+<p><code>let</code> 与 <code>var</code> 的区别，全局作用域中声明的变量不会成为 <code>window</code> 对象的属性：</p>
+<pre><code class="javascript">var name = &quot;a&quot;;
+console.log(window.name); // a
+
+let name = &quot;a&quot;;
+console.log(window.name); // undefined
+</code></pre>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>JavaScript 中有原语（primitive）和对象（object） 两种类型区分：</p>
+<ul>
+<li>primitive<ul>
+<li>string</li>
+<li>number</li>
+<li>bigint</li>
+<li>boolean</li>
+<li>symbol</li>
+<li>null</li>
+<li>undefined</li>
+</ul>
+</li>
+<li>object</li>
+</ul>
+<h4 id="Numbers"><a href="#Numbers" class="headerlink" title="Numbers"></a>Numbers</h4><p>JavaScript 中有两种数字类型：</p>
+<ul>
+<li>常规数字，以 IEEE-754 双精度浮点数存储，应用于大部分情况；</li>
+<li>Bigint，任意长度的数字。</li>
+</ul>
+<p>本小节只介绍常规数字。</p>
+<p>数字的字面量表示方式：</p>
+<pre><code class="javascript">let billion = 1000000000;
+let billion = 1_000_000_000; // 下划线仅作为语法糖，会被 JavaScript 引擎忽略，等同于上一句
+let x = 243_4343_42342;
+let x = 4234_; // error，下划线不允许在末尾
+let billion = 1e9; // 科学计数法
+let n = 7.3e9;
+let n = 7300000000; // 与上一句等同
+let mcs = 0.000001; // microsecond
+let mcs = 1e-6; // 与上一句等同
+</code></pre>
+<p>十六进制，二进制，八进制：</p>
+<pre><code class="javascript">let h = 0xff; // 255
+let h = 0xFF; // 255
+let b = 0b110; // 6
+let o = 0o377; // 255
+// 0xFF === 0o377
+</code></pre>
+<p>数字的 <code>toString</code> 方法（2-36 进制）：</p>
+<pre><code class="javascript">let num = 255;
+num.toString(); // 十进制，255
+num.toString(16); // 十六进制，ff
+num.toString(2); // 二进制，11111111
+
+let num = 0xf1;
+num.toString(); // 十进制，241
+num.toString(16); // 十六进制，f1
+num.toString(2); // 二进制，11110001
+</code></pre>
+<h4 id="Bigint"><a href="#Bigint" class="headerlink" title="Bigint"></a>Bigint</h4><h3 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h3><h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><h5 id="while"><a href="#while" class="headerlink" title="while"></a>while</h5><pre><code class="javascript">let i = 0;
+while (i &lt; 10) &#123;
+    i++;
+&#125;
+console.log(i); // 10
+</code></pre>
+<pre><code class="javascript">// 单行写法
+let i = 0;
+while(i) console.log(i--); // 10 9 8 ... 1
+</code></pre>
+<h5 id="do-while"><a href="#do-while" class="headerlink" title="do while"></a>do while</h5><p>该循环至少会被执行一次：</p>
+<pre><code class="javascript">let i = 0;
+do &#123;
+    i++;
+&#125; while(i &lt; 0);
+console.log(i); // 1
+</code></pre>
+<h5 id="for"><a href="#for" class="headerlink" title="for"></a>for</h5><p>能够替代其余所有循环方式：</p>
+<pre><code class="javascript">for (let i = 0; i &lt; 10; i++) &#123; // i 只在 for 循环内可访问
+    // ...
+&#125;
+</code></pre>
+<pre><code class="javascript">let i = 0;
+for (let i = 0; i &lt; 10; i++) &#123;
+  i++;
+&#125;
+console.log(i); // 0
+
+for (i = 0; i &lt; 10; i++) &#123;
+  i++;
+&#125;
+console.log(i); // 10
+
+for (; i &lt; 20; i++) &#123;&#125;
+console.log(i); // 20
+</code></pre>
+<p>省略赋值语句、条件或步进语句：</p>
+<pre><code class="javascript">let i = 0;
+for (; i &lt; 10; i++) &#123;&#125;
+
+console.log(i); // 10
+
+for (;;i++) &#123;
+    if (i &gt; 20) break; // break 结束循环
+&#125;
+
+console.log(i); // 21
+
+for (;;) &#123;
+    if (i++ &gt; 30) break;
+&#125;
+
+console.log(i); // 32
+</code></pre>
+<p>死循环：</p>
+<pre><code class="javascript">// 二者等同
+for (;;) &#123;&#125;
+while (true) &#123;&#125;
+</code></pre>
+<p><code>continue</code> 直接跳转到下一循环：</p>
+<pre><code class="javascript">let i = 0;
+for (; i &lt; 10; i++) &#123;
+    if (i &gt; 5) continue;
+    console.log(i); // 0 1 ... 5
+&#125;
+</code></pre>
+<p><code>break</code> 结束循环：</p>
+<pre><code class="javascript">let i = 0;
+for (;; i++) &#123;
+    if (i &gt;= 10) break;
+&#125;
+console.log(i); // 10
+</code></pre>
+<h4 id="switch"><a href="#switch" class="headerlink" title="switch"></a><code>switch</code></h4><p><code>switch</code> 语句通过传入值匹配到指定代码段，注意匹配时的相等检查<strong>类型严格</strong>：</p>
+<pre><code class="javascript">switch(x) &#123;
+    case &#39;2&#39;:
+        ...
+        break;
+    case 2:
+        ...
+        break;
+    default:
+        ...
+&#125;
+</code></pre>
+<p>如果不添加 <code>break</code>，匹配到 <code>case</code> 后会接着往下执行：</p>
+<pre><code class="javascript">let x = 1;
+switch(x) &#123;
+    case 0:
+        alert(0);
+    case 1:
+        alert(1);
+    case 2:
+        alert(2);
+    default:
+        alert(-1);
+&#125;
+
+// Output:
+//
+// 1
+// 2
+// -1
+</code></pre>
+<p>因此需要手动添加 <code>break</code>：</p>
+<pre><code class="javascript">let x = 1;
+switch(x) &#123;
+    case 0:
+        alert(0);
+        break;
+    case 1:
+        alert(1);
+        break;
+    case 2:
+        alert(2);
+        break;
+    default:
+        alert(-1);
+&#125;
+
+// Output:
+//
+// 1
+</code></pre>
+<p>将多个 <code>case</code> 组合到一起：</p>
+<pre><code class="javascript">switch(x) &#123;
+    case 0:
+        alert(0);
+        break;
+    case 1:
+    case 2:
+        // x 为 1 或 2，都会执行到这里
+        alert(&quot;1 and 2&quot;);
+        break;
+    default:
+        alert(-1);
+&#125;
+</code></pre>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h4><p>声明函数：</p>
+<pre><code class="javascript">function myFunction() &#123;
+    alert(&quot;hello&quot;);
+&#125;
+</code></pre>
+<p>调用函数：</p>
+<pre><code class="javascript">myFunction();
+</code></pre>
+<h4 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h4><p>在函数内声明的变量为局部变量，函数外无法访问：</p>
+<pre><code class="javascript">function myFunction() &#123;
+    let a = 1;
+    alert(a);
+&#125;
+
+myFunction();
+
+alert(a); // ERROR
+</code></pre>
+<p>函数能访问外部变量，并可修改：</p>
+<pre><code class="javascript">let a = 1;
+
+function myFunction() &#123;
+    a = 2;
+    let b = a + 1;
+    alert(b);
+&#125;
+
+myFunction(); // 3
+
+alert(a); // 2
+</code></pre>
+<p>局部变量优先级高于全局变量，重名会优先使用局部变量：</p>
+<pre><code class="javascript">let a = 1;
+
+function myFunction() &#123;
+    let a = 2;
+    alert(a);
+&#125;
+
+myFunction(); // 2
+</code></pre>
+<p>注意，只要函数中存在同名变量声明，则外部同名变量会被忽略，不论是使用 <code>let</code> 或 <code>var</code>：</p>
+<pre><code class="javascript">let a = 1;
+
+function myFunction() &#123;
+    alert(a); // ERROR: Cannot access &#39;a&#39; before initialization
+    let a = 2;
+    alert(a);
+&#125;
+
+myFunction();
+</code></pre>
+<pre><code class="javascript">let a = 1;
+
+function myFunction() &#123;
+    a = 3; // 这里修改的是由 var 声明提升特性，在函数顶部声明的局部变量 a
+    alert(a); // 3
+    var a = 2;
+    alert(a); // 2
+&#125;
+
+myFunction();
+
+alert(a); // 1
+</code></pre>
+<h4 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h4><p>函数参数：</p>
+<pre><code class="javascript">function add(a, b) &#123;
+    return a + b; // a, b 均为局部变量
+&#125;
+
+let sum = add(1, 2);
+alert(sum); // 3
+</code></pre>
+<p>函数参数传值时会拷贝参数，因此无法修改基本类型参数：</p>
+<pre><code class="javascript">function test(x) &#123;
+    x = 2;
+&#125;
+
+let a = 1;
+test(a);
+alert(a); // 1
+</code></pre>
+<p>调用时，参数数量可以不一致：</p>
+<pre><code class="javascript">function add(a, b) &#123;
+    return a + b;
+&#125;
+
+add(1, 2); // 3
+// 多余的参数会被忽略
+add(1, 2, 3, 4); // 3
+// 缺少的参数为 undefined
+add(); // NaN, 因为 undefined + undefined 为 NaN
+add(1); // NaN, 因为 1 + undefined 为 NaN
+</code></pre>
+<p>可以给参数设置默认值，当参数为 <code>undefined</code> 是会被替换为默认值：</p>
+<pre><code class="javascript">function add(a, b = 2) &#123;
+    return a + b;
+&#125;
+
+add(1); // 3
+add(1, 3); // 4
+add(1, undefined); // 3
+</code></pre>
+<pre><code class="javascript">function add(a = 1, b) &#123;
+    return a + b;
+&#125;
+
+add(2, 3); // 5
+add(undefined, 3); // 4
+</code></pre>
+<p>函数默认值可以使用表达式等：</p>
+<pre><code class="javascript">function add(a, b = a + 3) &#123; // 注意，参数按顺序声明，因此默认值能为 a = b + 1 类似写法
+    return a + b;
+&#125;
+
+add(1);
+</code></pre>
+<pre><code class="javascript">function defaultValue() &#123;
+    return 23;
+&#125;
+
+function add(a, b = defaultValue()) &#123;
+    return a + b;
+&#125;
+
+add(1); // 24
+</code></pre>
+<p>函数参数在调用时才会被操作：</p>
+<pre><code class="javascript">let x = 1;
+
+function defaultValue() &#123;
+    x = 2;
+    return 23;
+&#125;
+
+function add(a, b = defaultValue()) &#123;
+    return a + b;
+&#125;
+
+alert(x); // 1
+add(1); // 24
+alert(x); // 2
+</code></pre>
+<h4 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h4><p>函数默认返回 <code>undefined</code>：</p>
+<pre><code class="javascript">function test() &#123;&#125;;
+
+let a = test();
+alert(a); // undefined
+</code></pre>
+<p>多行返回值写法：</p>
+<pre><code class="javascript">function test() &#123;
+    ...
+    return (
+        a + b + c
+        + d +
+        f
+    )
+&#125;
+</code></pre>
+<h4 id="函数表达式"><a href="#函数表达式" class="headerlink" title="函数表达式"></a>函数表达式</h4><p>函数可以作为值：</p>
+<pre><code class="javascript">let hello = function() &#123;
+    alert(&quot;hello&quot;);
+&#125;;
+
+hello();
+</code></pre>
+<h4 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h4><p>箭头函数简化了创建函数的方式：</p>
+<pre><code class="javascript">// let func = (arg1, arg2, ...) =&gt; expression;
+let hello = (name) =&gt; alert(`hello $&#123;name&#125;`);
+
+hello(&quot;foo&quot;); // hello foo
+
+// 无参数
+let func = () =&gt; alert(&quot;hello&quot;);
+</code></pre>
+<p>更复杂的函数：</p>
+<pre><code class="javascript">let sum = (a, b) =&gt; &#123;
+    let result = a + b;
+    return result;
+&#125;
+
+alert(sum(1, 2)); // 3
+</code></pre>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象为 key-value 存储：</p>
+<pre><code class="javascript">// 空对象创建
+let emptyObj = new Object();
+
+// 字面量写法，与上方等同
+let emptyObj = &#123;&#125;;
+</code></pre>
+<h4 id="对象属性"><a href="#对象属性" class="headerlink" title="对象属性"></a>对象属性</h4><p>对象属性（property/name/identifier）：</p>
+<pre><code class="javascript">let person = &#123;
+    name: &quot;Alice&quot;,
+    age: 18
+&#125;;
+
+alert(person.name); // Alice
+
+// 添加属性
+person.dead = false;
+
+alert(person.dead); // true
+
+// 未设置的属性，即 undefined
+alert(person.a); // undefined
+
+// 删除属性
+delete person.dead;
+// 重复删除不会报错，但没有实际效果（no op）
+delete person.dead;
+
+// 属性可以用任意字符串命名
+let user = &#123;
+    &quot;any name&quot;: &quot;&quot;
+&#125;
+
+alert(user[&quot;any name&quot;]) // 使用 `[]` 取值
+
+// 使用 `[]` 设置属性
+user[&quot;name&quot;] = &quot;name&quot;;
+
+// 使用 `[]` 删除属性
+delete user[&quot;name&quot;];
+
+// 使用 `[]` 则可以支持任意类型的 key，`.` 的方式只能支持字符串
+// user.name 等同于 user[&quot;name&quot;]
+user[&#123;&#125;] = 1;
+
+alert(user[&#123;&#125;]); // 1
+</code></pre>
+<h4 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h4><p>JavaScript 支持属性名是变量：</p>
+<pre><code class="javascript">let keyFunc = (name) =&gt; name + &quot;x&quot;;
+
+let key = keyFunc(&quot;test&quot;);
+
+let user = &#123;
+  [key]: &quot;hello&quot;, // 使用 `[]` 设置属性名，属性名为 `[]` 内变量的值
+&#125;;
+
+alert(user.testx); // hello
+
+// 修改 key 并不会对对象属性产生影响 
+
+key = &quot;testy&quot;;
+
+alert(user.testy); // undefined
+</code></pre>
+<p>实际上，这就等同于下面的代码：</p>
+<pre><code class="javascript">let keyFunc = (name) =&gt; name + &quot;x&quot;;
+
+let key = keyFunc(&quot;test&quot;);
+
+let user = &#123;&#125;;
+
+user[key] = &quot;hello&quot;; // key 的值此时为 &quot;testx&quot;
+
+alert(user.testx); // hello
+</code></pre>
 
   
   
@@ -767,7 +1243,7 @@ func main() &#123;
           <blockquote>
             
               
-                <p>本文永久链接：<a href=https://blog.secriy.com/go-learning-defer/>https://blog.secriy.com/go-learning-defer/</a></p>
+                <p>本文永久链接：<a href=https://blog.secriy.com/learn-javascript/>https://blog.secriy.com/learn-javascript/</a></p>
               
             
           </blockquote>
@@ -784,10 +1260,10 @@ func main() &#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-26T10:37:15+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-06-05T10:16:34+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年3月26日</p>
+    <p>更新于：2024年6月5日</p>
   </a>
 </div>
 
@@ -796,7 +1272,7 @@ func main() &#123;
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Go/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Go</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PL</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PL</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/JavaScript/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>JavaScript</p></a></div>
 
 
         
@@ -809,7 +1285,7 @@ func main() &#123;
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/go-learning-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/learn-javascript/&title=Learn JavaScript - Secriy's Blog&summary=本文是 JavaScript 的个人学习笔记，仅适合有编程基础快速上手新语言使用。"
           
           >
           
@@ -821,7 +1297,7 @@ func main() &#123;
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/go-learning-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/learn-javascript/&title=Learn JavaScript - Secriy's Blog&summary=本文是 JavaScript 的个人学习笔记，仅适合有编程基础快速上手新语言使用。"
           
           >
           
@@ -833,7 +1309,7 @@ func main() &#123;
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/go-learning-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/learn-javascript/&title=Learn JavaScript - Secriy's Blog&summary=本文是 JavaScript 的个人学习笔记，仅适合有编程基础快速上手新语言使用。"
           
           >
           
@@ -863,22 +1339,14 @@ func main() &#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/basics-of-mysql/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>The Basics of MySQL</p>
-          <p class='content'>本文是对 MySQL 的学习总结，包含 MySQL 数据库系统的基础知识。
-
-
-
-基本概念Database
-数据库（database）：保存有组织数据的容器（通常是一个文件或一组文件）
-
-表（t...</p>
-        </a>
       
-      
-        <a class='next' href='/learning-go/'>
-          <p class='title'>Learning Go<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行...</p>
+        <a class='next' href='/gc553-linux/'>
+          <p class='title'>GC553 采集卡 Linux 踩坑记录<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>闲着没事买了一张采集卡直播用，打算将台式机的视频输出到采集卡，再通过 Linux 笔记本进行推流。然而过程中遇到一大堆问题，不过最终还是解决了。
+
+
+
+前言我个人有两台设备，一台 Windows...</p>
         </a>
       
     </div>
@@ -921,7 +1389,7 @@ func main() &#123;
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%89%E5%85%B3-defer-%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">一、有关 defer 的执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81defer-%E5%92%8C-return-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%85%88%E5%90%8E"><span class="toc-text">二、defer 和 return 执行的先后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81defer-%E5%92%8C-panic-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%85%88%E5%90%8E"><span class="toc-text">三、defer 和 panic 执行的先后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81defer-%E4%B8%AD%E5%8C%85%E5%90%AB%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-text">四、defer 中包含子函数</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80"><span class="toc-text">语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Numbers"><span class="toc-text">Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bigint"><span class="toc-text">Bigint</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-text">循环</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#while"><span class="toc-text">while</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#do-while"><span class="toc-text">do while</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#for"><span class="toc-text">for</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#switch"><span class="toc-text">switch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="toc-text">函数声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">变量作用域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-text">函数参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">函数返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">函数表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-text">箭头函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-text">对象属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="toc-text">计算属性</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -963,7 +1431,7 @@ func main() &#123;
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="Go Learning: defer";
+  pdata.postTitle="Learn JavaScript";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

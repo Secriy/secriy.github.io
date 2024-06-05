@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,9 +22,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2020/2 - Secriy&#39;s Blog</title>
+  <title>Go Learning: defer - Secriy&#39;s Blog</title>
+  
+    <meta name="keywords" content="Go,PL">
   
 
+  
+    <meta name="description" content="本文是 Golang 中 defer 语句的学习和深入理解。">
   
 
   <!-- feed -->
@@ -106,7 +108,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur floatable " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -529,7 +531,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  search' style="display: ;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://upyun.secriy.com/statics/img/scene.jpg"></div>
           
@@ -601,116 +603,305 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-	
-		
-  <section class="post-list">
+  <article class="article post white-box reveal md shadow floatable article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
     
-      
+    
+    
+      <h1 class="title">
+        Go Learning: defer
+      </h1>
+      <div class='new-meta-box'>
         
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://upyun.secriy.com/statics/img/avatar.png">
+    <p>Secriy</p>
+  </a>
+</div>
+
           
         
           
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/csgo-on-centos7/">
-        CentOS 7 搭建 CSGO 社区服务器
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <div class="note quote cyan"><p>想和很多朋友一起玩 CSGO，苦于本地房间两地延迟太高无法正常游戏，因此用闲置服务器搭建 CSGO 社区服。</p></div>
-    
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/note/">学习笔记</a>
+    </a>
   </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年4月20日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Go Learning: defer" data-path="/go-defer/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+<div class="new-meta-item comments-count">
   
-    <div class='meta-v3' line_style='dashed'>
-      <div>
-        
-        <time>2020-02-21</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/tutorial/">经验教程</a>
+  <a href="/go-defer/#comments">
+    <i class="fas fa-comment-dots fa-fw"></i>
+    <span class="valine-comment-count" data-xid="/go-defer/">0</span>
+    <span class="leancloud-comments-count">&nbsp;</span>
+  </a>
+</div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <div class="note quote cyan"><p>本文是 Golang 中 <code>defer</code> 语句的学习和深入理解。</p></div>
+
+<span id="more"></span>
+
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="一、有关-defer-的执行顺序"><a href="#一、有关-defer-的执行顺序" class="headerlink" title="一、有关 defer 的执行顺序"></a>一、有关 <code>defer</code> 的执行顺序</h3><p>程序执行到 <code>defer</code> 语句时，并不会直接执行 <code>defer</code> 后的语句，而是将其存入该函数的栈中，等待最后函数返回后出栈执行，因此当多个 <code>defer</code> 出现的时候，执行顺序遵循 FILO。</p>
+<h3 id="二、defer-和-return-执行的先后"><a href="#二、defer-和-return-执行的先后" class="headerlink" title="二、defer 和 return 执行的先后"></a>二、<code>defer</code> 和 <code>return</code> 执行的先后</h3><p>同时包含 <code>defer</code> 和 <code>return</code> 语句的函数执行顺序如下：</p>
+<ol>
+<li><code>defer</code> 语句顺序入栈。</li>
+<li><code>return</code> 语句执行，设置返回值。</li>
+<li><code>defer</code> 语句出栈执行。</li>
+<li>程序携返回值退出。</li>
+</ol>
+<h3 id="三、defer-和-panic-执行的先后"><a href="#三、defer-和-panic-执行的先后" class="headerlink" title="三、defer 和 panic 执行的先后"></a>三、<code>defer</code> 和 <code>panic</code> 执行的先后</h3><p>当程序进入 <code>panic</code> 后，首先立即执行所有的 <code>defer</code>，接着执行 <code>panic</code>，最后将 <code>panic</code> 状态上溯至包含其的所有函数，直到结束整个 goroutine。</p>
+<p>示例：</p>
+<pre><code class="go">func main() &#123;
+    f1()
+&#125;
+
+func f1() &#123;
+    defer println(&quot;f1-begin&quot;)
+    f2()
+    defer println(&quot;f1-end&quot;)
+&#125;
+
+func f2() &#123;
+    defer println(&quot;f2-begin&quot;)
+    f3()
+    defer println(&quot;f2-end&quot;)
+&#125;
+
+func f3() &#123;
+    defer println(&quot;f3-begin&quot;)
+    panic(0)
+    defer println(&quot;f3-end&quot;)
+&#125;
+</code></pre>
+<p>上述代码的执行顺序如下：</p>
+<ol>
+<li>从 <code>main.main()</code> 进入，执行 <code>f1()</code>。</li>
+<li><code>println(&quot;f1-begin&quot;)</code> 入栈，执行 <code>f2()</code>。</li>
+<li><code>println(&quot;f2-begin&quot;)</code> 入栈，执行 <code>f3()</code>。</li>
+<li><code>println(&quot;f3-begin&quot;)</code> 入栈，触发 <code>panic(0)</code>。</li>
+<li>执行当前函数内所有 <code>defer</code> 语句，<code>println(&quot;f3-begin&quot;)</code> 出栈执行，<code>panic f3()</code>。</li>
+<li><code>panic</code> 向上执行至 <code>f2()</code>，同理 <code>println(&quot;f2-begin&quot;)</code> 出栈执行，<code>panic f2()</code>。</li>
+<li><code>panic</code> 向上执行至 <code>f1()</code>，同理 <code>println(&quot;f1-begin&quot;)</code> 出栈执行，<code>panic f1()</code>。</li>
+<li><code>panic</code> 向上执行至 <code>main.main()</code>，<code>panic main.main()</code>，退出该 Goroutine。</li>
+</ol>
+<h3 id="四、defer-中包含子函数"><a href="#四、defer-中包含子函数" class="headerlink" title="四、defer 中包含子函数"></a>四、<code>defer</code> 中包含子函数</h3><p>当 <code>defer</code> 语句中的函数包含子函数调用时，由于需要 Push Stack 操作，存入函数地址和实参，因此 Push Stack 操作前会先执行子函数返回。</p>
+<p>示例：</p>
+<pre><code class="go">func f(index int, value int) int &#123;
+    fmt.Println(index)
+
+    return index
+&#125;
+
+func main() &#123;
+    defer f(1, f(3, 0))
+    defer f(2, f(4, 0))
+&#125;
+</code></pre>
+<p>执行流程：</p>
+<ol>
+<li>从 <code>main.main()</code> 进入</li>
+<li><code>f(1, f(3, 0))</code> 准备入栈，执行 <code>f(3, 0)</code>，输出 3，将函数地址和参数一并入栈。</li>
+<li><code>f(2, f(4, 0))</code> 准备入栈，执行 <code>f(4, 0)</code>，输出 4，将函数地址和参数一并入栈。</li>
+<li><code>f(2, f(4, 0))</code> 出栈执行，输出 2。</li>
+<li><code>f(1, f(3, 0))</code> 出栈执行，输出 1。</li>
+</ol>
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/csgo-on-centos7/'>
-            阅读全文
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>本文永久链接：<a href=https://blog.secriy.com/go-defer/>https://blog.secriy.com/go-defer/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2024-03-27T10:25:46+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年3月27日</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable">
+          
   
-  
-  
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Go/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Go</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PL/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>PL</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
-    <h2 class="article-title" >
-      <a href="/hexo-deploy/">
-        云服务器搭建 Hexo 博客
-      </a>
-    </h2>
-  
-  <div class='md'>
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.secriy.com/go-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
     
-      <div class="note quote cyan"><p>一般 Hexo 搭建在 GItHub 上，然而国内访问稍慢，Gitee 免费版又不能自动更新，选择在服务器上搭建也是个办法。不过我觉得很浪费资源，最终还是选择了 GitHub Pages+Gitee Pages 的解决方案。</p></div>
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.secriy.com/go-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.secriy.com/go-defer/&title=Go Learning: defer - Secriy's Blog&summary=本文是 Golang 中 defer 语句的学习和深入理解。"
+          
+          >
+          
+            <img src="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.secriy.com/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
     
   </div>
-  
-    <div class='meta-v3' line_style='dashed'>
-      <div>
+</div>
+
+
+
         
-        <time>2020-02-03</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/tutorial/">经验教程</a>
-        
-      </div>
       
-        <div>
-          <a class='readmore' href='/hexo-deploy/'>
-            阅读全文
-          </a>
-        </div>
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/basics-of-mysql/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>The Basics of MySQL</p>
+          <p class='content'>本文是对 MySQL 的学习总结，包含 MySQL 数据库系统的基础知识。
+
+
+
+基本概念Database
+数据库（database）：保存有组织数据的容器（通常是一个文件或一组文件）
+
+表（t...</p>
+        </a>
+      
+      
+        <a class='next' href='/learn-go/'>
+          <p class='title'>Learn Go<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>本文是 Golang 的基础学习笔记，大多是对 A Tour of Go 的翻译总结，并参考了 The Go Programming Language 的部分内容自行实现了相关代码并对知识点进行...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow floatable" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
+  </article>
 
 
-	
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -718,151 +909,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget blogger shadow floatable desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box circle' href='/about/'>
-          <img no-lazy src='https://upyun.secriy.com/statics/img/avatar.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Secriy's Blog</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@secriy.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/Secriy"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://music.163.com/#/user/home?id=494386912"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-  
-
-  <section class="widget category shadow floatable desktop">
+  <section class="widget toc-wrapper shadow floatable desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/algorithms/" href="/categories/algorithms/"
-            id="categoriesalgorithms"
-            ><div class='name'>算法刷题</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/infosec/" href="/categories/infosec/"
-            id="categoriesinfosec"
-            ><div class='name'>信息安全</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/manual/" href="/categories/manual/"
-            id="categoriesmanual"
-            ><div class='name'>操作手册</div><div class='badge'>(4)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/note/" href="/categories/note/"
-            id="categoriesnote"
-            ><div class='name'>学习笔记</div><div class='badge'>(10)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/software/" href="/categories/software/"
-            id="categoriessoftware"
-            ><div class='name'>软件工具</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/tech/" href="/categories/tech/"
-            id="categoriestech"
-            ><div class='name'>技术讨论</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/tutorial/" href="/categories/tutorial/"
-            id="categoriestutorial"
-            ><div class='name'>经验教程</div><div class='badge'>(6)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/" href="/categories/%E6%91%B8%E9%B1%BC%E5%88%92%E6%B0%B4/"
-            id="categoriesE691B8E9B1BCE58892E6B0B4"
-            ><div class='name'>摸鱼划水</div><div class='badge'>(1)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow floatable desktop mobile">
-    
-  <header>
-    
-      <a href='/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/ASM/" style="font-size: 14px; color: #000">ASM</a> <a href="/tags/Algorithms/" style="font-size: 16.5px; color: #373737">Algorithms</a> <a href="/tags/CSGO/" style="font-size: 14px; color: #000">CSGO</a> <a href="/tags/CTF/" style="font-size: 14px; color: #000">CTF</a> <a href="/tags/Chromatics/" style="font-size: 14px; color: #000">Chromatics</a> <a href="/tags/Crack/" style="font-size: 16.5px; color: #373737">Crack</a> <a href="/tags/Database/" style="font-size: 24px; color: #ddd">Database</a> <a href="/tags/Design/" style="font-size: 14px; color: #000">Design</a> <a href="/tags/Games/" style="font-size: 14px; color: #000">Games</a> <a href="/tags/Git/" style="font-size: 14px; color: #000">Git</a> <a href="/tags/Go/" style="font-size: 16.5px; color: #373737">Go</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #000">Hexo</a> <a href="/tags/InnoDB/" style="font-size: 19px; color: #6f6f6f">InnoDB</a> <a href="/tags/JavaScript/" style="font-size: 14px; color: #000">JavaScript</a> <a href="/tags/Kali-Linux/" style="font-size: 16.5px; color: #373737">Kali Linux</a> <a href="/tags/Linux/" style="font-size: 19px; color: #6f6f6f">Linux</a> <a href="/tags/MySQL/" style="font-size: 21.5px; color: #a6a6a6">MySQL</a> <a href="/tags/Network/" style="font-size: 16.5px; color: #373737">Network</a> <a href="/tags/PL/" style="font-size: 21.5px; color: #a6a6a6">PL</a> <a href="/tags/Pentest/" style="font-size: 14px; color: #000">Pentest</a> <a href="/tags/Powershell/" style="font-size: 14px; color: #000">Powershell</a> <a href="/tags/Protocol/" style="font-size: 14px; color: #000">Protocol</a> <a href="/tags/Proxy/" style="font-size: 14px; color: #000">Proxy</a> <a href="/tags/Rust/" style="font-size: 14px; color: #000">Rust</a> <a href="/tags/SQL/" style="font-size: 14px; color: #000">SQL</a> <a href="/tags/Security/" style="font-size: 14px; color: #000">Security</a> <a href="/tags/Software/" style="font-size: 16.5px; color: #373737">Software</a> <a href="/tags/Windows/" style="font-size: 14px; color: #000">Windows</a> <a href="/tags/Wireless/" style="font-size: 14px; color: #000">Wireless</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%89%E5%85%B3-defer-%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">一、有关 defer 的执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81defer-%E5%92%8C-return-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%85%88%E5%90%8E"><span class="toc-text">二、defer 和 return 执行的先后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81defer-%E5%92%8C-panic-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%85%88%E5%90%8E"><span class="toc-text">三、defer 和 panic 执行的先后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81defer-%E4%B8%AD%E5%8C%85%E5%90%AB%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-text">四、defer 中包含子函数</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -873,125 +932,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget shadow floatable desktop">
+<section class="widget text shadow floatable desktop">
   
   <header>
     
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
+      <i class="fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i><span class='name'>注意</span>
     
   </header>
 
 
   <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>27 篇</div>
-        </div>
-      
+    
+      <p>本文内容可能存在滞后性，请自行确认相关内容是否仍可用。</p>
 
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2018/06/02'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-        <div class="webinfo-item">
-          <div>本站总字数：</div>
-          <div>95.6k 字</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Wed Jun 05 2024 10:28:17 GMT+0800 (China Standard Time)</div>
-            <div id="last-update-show">2024-06-05 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2024-06-05 日';
-          }
-        </script>
-        
-      
-    </div>
+    
   </div>
 </section>
 
@@ -1001,27 +955,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </aside>
 
 
+
 		  
 		  <!--此文件用来存放一些不方便取值的变量-->
 <!--思路大概是将值藏到重加载的区域内-->
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="Go Learning: defer";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="half";
-    cover_wrapper.style.display="";
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
     
   
 </script>
